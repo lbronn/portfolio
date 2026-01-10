@@ -8,3 +8,5 @@ build
 .idea
 .vscode
 
+# Other Files
+.DS_Store

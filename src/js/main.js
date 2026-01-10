@@ -66,3 +66,41 @@ scrollTopBtn.addEventListener("click", () => {
     behavior: "smooth",
   });
 });
+
+// Typewriter Effect Logic
+const typeWriterElement = document.getElementById("typewriter-text");
+const phrases = ["Software Engineer", "AI Engineer", "Loyal"];
+let phraseIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+let typeSpeed = 100;
+
+function typeWriter() {
+  if (!typeWriterElement) return;
+
+  const currentPhrase = phrases[phraseIndex];
+
+  if (isDeleting) {
+    typeWriterElement.textContent = currentPhrase.substring(0, charIndex - 1);
+    charIndex--;
+    typeSpeed = 50; // Faster deleting
+  } else {
+    typeWriterElement.textContent = currentPhrase.substring(0, charIndex + 1);
+    charIndex++;
+    typeSpeed = 150; // Normal typing
+  }
+
+  if (!isDeleting && charIndex === currentPhrase.length) {
+    isDeleting = true;
+    typeSpeed = 2000; // Pause at end
+  } else if (isDeleting && charIndex === 0) {
+    isDeleting = false;
+    phraseIndex = (phraseIndex + 1) % phrases.length;
+    typeSpeed = 500; // Pause before new word
+  }
+
+  setTimeout(typeWriter, typeSpeed);
+}
+
+// Start the typewriter
+document.addEventListener("DOMContentLoaded", typeWriter);

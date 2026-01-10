@@ -1,0 +1,10 @@
+# Node Modules
+node_modules
+
+# Tailwind CSS
+build
+
+# IDE Settings
+.idea
+.vscode
+

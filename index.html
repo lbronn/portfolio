@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Personal Portfolio of Bronny - Software Engineer"
+    />
+    <title>Bronny.</title>
+
+    <!-- Google Fonts: Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Tailwind CSS -->
+    <link href="./dist/output.css" rel="stylesheet" />
+
+    <script>
+      // Check for saved theme preference or system preference
+      if (
+        localStorage.theme === "dark" ||
+        (!("theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
+  </head>
+  <body
+    class="bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100 font-sans transition-colors duration-300"
+  >
+    <!-- Navbar -->
+    <nav
+      class="fixed w-full z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-colors duration-300"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <!-- Logo -->
+          <div class="flex-shrink-0">
+            <a
+              href="#"
+              class="text-2xl font-bold tracking-tight text-blue-600 dark:text-blue-400"
+              >Bronny.</a
+            >
+          </div>
+
+          <!-- Desktop Menu -->
+          <div class="hidden md:block">
+            <div class="ml-10 flex items-baseline space-x-8">
+              <a
+                href="#about"
+                class="hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                >About</a
+              >
+              <a
+                href="#projects"
+                class="hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                >Projects</a
+              >
+              <a
+                href="#roadmap"
+                class="hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                >Roadmap</a
+              >
+              <a
+                href="#contact"
+                class="hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                >Contact</a
+              >
+            </div>
+          </div>
+
+          <!-- Theme Toggle & Mobile Menu Button -->
+          <div class="flex items-center gap-4">
+            <button
+              id="theme-toggle"
+              class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
+              aria-label="Toggle Theme"
+            >
+              <!-- Sun Icon -->
+              <i class="ph ph-sun text-xl hidden dark:block"></i>
+              <!-- Moon Icon -->
+              <i class="ph ph-moon text-xl block dark:hidden"></i>
+            </button>
+
+            <div class="-mr-2 flex md:hidden">
+              <button
+                type="button"
+                class="inline-flex items-center justify-center p-2 rounded-md text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 focus:outline-none"
+                aria-controls="mobile-menu"
+                aria-expanded="false"
+              >
+                <span class="sr-only">Open main menu</span>
+                <i class="ph ph-list text-2xl"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Menu (Hidden by default) -->
+      <div class="md:hidden hidden" id="mobile-menu">
+        <div
+          class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800"
+        >
+          <a
+            href="#about"
+            class="block px-3 py-2 rounded-md text-base font-medium hover:text-blue-600 dark:hover:text-blue-400"
+            >About</a
+          >
+          <a
+            href="#projects"
+            class="block px-3 py-2 rounded-md text-base font-medium hover:text-blue-600 dark:hover:text-blue-400"
+            >Projects</a
+          >
+          <a
+            href="#roadmap"
+            class="block px-3 py-2 rounded-md text-base font-medium hover:text-blue-600 dark:hover:text-blue-400"
+            >Roadmap</a
+          >
+          <a
+            href="#contact"
+            class="block px-3 py-2 rounded-md text-base font-medium hover:text-blue-600 dark:hover:text-blue-400"
+            >Contact</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <!-- Hero Section -->
+      <section
+        id="home"
+        class="min-h-screen flex items-center pt-16 relative overflow-hidden"
+      >
+        <!-- Background Decoration -->
+        <div
+          class="absolute top-20 right-0 -mr-20 -mt-20 w-96 h-96 bg-blue-500/10 blur-3xl rounded-full mix-blend-multiply dark:mix-blend-overlay"
+        ></div>
+        <div
+          class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-blue-500/10 blur-3xl rounded-full mix-blend-multiply dark:mix-blend-overlay"
+        ></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <!-- Hero Text -->
+            <div class="order-2 md:order-1 text-center md:text-left">
+              <span
+                class="text-blue-600 dark:text-blue-400 font-semibold tracking-wider uppercase text-sm mb-2 block animate-fade-in-up"
+                >Wubba Lubba Dub Dub!</span
+              >
+              <h1
+                class="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-gray-900 dark:text-white"
+              >
+                I'm
+                <span class="text-blue-600 dark:text-blue-400">Le Bronn</span
+                ><br />
+                <span
+                  class="text-3xl md:text-5xl font-medium text-gray-500 dark:text-gray-400 mt-2 block"
+                  >Software Engineer</span
+                >
+              </h1>
+              <p
+                class="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed"
+              >
+                Crafting robust, scalable, and aesthetic web solutions. I bridge
+                the gap between creative design and engineering excellence.
+              </p>
+              <div
+                class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
+              >
+                <a
+                  href="#projects"
+                  class="px-8 py-3.5 rounded-full bg-blue-600 text-white font-medium hover:bg-blue-700 transition-all shadow-lg hover:shadow-blue-500/30"
+                >
+                  View Projects
+                </a>
+                <a
+                  href="#contact"
+                  class="px-8 py-3.5 rounded-full border-2 border-gray-200 dark:border-gray-700 hover:border-blue-600 dark:hover:border-blue-400 text-gray-900 dark:text-white font-medium transition-all hover:bg-gray-50 dark:hover:bg-gray-800"
+                >
+                  Contact Me
+                </a>
+              </div>
+
+              <div
+                class="mt-12 flex items-center justify-center md:justify-start gap-6 text-2xl text-gray-400"
+              >
+                <a
+                  href="https://github.com/lbronn"
+                  target="_blank"
+                  class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  ><i class="ph ph-github-logo"></i
+                ></a>
+                <a href="https://www.linkedin.com/in/lebronnsamson/" target="_blank" class="hover:text-blue-500 transition-colors"
+                  ><i class="ph ph-linkedin-logo"></i
+                ></a>
+                <a href="https://www.instagram.com/lbroooooonn/" target="_blank" class="hover:text-pink-500 transition-colors"
+                  ><i class="ph ph-instagram-logo"></i
+                ></a>
+              </div>
+            </div>
+
+            <!-- Hero Image / Visual -->
+            <div class="order-1 md:order-2 flex justify-center relative">
+              <div class="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96">
+                <div
+                  class="absolute inset-0 bg-gradient-to-tr from-blue-500 to-blue-500 rounded-full opacity-20 animate-pulse"
+                ></div>
+                <div
+                  class="absolute inset-2 bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden border-4 border-white dark:border-gray-900 shadow-2xl"
+                >
+                  <!-- User Image -->
+                  <img src="./src/assets/images/profile.jpg" alt="Le Bronn" class="w-full h-full object-cover">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- About Section -->
+      <section id="about" class="py-24 bg-white dark:bg-gray-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-16">
+            <h2
+              class="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white"
+            >
+              About Me
+            </h2>
+            <div class="w-20 h-1 bg-blue-600 mx-auto rounded-full"></div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <!-- About Content -->
+            <div class="space-y-6 text-lg text-gray-600 dark:text-gray-300">
+              <p>
+                I'm a dedicated <strong>Software Engineer</strong> specializing in <strong>AI engineering</strong>, <strong>automation</strong>, and <strong>full-stack development</strong>. My passion lies in building intelligent systems that optimize workflows and solve complex real-world problems.
+              </p>
+              <p>
+                With a strong foundation in modern web technologies and a deep understanding of AI agents, I bridge the gap between traditional software engineering and cutting-edge artificial intelligence.
+              </p>
+
+              <div class="grid grid-cols-2 gap-6 pt-4">
+                <div>
+                  <h4
+                    class="text-4xl font-bold text-blue-600 dark:text-blue-400"
+                  >
+                    3+
+                  </h4>
+                  <span class="text-sm text-gray-500">Years of Experience</span>
+                </div>
+                <div>
+                  <h4
+                    class="text-4xl font-bold text-blue-600 dark:text-blue-400"
+                  >
+                    20+
+                  </h4>
+                  <span class="text-sm text-gray-500">Projects Completed</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Skills / Stack -->
+            <div
+              class="bg-gray-50 dark:bg-gray-900 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700"
+            >
+              <h3
+                class="text-xl font-semibold mb-6 text-gray-900 dark:text-white"
+              >
+                Technical Arsenal
+              </h3>
+              <div class="space-y-4">
+                <!-- Skill Category -->
+                <div>
+                  <span
+                    class="text-sm font-medium text-gray-500 dark:text-gray-400 block mb-2"
+                    >Frontend</span
+                  >
+                  <div class="flex flex-wrap gap-2">
+                    <span
+                      class="px-3 py-1 text-sm rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300"
+                      >AI Engineering</span
+                    >
+                    <span
+                      class="px-3 py-1 text-sm rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300"
+                      >Tailwind CSS</span
+                    >
+                    <span
+                      class="px-3 py-1 text-sm rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300"
+                      >React/Next.js</span
+                    >
+                  </div>
+                </div>
+                <!-- Skill Category -->
+                <div>
+                  <span
+                    class="text-sm font-medium text-gray-500 dark:text-gray-400 block mb-2"
+                    >Backend & Tools</span
+                  >
+                  <div class="flex flex-wrap gap-2">
+                    <span
+                      class="px-3 py-1 text-sm rounded-full bg-sky-100 dark:bg-sky-900/30 text-sky-700 dark:text-sky-300"
+                      >Node.js</span
+                    >
+                    <span
+                      class="px-3 py-1 text-sm rounded-full bg-sky-100 dark:bg-sky-900/30 text-sky-700 dark:text-sky-300"
+                      >Git</span
+                    >
+                    <span
+                      class="px-3 py-1 text-sm rounded-full bg-sky-100 dark:bg-sky-900/30 text-sky-700 dark:text-sky-300"
+                      >Docker</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Projects Section -->
+      <section id="projects" class="py-24 bg-gray-50 dark:bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-16">
+            <h2
+              class="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white"
+            >
+              Featured Projects
+            </h2>
+            <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              A selection of my recent work, specifically designed to showcase
+              my skills and problem-solving abilities.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Project Card 1 -->
+            <div
+              class="group bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700 flex flex-col"
+            >
+              <div
+                class="h-48 bg-gray-200 dark:bg-gray-700 relative overflow-hidden"
+              >
+                <!-- Placeholder Project Image -->
+                <div
+                  class="absolute inset-0 flex items-center justify-center text-gray-400"
+                >
+                  <i class="ph ph-laptop text-4xl"></i>
+                </div>
+                <div
+                  class="absolute inset-0 bg-blue-900/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4 backdrop-blur-sm"
+                >
+                  <a
+                    href="#"
+                    class="p-2 bg-white rounded-full text-blue-900 hover:scale-110 transition-transform"
+                    title="View Code"
+                    ><i class="ph ph-github-logo text-xl"></i
+                  ></a>
+                  <a
+                    href="#"
+                    class="p-2 bg-white rounded-full text-blue-900 hover:scale-110 transition-transform"
+                    title="Live Demo"
+                    ><i class="ph ph-arrow-square-out text-xl"></i
+                  ></a>
+                </div>
+              </div>
+              <div class="p-6 flex-1 flex flex-col">
+                <h3
+                  class="text-xl font-bold text-gray-900 dark:text-white mb-2"
+                >
+                  E-Commerce Dashboard
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm mb-4 flex-1">
+                  A comprehensive dashboard for managing products, orders, and
+                  analytics. Built with performance in mind.
+                </p>
+                <div class="flex flex-wrap gap-2 mt-auto">
+                  <span
+                    class="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-gray-600 dark:text-gray-300"
+                    >React</span
+                  >
+                  <span
+                    class="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-gray-600 dark:text-gray-300"
+                    >Tailwind</span
+                  >
+                  <span
+                    class="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-gray-600 dark:text-gray-300"
+                    >Supabase</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Project Card 2 -->
+            <div
+              class="group bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700 flex flex-col"
+            >
+              <div
+                class="h-48 bg-gray-200 dark:bg-gray-700 relative overflow-hidden"
+              >
+                <div
+                  class="absolute inset-0 flex items-center justify-center text-gray-400"
+                >
+                  <i class="ph ph-chat-circle-text text-4xl"></i>
+                </div>
+                <div
+                  class="absolute inset-0 bg-blue-900/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4 backdrop-blur-sm"
+                >
+                  <a
+                    href="#"
+                    class="p-2 bg-white rounded-full text-blue-900 hover:scale-110 transition-transform"
+                    ><i class="ph ph-github-logo text-xl"></i
+                  ></a>
+                  <a
+                    href="#"
+                    class="p-2 bg-white rounded-full text-blue-900 hover:scale-110 transition-transform"
+                    ><i class="ph ph-arrow-square-out text-xl"></i
+                  ></a>
+                </div>
+              </div>
+              <div class="p-6 flex-1 flex flex-col">
+                <h3
+                  class="text-xl font-bold text-gray-900 dark:text-white mb-2"
+                >
+                  Real-time Chat App
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm mb-4 flex-1">
+                  Enables users to communicate instantly in room-based channels.
+                  Features WebSocket integration and persistent history.
+                </p>
+                <div class="flex flex-wrap gap-2 mt-auto">
+                  <span
+                    class="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-gray-600 dark:text-gray-300"
+                    >Node.js</span
+                  >
+                  <span
+                    class="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-gray-600 dark:text-gray-300"
+                    >Socket.io</span
+                  >
+                  <span
+                    class="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-gray-600 dark:text-gray-300"
+                    >Redis</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Project Card 3 -->
+            <div
+              class="group bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700 flex flex-col"
+            >
+              <div
+                class="h-48 bg-gray-200 dark:bg-gray-700 relative overflow-hidden"
+              >
+                <div
+                  class="absolute inset-0 flex items-center justify-center text-gray-400"
+                >
+                  <i class="ph ph-cloud text-4xl"></i>
+                </div>
+                <div
+                  class="absolute inset-0 bg-blue-900/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4 backdrop-blur-sm"
+                >
+                  <a
+                    href="#"
+                    class="p-2 bg-white rounded-full text-blue-900 hover:scale-110 transition-transform"
+                    ><i class="ph ph-github-logo text-xl"></i
+                  ></a>
+                  <a
+                    href="#"
+                    class="p-2 bg-white rounded-full text-blue-900 hover:scale-110 transition-transform"
+                    ><i class="ph ph-arrow-square-out text-xl"></i
+                  ></a>
+                </div>
+              </div>
+              <div class="p-6 flex-1 flex flex-col">
+                <h3
+                  class="text-xl font-bold text-gray-900 dark:text-white mb-2"
+                >
+                  Weather Forecast
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 text-sm mb-4 flex-1">
+                  An aesthetic weather application providing 7-day forecasts
+                  using public APIs and geolocation.
+                </p>
+                <div class="flex flex-wrap gap-2 mt-auto">
+                  <span
+                    class="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-gray-600 dark:text-gray-300"
+                    >JS</span
+                  >
+                  <span
+                    class="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-gray-600 dark:text-gray-300"
+                    >OpenWeatherAPI</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+        <!-- Roadmap Section -->
+        <section id="roadmap" class="py-24 bg-white dark:bg-gray-800/50 relative overflow-hidden">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">My Journey</h2>
+                    <p class="text-gray-600 dark:text-gray-400">The path that led me to where I am today.</p>
+                </div>
+
+                <div class="relative">
+                    <!-- Vertical Line -->
+                    <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gray-200 dark:bg-gray-700 -translate-x-1/2 md:translate-x-0"></div>
+
+                    <div class="space-y-12">
+                        <!-- Roadmap Item 1 -->
+                        <div class="relative flex flex-col md:flex-row items-center md:justify-between group">
+                            <!-- Dot -->
+                            <div class="absolute left-4 md:left-1/2 w-4 h-4 bg-blue-600 rounded-full border-4 border-white dark:border-gray-900 -translate-x-2 md:-translate-x-2 z-10 shadow"></div>
+                            
+                            <div class="ml-12 md:ml-0 md:w-[45%] md:pr-8 text-left md:text-right order-1">
+                                <span class="inline-block px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-xs font-semibold mb-2">2025 - Present</span>
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">AI Automation Engineer</h3>
+                                <p class="text-gray-600 dark:text-gray-400 mt-2">Architecting autonomous agents and scalable automation frameworks.</p>
+                            </div>
+                            <div class="hidden md:block md:w-[45%] order-2"></div>
+                        </div>
+
+                        <!-- Roadmap Item 2 -->
+                        <div class="relative flex flex-col md:flex-row items-center md:justify-between group">
+                            <!-- Dot -->
+                            <div class="absolute left-4 md:left-1/2 w-4 h-4 bg-blue-500 rounded-full border-4 border-white dark:border-gray-900 -translate-x-2 md:-translate-x-2 z-10 shadow"></div>
+                            
+                            <div class="hidden md:block md:w-[45%] order-1"></div>
+                            <div class="ml-12 md:ml-0 md:w-[45%] md:pl-8 text-left order-2">
+                                <span class="inline-block px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-xs font-semibold mb-2">2023 - 2024</span>
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Full-Stack Engineer</h3>
+                                <p class="text-gray-600 dark:text-gray-400 mt-2">Built robust web applications and integrated complex backend systems.</p>
+                            </div>
+                        </div>
+
+                        <!-- Roadmap Item 3 -->
+                        <div class="relative flex flex-col md:flex-row items-center md:justify-between group">
+                            <!-- Dot -->
+                            <div class="absolute left-4 md:left-1/2 w-4 h-4 bg-gray-400 dark:bg-gray-600 rounded-full border-4 border-white dark:border-gray-900 -translate-x-2 md:-translate-x-2 z-10 shadow"></div>
+                            
+                            <div class="ml-12 md:ml-0 md:w-[45%] md:pr-8 text-left md:text-right order-1">
+                                <span class="inline-block px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full text-xs font-semibold mb-2">2021 - 2022</span>
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">The Beginning</h3>
+                                <p class="text-gray-600 dark:text-gray-400 mt-2">Started my journey with bootcamps and freelance gigs, learning the fundamentals of web dev.</p>
+                            </div>
+                            <div class="hidden md:block md:w-[45%] order-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Personal Section -->
+        <section class="py-24 bg-gray-50 dark:bg-gray-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                    <div class="relative group">
+                        <!-- Abstract shapes -->
+                        <div class="absolute -inset-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl opacity-30 blur-lg group-hover:opacity-50 transition duration-500"></div>
+                        <div class="relative bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700">
+                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Beyond the Code</h3>
+                            <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
+                                When I'm not debugging or designing systems, I stay competitive on the basketball court or immerse myself in video game worlds. I believe that a balanced life fuels creativity.
+                            </p>
+                            <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                I'm also a huge coffee enthusiast ☕ and love experimenting with different brewing methods.
+                            </p>
+                        </div>
+                    </div>
+                    <div>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-900 dark:text-white">Personal Life</h2>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700 text-center hover:border-blue-500 transition-colors">
+                                <i class="ph ph-basketball text-4xl text-orange-600 mb-2"></i>
+                                <span class="block font-medium dark:text-gray-200">Basketball</span>
+                            </div>
+                            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700 text-center hover:border-blue-500 transition-colors">
+                                <i class="ph ph-game-controller text-4xl text-purple-600 mb-2"></i>
+                                <span class="block font-medium dark:text-gray-200">Video Games</span>
+                            </div>
+                            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700 text-center hover:border-blue-500 transition-colors">
+                                <i class="ph ph-coffee text-4xl text-amber-700 mb-2"></i>
+                                <span class="block font-medium dark:text-gray-200">Coffee</span>
+                            </div>
+                            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700 text-center hover:border-blue-500 transition-colors">
+                                <i class="ph ph-television text-4xl text-blue-500 mb-2"></i>
+                                <span class="block font-medium dark:text-gray-200">TV Series</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-24 bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-900 dark:text-white">Let's Work Together</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400 mb-12">
+                    Have a project in mind or just want to say hi? I'm always open to discussing new opportunities and ideas.
+                </p>
+
+                <div class="flex flex-col md:flex-row justify-center gap-6 mb-12">
+                    <a href="mailto:lebronnsamson@gmail.com" class="flex items-center justify-center gap-3 px-8 py-4 bg-blue-600 dark:bg-white text-white dark:text-gray-900 rounded-lg hover:bg-blue-700 dark:hover:bg-gray-100 transition-colors font-medium text-lg shadow-lg">
+                        <i class="ph ph-envelope-simple text-2xl"></i>
+                        Send an Email
+                    </a>
+                    <a href="https://www.linkedin.com/in/lebronnsamson/" target="_blank" class="flex items-center justify-center gap-3 px-8 py-4 border border-gray-300 dark:border-gray-700 rounded-lg hover:border-gray-900 dark:hover:border-white transition-colors font-medium text-lg dark:text-white">
+                        <i class="ph ph-linkedin-logo text-2xl"></i>
+                        LinkedIn
+                    </a>
+                </div>
+
+                <div class="flex justify-center gap-8 text-gray-400">
+                    <a href="https://github.com/lbronn" target="_blank" class="hover:text-gray-900 dark:hover:text-white transition-colors"><i class="ph ph-github-logo text-2xl"></i></a>
+                    <a href="https://www.linkedin.com/in/lebronnsamson/" target="_blank" class="hover:text-blue-600 transition-colors"><i class="ph ph-linkedin-logo text-2xl"></i></a>
+                    <a href="https://www.instagram.com/lbroooooonn/" target="_blank" class="hover:text-pink-500 transition-colors"><i class="ph ph-instagram-logo text-2xl"></i></a>
+                </div>
+
+                <p class="mt-16 text-sm text-gray-500">
+                    &copy; 2025 Bronny. All rights reserved.<i class="ph ph-heart-fill text-red-500"></i>
+                </p>
+            </div>
+        </section>
+
+    <!-- Scroll to Top Button -->
+    <button id="scroll-to-top" class="fixed bottom-8 right-8 w-12 h-12 flex items-center justify-center rounded-full bg-blue-600 text-white shadow-lg translate-y-20 opacity-0 transition-all duration-300 hover:bg-blue-700 focus:outline-none z-40" aria-label="Scroll to top">
+        <i class="ph ph-arrow-up text-xl"></i>
+    </button>
+
+    <script src="./src/js/main.js"></script>
+  </body>
+</html>

@@ -69,7 +69,7 @@ scrollTopBtn.addEventListener("click", () => {
 
 // Typewriter Effect Logic
 const typeWriterElement = document.getElementById("typewriter-text");
-const phrases = ["Software Engineer", "AI Engineer", "Loyal"];
+const phrases = ["Software Engineer", "AI Engineer"];
 let phraseIndex = 0;
 let charIndex = 0;
 let isDeleting = false;

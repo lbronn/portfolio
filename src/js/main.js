@@ -24,33 +24,37 @@ mobileMenuButton.addEventListener("click", () => {
   mobileMenu.classList.toggle("hidden");
 });
 
-// Scroll Animations
-const observerOptions = {
-  root: null,
-  rootMargin: "0px",
-  threshold: 0.1,
-};
+// Scroll Animations (progressive enhancement — content stays visible if JS/IO fails)
+const revealTargets = document.querySelectorAll("section > div");
 
-const observer = new IntersectionObserver((entries, observer) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("animate-fade-in-up");
-      entry.target.classList.remove("opacity-0");
-      observer.unobserve(entry.target);
-    }
+if ("IntersectionObserver" in window) {
+  const observerOptions = { root: null, rootMargin: "0px 0px -8% 0px", threshold: 0.08 };
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("animate-fade-in-up");
+        entry.target.classList.remove("opacity-0");
+        obs.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  revealTargets.forEach((section) => {
+    section.classList.add("opacity-0"); // Initial state
+    observer.observe(section);
   });
-}, observerOptions);
 
-document.querySelectorAll("section > div").forEach((section) => {
-  section.classList.add("opacity-0"); // Initial state
-  observer.observe(section);
-});
+  // Safety net: never leave content hidden if the observer doesn't fire
+  setTimeout(() => {
+    revealTargets.forEach((s) => s.classList.remove("opacity-0"));
+  }, 1500);
+}
 
 // Scroll to Top Logic
 const scrollTopBtn = document.getElementById("scroll-to-top");
 
 window.addEventListener("scroll", () => {
-  // Show button when scrolled down 500px (past hero roughly)
   if (window.scrollY > 500) {
     scrollTopBtn.classList.remove("translate-y-20", "opacity-0");
     scrollTopBtn.classList.remove("pointer-events-none");
@@ -83,24 +87,28 @@ function typeWriter() {
   if (isDeleting) {
     typeWriterElement.textContent = currentPhrase.substring(0, charIndex - 1);
     charIndex--;
-    typeSpeed = 50; // Faster deleting
+    typeSpeed = 50;
   } else {
     typeWriterElement.textContent = currentPhrase.substring(0, charIndex + 1);
     charIndex++;
-    typeSpeed = 150; // Normal typing
+    typeSpeed = 150;
   }
 
   if (!isDeleting && charIndex === currentPhrase.length) {
     isDeleting = true;
-    typeSpeed = 2000; // Pause at end
+    typeSpeed = 2000;
   } else if (isDeleting && charIndex === 0) {
     isDeleting = false;
     phraseIndex = (phraseIndex + 1) % phrases.length;
-    typeSpeed = 500; // Pause before new word
+    typeSpeed = 500;
   }
 
   setTimeout(typeWriter, typeSpeed);
 }
 
-// Start the typewriter
-document.addEventListener("DOMContentLoaded", typeWriter);
+// Start the typewriter (run now if the DOM is already parsed)
+if (document.readyState !== "loading") {
+  typeWriter();
+} else {
+  document.addEventListener("DOMContentLoaded", typeWriter);
+}

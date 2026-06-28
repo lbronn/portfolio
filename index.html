@@ -8,7 +8,10 @@
       content="Personal Portfolio of Bronny - AI / Software Engineer"
     />
     <title>Bronny.</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="./src/assets/images/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="./src/assets/images/favicon-16.png" />
     <link rel="icon" type="image/png" href="./src/assets/images/favicon.png" />
+    <link rel="apple-touch-icon" href="./src/assets/images/apple-touch-icon.png" />
 
     <!-- Google Fonts: Sora (display) + Inter (body) + JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -25,11 +28,8 @@
     <link href="./dist/output.css" rel="stylesheet" />
 
     <script>
-      // Default to dark unless the user explicitly chose light
-      if (
-        localStorage.theme === "dark" ||
-        !("theme" in localStorage)
-      ) {
+      // Default to light unless the user explicitly chose dark
+      if (localStorage.theme === "dark") {
         document.documentElement.classList.add("dark");
       } else {
         document.documentElement.classList.remove("dark");
@@ -153,10 +153,10 @@
             <!-- About Content -->
             <div class="space-y-6 text-lg text-ink-600 dark:text-ink-300">
               <p>
-                I'm an <strong class="text-ink-900 dark:text-white font-semibold">AI Engineer</strong> specializing in <strong class="text-ink-900 dark:text-white font-semibold">AI Agents Orchestration</strong>, <strong class="text-ink-900 dark:text-white font-semibold">RAG Architecture</strong>, and <strong class="text-ink-900 dark:text-white font-semibold">full-stack development</strong>. My passion lies in designing intelligent systems — from Vector DB pipelines and LLMOps workflows to fast, decision-ready PoCs.
+                I'm an <strong class="text-ink-900 dark:text-white font-semibold">AI Engineer</strong> specializing in <strong class="text-ink-900 dark:text-white font-semibold">hyperspecific AI agents</strong>, <strong class="text-ink-900 dark:text-white font-semibold">agentic multimodal RAG</strong>, and <strong class="text-ink-900 dark:text-white font-semibold">full-stack development</strong>. My passion lies in designing intelligent systems — from vectors-and-embeddings pipelines and LLMOps workflows to fast, decision-ready PoCs.
               </p>
               <p>
-                With hands-on experience across agentic AI, context engineering, CNN models, and workflow automation, I bridge the gap between cutting-edge AI research and production-grade engineering.
+                With hands-on experience across prompt &amp; context engineering, token optimization, and orchestration, evals, and logging, I bridge the gap between cutting-edge AI research and production-grade engineering.
               </p>
 
               <div class="grid grid-cols-2 gap-6 pt-4">
@@ -179,7 +179,6 @@
                   <span class="text-sm font-medium text-ink-500 dark:text-ink-400 block mb-2">Languages</span>
                   <div class="flex flex-wrap gap-2">
                     <span class="px-3 py-1 text-sm rounded-full bg-primary-100 dark:bg-primary-500/20 text-primary-700 dark:text-primary-300">Python</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-primary-100 dark:bg-primary-500/20 text-primary-700 dark:text-primary-300">Kotlin</span>
                     <span class="px-3 py-1 text-sm rounded-full bg-primary-100 dark:bg-primary-500/20 text-primary-700 dark:text-primary-300">JavaScript</span>
                     <span class="px-3 py-1 text-sm rounded-full bg-primary-100 dark:bg-primary-500/20 text-primary-700 dark:text-primary-300">TypeScript</span>
                   </div>
@@ -190,28 +189,32 @@
                     <span class="px-3 py-1 text-sm rounded-full bg-sky-100 dark:bg-sky-500/15 text-sky-700 dark:text-sky-300">Django</span>
                     <span class="px-3 py-1 text-sm rounded-full bg-sky-100 dark:bg-sky-500/15 text-sky-700 dark:text-sky-300">FastAPI</span>
                     <span class="px-3 py-1 text-sm rounded-full bg-sky-100 dark:bg-sky-500/15 text-sky-700 dark:text-sky-300">React</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-sky-100 dark:bg-sky-500/15 text-sky-700 dark:text-sky-300">BMAD Method</span>
+                    <span class="px-3 py-1 text-sm rounded-full bg-sky-100 dark:bg-sky-500/15 text-sky-700 dark:text-sky-300">BMAD v6</span>
                   </div>
                 </div>
                 <div>
                   <span class="text-sm font-medium text-ink-500 dark:text-ink-400 block mb-2">AI/ML &amp; Automation</span>
                   <div class="flex flex-wrap gap-2">
-                    <span class="px-3 py-1 text-sm rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300">Claude</span>
+                    <span class="px-3 py-1 text-sm rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300">Claude SDK</span>
+                    <span class="px-3 py-1 text-sm rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300">OpenAI SDK</span>
                     <span class="px-3 py-1 text-sm rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300">Gemini</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300">RAG</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300">AI Agents</span>
+                    <span class="px-3 py-1 text-sm rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300">Agentic Multimodal RAG</span>
+                    <span class="px-3 py-1 text-sm rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300">Hyperspecific AI Agents</span>
                     <span class="px-3 py-1 text-sm rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300">LLMOps</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300">Context Engineering</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300">Vector DB</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300">CNN Models</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300">N8N</span>
+                    <span class="px-3 py-1 text-sm rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300">Prompt &amp; Context Engineering</span>
+                    <span class="px-3 py-1 text-sm rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300">Vectors and Embeddings</span>
+                    <span class="px-3 py-1 text-sm rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300">n8n</span>
                     <span class="px-3 py-1 text-sm rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300">Power Automate</span>
+                    <span class="px-3 py-1 text-sm rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300">Token Optimization</span>
+                    <span class="px-3 py-1 text-sm rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300">Orchestration, Evals, and Logs</span>
                   </div>
                 </div>
                 <div>
                   <span class="text-sm font-medium text-ink-500 dark:text-ink-400 block mb-2">Tools</span>
                   <div class="flex flex-wrap gap-2">
                     <span class="px-3 py-1 text-sm rounded-full bg-ink-100 dark:bg-ink-700 text-ink-700 dark:text-ink-300">VS Code</span>
+                    <span class="px-3 py-1 text-sm rounded-full bg-ink-100 dark:bg-ink-700 text-ink-700 dark:text-ink-300">Claude Code</span>
+                    <span class="px-3 py-1 text-sm rounded-full bg-ink-100 dark:bg-ink-700 text-ink-700 dark:text-ink-300">Codex</span>
                     <span class="px-3 py-1 text-sm rounded-full bg-ink-100 dark:bg-ink-700 text-ink-700 dark:text-ink-300">Antigravity</span>
                     <span class="px-3 py-1 text-sm rounded-full bg-ink-100 dark:bg-ink-700 text-ink-700 dark:text-ink-300">LXC</span>
                     <span class="px-3 py-1 text-sm rounded-full bg-ink-100 dark:bg-ink-700 text-ink-700 dark:text-ink-300">Docker</span>

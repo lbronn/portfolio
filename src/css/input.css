@@ -15,22 +15,26 @@
   }
 
   :root {
-    /* glass — LIGHT */
-    --glass-fill: color-mix(in srgb, #fff 62%, transparent);
-    --glass-fill-hover: color-mix(in srgb, #fff 74%, transparent);
-    --glass-tint: color-mix(in srgb, #E0E7FF 40%, transparent);
-    --glass-border: color-mix(in srgb, #fff 70%, transparent);
-    --glass-rim: color-mix(in srgb, #fff 90%, transparent);
+    /* glass — LIGHT
+       On a light page a pure-white edge disappears, so the glass needs a
+       darker slate hairline for definition + a brighter inner rim for the
+       specular top highlight. Fill stays translucent so the blur shows the
+       colour behind it. */
+    --glass-fill: color-mix(in srgb, #fff 74%, transparent);
+    --glass-fill-hover: color-mix(in srgb, #fff 85%, transparent);
+    --glass-tint: color-mix(in srgb, #C7D2FE 62%, transparent);
+    --glass-border: color-mix(in srgb, #1E293B 14%, transparent);
+    --glass-rim: color-mix(in srgb, #fff 95%, transparent);
     --glass-specular: linear-gradient(135deg,
-        color-mix(in srgb, #fff 55%, transparent) 0%,
-        color-mix(in srgb, #fff 8%, transparent) 38%,
+        color-mix(in srgb, #fff 60%, transparent) 0%,
+        color-mix(in srgb, #fff 10%, transparent) 38%,
         transparent 60%);
-    --glass-shadow: 0 1px 1px rgba(15,23,42,.04), 0 8px 24px rgba(15,23,42,.10), 0 18px 48px rgba(15,23,42,.08);
-    --glass-clear-fill: color-mix(in srgb, #fff 34%, transparent);
-    --glass-clear-border: color-mix(in srgb, #fff 55%, transparent);
-    /* ambient page wash */
-    --wash-1: rgba(99,102,241,.10);
-    --wash-2: rgba(245,158,11,.06);
+    --glass-shadow: 0 1px 2px rgba(15,23,42,.06), 0 10px 28px rgba(15,23,42,.14), 0 22px 56px rgba(15,23,42,.12);
+    --glass-clear-fill: color-mix(in srgb, #fff 50%, transparent);
+    --glass-clear-border: color-mix(in srgb, #1E293B 10%, transparent);
+    /* ambient page wash — gives glass something to refract in light mode */
+    --wash-1: rgba(99,102,241,.14);
+    --wash-2: rgba(245,158,11,.09);
   }
 
   .dark {

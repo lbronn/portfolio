@@ -1,0 +1,6 @@
+/* Home page: nav, hero, sections, lightbox, footer. Breakpoints at the end of the file. */
+
+/* ---------- Footer ---------- */
+.footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; max-width: var(--max); margin: 0 auto; padding: 24px var(--gutter); border-top: 1px solid var(--rule); color: var(--ink-soft); font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; }
+.footer-name { color: var(--ink); font-size: 22px; }
+.footer.tone { padding-bottom: 24px; }

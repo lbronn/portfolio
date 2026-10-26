@@ -1,4 +1,4 @@
-import { contourPaths, navStep } from './lib.js';
+import { contourPaths, navStep, sparkPoints } from './lib.js';
 
 /** Fill every <svg data-contours> with the same topographic rings (generated once). */
 function initContours() {
@@ -44,6 +44,51 @@ function initNav() {
   window.addEventListener('pointerdown', (e) => { if (!e.target.closest('.nav')) setOpen(false); });
 }
 
+const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/** <polyline data-spark="1,2,3"> -> points. Bad data hides the sparkline instead of breaking the hero. */
+function initSpark() {
+  document.querySelectorAll('polyline[data-spark]').forEach((line) => {
+    try {
+      line.setAttribute('points', sparkPoints(line.dataset.spark.split(',').map(Number)));
+    } catch (err) {
+      console.warn('[hero] sparkline hidden, bad data-spark:', err.message);
+      line.closest('svg').remove();
+    }
+  });
+}
+
+/** Portrait switch. Modes: intro (alt visible, waiting) -> webgl | static (CSS crossfade fallback). */
+function initHero() {
+  const portrait = document.querySelector('.hero-portrait');
+  if (!portrait) return;
+  const btn = document.querySelector('.hero-switch');
+  const title = btn.querySelector('.hero-switch-title');
+  let mode = 'intro';
+  let layer = 'photo';
+  let reveal = null; // set by Task 5
+
+  const setMode = (next) => {
+    portrait.classList.replace(`is-${mode}`, `is-${next}`);
+    mode = next;
+  };
+  if (reducedMotion()) setMode('static');
+
+  btn.addEventListener('click', () => {
+    layer = layer === 'photo' ? 'alt' : 'photo';
+    portrait.dataset.layer = layer;
+    btn.setAttribute('aria-pressed', String(layer === 'alt'));
+    title.textContent = layer === 'photo' ? 'Show render' : 'Show photo';
+    reveal?.show(layer);
+    if (mode === 'intro' && !reveal) setMode('static');
+  });
+
+  // Task 5 replaces this line with the WebGL boot; until then fall back after first paint.
+  requestAnimationFrame(() => setMode('static'));
+}
+
 // --- boot (module scripts run after the DOM is parsed) ---
 initContours();
 initNav();
+initSpark();
+initHero();

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#eef3f4" />
+    <title>Work-to-Home Forecast | Le Bronn Samson</title>
+    <meta name="description" content="Work-to-Home Forecast: an n8n automation that posts traffic, weather and a map of the commute to Discord." />
+    <link rel="icon" type="image/png" sizes="32x32" href="../../src/assets/images/favicon-32.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&family=Onest:wght@400;500&display=swap" />
+    <link rel="stylesheet" href="../../src/css/base.css" />
+    <link rel="stylesheet" href="../../src/css/case.css" />
+    <script type="module" src="../../src/js/main.js"></script>
+  </head>
+  <body style="background:#eef3f4">
+    <div class="case" style="--accent:#0a7a8c">
+      <svg class="contours" data-contours viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+      <header class="case-bar">
+        <div class="case-wrap">
+          <a href="../../" class="case-back"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6" /></svg>Portfolio</a>
+          <a href="../../" class="cond case-brand">Le Bronn Samson</a>
+          <span class="case-crumb">Project · Work-to-Home Forecast</span>
+        </div>
+      </header>
+      <main class="case-wrap">
+        <section class="case-hero">
+          <div class="case-in">
+            <p class="hud-label case-eyebrow" style="--i:0">Automation · n8n · 2025</p>
+            <h1 class="cond case-title" style="--i:1">Work-to-Home<br /><em>Forecast</em></h1>
+            <p class="case-lede" style="--i:2">An n8n automation that pulls data from Google's Routes, Weather and Static Maps APIs and posts a commute briefing (traffic, weather and a map) to Discord.</p>
+            <ul class="tags" style="--i:3"><li>n8n</li><li>Google APIs</li><li>Discord</li></ul>
+          </div>
+          <div class="case-in">
+            <figure class="case-media" style="--i:2">
+              <div class="case-frame"><img src="../../src/assets/images/work-to-home-1200.webp" width="1200" height="630" alt="Work-to-Home Forecast workflow" /></div>
+              <figcaption>The workflow and its Discord briefing</figcaption>
+            </figure>
+          </div>
+        </section>
+        <section class="case-sec">
+          <div class="case-sec-head">
+            <div><p class="hud-label">How it works</p><h2 class="cond">The flow</h2></div>
+            <p>Four steps from raw APIs to one Discord message.</p>
+          </div>
+          <ol class="case-steps">
+            <li class="case-step"><span class="cond case-step-num">01</span><div><h3 class="cond">Check the route</h3><p>Google Routes returns the drive home with current traffic.</p></div><span class="case-pill">Routes API</span></li>
+            <li class="case-step"><span class="cond case-step-num">02</span><div><h3 class="cond">Check the weather</h3><p>The Weather API adds conditions for the trip.</p></div><span class="case-pill">Weather API</span></li>
+            <li class="case-step"><span class="cond case-step-num">03</span><div><h3 class="cond">Draw the map</h3><p>Static Maps renders the route as an image.</p></div><span class="case-pill">Static Maps</span></li>
+            <li class="case-step"><span class="cond case-step-num">04</span><div><h3 class="cond">Notify</h3><p>Everything lands in one Discord message.</p></div><span class="case-pill">Discord</span></li>
+          </ol>
+        </section>
+        <section class="case-sec">
+          <div class="case-sec-head">
+            <div><p class="hud-label">Built with</p><h2 class="cond">Stack</h2></div>
+            <p>The services behind the automation.</p>
+          </div>
+          <ul class="case-stack"><li>n8n</li><li>Google Routes</li><li>Google Weather</li><li>Google Static Maps</li><li>Discord</li></ul>
+        </section>
+      </main>
+      <section class="case-end tone tone-ink" style="--accent:#ffd43b">
+        <div class="case-wrap">
+          <div><h2 class="cond">Next project</h2><p>Thrombolaize, stroke detection with AI on mobile.</p></div>
+          <div class="case-actions">
+            <a class="cut-btn is-solid" href="../thrombolaize/">Thrombolaize <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg></a>
+            <a class="cut-btn" href="../../#contact">Get in touch</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

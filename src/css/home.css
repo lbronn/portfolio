@@ -250,8 +250,48 @@
 .role-stack li { border-color: color-mix(in srgb, var(--accent) 40%, transparent); }
 .role-period { padding-top: 16px; border-top: 1px solid var(--rule); color: var(--ink-soft); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
 
+/* ---------- Off the clock + coverflow gallery ---------- */
+.paper .offclock { padding: clamp(22px, 3vw, 34px) 0; }
+.offclock-head { display: grid; grid-template-columns: auto 1fr auto; align-items: start; gap: 24px; padding: 0 clamp(20px, 3vw, 34px); }
+.offclock-avatar { width: 80px; height: 80px; border: 1px solid var(--rule); border-radius: 50%; }
+.offclock-head h3 { margin: 6px 0 8px; font-size: 48px; }
+.offclock-desc { margin-bottom: 14px; color: var(--ink-soft); }
+.offclock-links { display: flex; gap: 8px; }
+.gallery { display: flex; gap: 20px; margin-top: 28px; padding: 16px clamp(20px, 3vw, 34px); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; perspective: 1200px; }
+.gallery::-webkit-scrollbar { display: none; }
+.gallery-item { flex: 0 0 clamp(220px, 26vw, 320px); scroll-snap-align: center; }
+.gallery-item button { display: block; width: 100%; aspect-ratio: 4 / 5; background: #0b10260f; clip-path: var(--cut-md); }
+.gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s var(--ease); }
+.gallery-item button:hover img { transform: scale(1.04); }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* cards rotate in 3D as they cross the horizontal scrollport */
+    .gallery-item { animation: coverflow linear both; animation-timeline: view(inline); }
+    @keyframes coverflow {
+      0% { opacity: 0.6; transform: rotateY(38deg) scale(0.88); }
+      50% { opacity: 1; transform: rotateY(0) scale(1); }
+      100% { opacity: 0.6; transform: rotateY(-38deg) scale(0.88); }
+    }
+  }
+}
+
+/* ---------- Lightbox (native <dialog>) ---------- */
+.lightbox { width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 64px 16px; border: 0; background: #0b1026eb; color: inherit; }
+.lightbox[open] { display: grid; place-items: center; animation: fade 0.25s; }
+.lightbox::backdrop { background: transparent; }
+body:has(.lightbox[open]) { overflow: hidden; }
+.lightbox img { width: auto; height: auto; max-width: min(92vw, 900px); max-height: 86svh; animation: pop 0.35s var(--ease); }
+.lb-btn { position: absolute; display: grid; place-items: center; width: 48px; height: 48px; border: 1px solid #eef3f480; color: var(--paper); font-size: 22px; clip-path: var(--cut); transition: background-color 0.2s, color 0.2s; }
+.lb-btn[hidden] { display: none; }
+.lb-btn:hover { background: var(--yellow); color: var(--ink); border-color: var(--yellow); }
+.lb-close { top: 16px; right: 16px; }
+.lb-prev { top: 50%; left: 16px; translate: 0 -50%; }
+.lb-next { top: 50%; right: 16px; translate: 0 -50%; }
+
 /* ---------- Home breakpoints (keep last) ---------- */
 @media (width <= 1024px) {
+  .offclock-head { grid-template-columns: auto 1fr; }
+  .offclock-links { grid-column: 2; }
   .about, .contact { grid-template-columns: 1fr; }
   .skills-grid { grid-template-columns: 1fr 1fr; }
   .skills-grid > :last-child { grid-column: 1 / -1; }
@@ -264,6 +304,8 @@
   .role-screen { padding: 48px 24px 40px; }
 }
 @media (width <= 768px) {
+  .offclock-head { grid-template-columns: 1fr; }
+  .offclock-links { grid-column: auto; }
   .sec-head { flex-direction: column; align-items: start; gap: 8px; }
   .sec-meta { text-align: left; }
   .facts, .skills-grid { grid-template-columns: 1fr; }
@@ -273,6 +315,9 @@
   .contact-list .icon { grid-area: 1 / 2 / span 2; }
 }
 @media (width <= 560px) {
+  .offclock-head h3 { font-size: 36px; }
+  .gallery { gap: 14px; }
+  .gallery-item { flex-basis: 74vw; }
   .section { padding-top: clamp(56px, 14vw, 80px); }
   .tone { padding-bottom: clamp(56px, 14vw, 80px); }
   .sec-head { margin-bottom: 24px; }

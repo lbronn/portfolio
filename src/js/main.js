@@ -1,4 +1,4 @@
-import { contourPaths, navStep, sparkPoints, wrapIndex } from './lib.js';
+import { clampIndex, contourPaths, navStep, sparkPoints, wrapIndex } from './lib.js';
 
 /** Fill every <svg data-contours> with the same topographic rings (generated once). */
 function initContours() {
@@ -162,6 +162,39 @@ function initCarousels() {
   });
 }
 
+/** Gallery lightbox on a native <dialog>: Esc, focus trap and focus return come from the platform. */
+function initLightbox() {
+  const dialog = document.querySelector('dialog.lightbox');
+  const items = [...document.querySelectorAll('[data-lightbox-src]')];
+  if (!dialog || !items.length) return;
+  const img = dialog.querySelector('img');
+  const prev = dialog.querySelector('.lb-prev');
+  const next = dialog.querySelector('.lb-next');
+  let index = 0;
+
+  const show = (i) => {
+    index = i;
+    img.src = items[i].dataset.lightboxSrc;
+    img.alt = items[i].dataset.lightboxAlt || '';
+    img.style.animation = 'none';
+    void img.offsetWidth; // restart the pop animation for each photo
+    img.style.animation = '';
+    prev.hidden = i === 0;
+    next.hidden = i === items.length - 1;
+  };
+  const step = (delta) => show(clampIndex(index, delta, items.length));
+
+  items.forEach((item, i) => item.addEventListener('click', () => { show(i); dialog.showModal(); }));
+  prev.addEventListener('click', () => step(-1));
+  next.addEventListener('click', () => step(1));
+  dialog.querySelector('.lb-close').addEventListener('click', () => dialog.close());
+  dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); }); // click on the dark area
+  dialog.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') step(1);
+    if (e.key === 'ArrowLeft') step(-1);
+  });
+}
+
 // --- boot (module scripts run after the DOM is parsed) ---
 initReveal();
 initContours();
@@ -169,3 +202,4 @@ initNav();
 initSpark();
 initHero();
 initCarousels();
+initLightbox();

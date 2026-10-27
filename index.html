@@ -351,7 +351,31 @@
               </article>
             </li>
           </ul>
-          <!-- OFFCLOCK -->
+          <div class="sub-head" data-reveal>
+            <p class="hud-label">Off the clock</p>
+            <h3 class="cond">Beyond the code</h3>
+            <p class="sub-sub">Basketball, games, coffee and TV</p>
+          </div>
+          <div class="hud offclock" data-reveal>
+            <div class="offclock-head">
+              <img class="offclock-avatar" src="./src/assets/images/avatar-160.webp" width="80" height="80" alt="" loading="lazy" />
+              <div>
+                <p class="hud-label">Personal</p>
+                <h3 class="cond">Off the clock</h3>
+                <p class="offclock-desc">When I'm not debugging or designing systems, I'm on the basketball court, deep in a video game or a TV series, or hopping between coffee shops around the city.</p>
+                <ul class="tags"><li>Basketball</li><li>Video games</li><li>Coffee hopping</li><li>TV series</li></ul>
+              </div>
+              <ul class="offclock-links">
+                <li><a class="cut-btn" href="https://www.instagram.com/lbroooooonn/" target="_blank" rel="noopener noreferrer">Instagram <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg></a></li>
+              </ul>
+            </div>
+            <ul class="gallery" aria-label="Off-the-clock photos">
+              <li class="gallery-item"><button type="button" class="burn" data-lightbox-src="./src/assets/images/offclock-1-1080.webp" data-lightbox-alt="Illustration tile: Basketball" aria-label="Open photo 1 of 4"><img src="./src/assets/images/offclock-1-480.webp" srcset="./src/assets/images/offclock-1-480.webp 480w, ./src/assets/images/offclock-1-1080.webp 1080w" sizes="320px" width="1080" height="1350" alt="" loading="lazy" decoding="async" /></button></li>
+              <li class="gallery-item"><button type="button" class="burn" data-lightbox-src="./src/assets/images/offclock-2-1080.webp" data-lightbox-alt="Illustration tile: Video games" aria-label="Open photo 2 of 4"><img src="./src/assets/images/offclock-2-480.webp" srcset="./src/assets/images/offclock-2-480.webp 480w, ./src/assets/images/offclock-2-1080.webp 1080w" sizes="320px" width="1080" height="1350" alt="" loading="lazy" decoding="async" /></button></li>
+              <li class="gallery-item"><button type="button" class="burn" data-lightbox-src="./src/assets/images/offclock-3-1080.webp" data-lightbox-alt="Illustration tile: Coffee hopping" aria-label="Open photo 3 of 4"><img src="./src/assets/images/offclock-3-480.webp" srcset="./src/assets/images/offclock-3-480.webp 480w, ./src/assets/images/offclock-3-1080.webp 1080w" sizes="320px" width="1080" height="1350" alt="" loading="lazy" decoding="async" /></button></li>
+              <li class="gallery-item"><button type="button" class="burn" data-lightbox-src="./src/assets/images/offclock-4-1080.webp" data-lightbox-alt="Illustration tile: TV series" aria-label="Open photo 4 of 4"><img src="./src/assets/images/offclock-4-480.webp" srcset="./src/assets/images/offclock-4-480.webp 480w, ./src/assets/images/offclock-4-1080.webp 1080w" sizes="320px" width="1080" height="1350" alt="" loading="lazy" decoding="async" /></button></li>
+            </ul>
+          </div>
         </section>
         <section id="contact" class="section contact tone tone-ink" data-reveal-style="scan">
           <svg class="contours" data-contours viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
@@ -372,6 +396,11 @@
         </footer>
       </div>
     </main>
-    <!-- LIGHTBOX -->
+    <dialog class="lightbox" aria-label="Photo viewer">
+      <button type="button" class="lb-btn lb-close" aria-label="Close"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg></button>
+      <button type="button" class="lb-btn lb-prev" aria-label="Previous photo"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7" /></svg></button>
+      <button type="button" class="lb-btn lb-next" aria-label="Next photo"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg></button>
+      <img alt="" />
+    </dialog>
   </body>
 </html>

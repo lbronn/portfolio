@@ -181,6 +181,8 @@ function initLightbox() {
     img.style.animation = '';
     prev.hidden = i === 0;
     next.hidden = i === items.length - 1;
+    // hiding the focused button would drop focus to <body>, outside the dialog
+    if ((prev.hidden && document.activeElement === prev) || (next.hidden && document.activeElement === next)) dialog.querySelector('.lb-close').focus();
   };
   const step = (delta) => show(clampIndex(index, delta, items.length));
 

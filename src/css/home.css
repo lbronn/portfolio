@@ -214,7 +214,7 @@
 .sub-head .hud-label { order: -1; width: 100%; }
 .sub-sub { color: var(--ink-soft); font-size: 13px; }
 .roles { display: grid; gap: 24px; margin-top: 20px; }
-.role { display: flex; }
+.role { display: flex; padding-top: 4px; margin-top: -4px; } /* headroom so the hover lift is not clipped by the scan-reveal overflow: clip */
 .paper .role-card { --c: var(--accent); --fill: color-mix(in srgb, var(--paper) 90%, transparent); display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr); width: 100%; padding: 0; overflow: hidden; transition: translate 0.4s var(--ease), background-size 0.35s var(--ease); }
 .role:hover .role-card { --b: 22px; translate: 0 -4px; }
 .role-screen { position: relative; display: grid; place-items: center; padding: 56px clamp(24px, 4vw, 56px); }
@@ -262,7 +262,8 @@
 .gallery-item { flex: 0 0 clamp(220px, 26vw, 320px); scroll-snap-align: center; }
 .gallery-item button { display: block; width: 100%; aspect-ratio: 4 / 5; background: #0b10260f; clip-path: var(--cut-md); }
 .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s var(--ease); }
-.gallery-item button:hover img { transform: scale(1.04); }
+.gallery-item button:hover img, .gallery-item button:focus-visible img { transform: scale(1.04); }
+.gallery-item button:focus-visible, .lb-btn:focus-visible { outline-offset: -4px; } /* clip-path would clip an outset ring */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     /* cards rotate in 3D as they cross the horizontal scrollport */
@@ -283,7 +284,7 @@ body:has(.lightbox[open]) { overflow: hidden; }
 .lightbox img { width: auto; height: auto; max-width: min(92vw, 900px); max-height: 86svh; animation: pop 0.35s var(--ease); }
 .lb-btn { position: absolute; display: grid; place-items: center; width: 48px; height: 48px; border: 1px solid #eef3f480; color: var(--paper); font-size: 22px; clip-path: var(--cut); transition: background-color 0.2s, color 0.2s; }
 .lb-btn[hidden] { display: none; }
-.lb-btn:hover { background: var(--yellow); color: var(--ink); border-color: var(--yellow); }
+.lb-btn:hover, .lb-btn:focus-visible { background: var(--yellow); color: var(--ink); border-color: var(--yellow); }
 .lb-close { top: 16px; right: 16px; }
 .lb-prev { top: 50%; left: 16px; translate: 0 -50%; }
 .lb-next { top: 50%; right: 16px; translate: 0 -50%; }

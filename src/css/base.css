@@ -79,6 +79,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 /* Chamfered button (top-left + bottom-right corners cut 10px) */
 .cut-btn { display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0; padding: 11px 18px; border: 1px solid var(--teal); color: var(--teal); background: color-mix(in srgb, var(--paper) 85%, transparent); clip-path: var(--cut); font-size: 13px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; transition: background-color 0.2s, color 0.2s; }
 .cut-btn:hover { background: var(--teal); color: var(--paper); }
+.cut-btn:focus-visible { outline-offset: -4px; } /* clip-path would clip an outset ring */
 .cut-btn .icon { width: 14px; height: 14px; }
 .cut-btn.is-solid { background: var(--teal); color: var(--paper); }
 .cut-btn.is-solid:hover { background: none; color: var(--teal); }

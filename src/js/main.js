@@ -66,7 +66,7 @@ function initHero() {
   const title = btn.querySelector('.hero-switch-title');
   let mode = 'intro';
   let layer = 'photo';
-  let reveal = null; // set by Task 5
+  let reveal = null; // set once the WebGL boot succeeds
 
   const setMode = (next) => {
     portrait.classList.replace(`is-${mode}`, `is-${next}`);
@@ -83,8 +83,30 @@ function initHero() {
     if (mode === 'intro' && !reveal) setMode('static');
   });
 
-  // Task 5 replaces this line with the WebGL boot; until then fall back after first paint.
-  requestAnimationFrame(() => setMode('static'));
+  const altImg = portrait.querySelector('.layer-alt');
+  const photoImg = portrait.querySelector('.layer-photo');
+  const decoded = async (img) => {
+    const copy = new Image();
+    copy.src = img.currentSrc || img.src;
+    await copy.decode();
+    return copy;
+  };
+  const boot = async () => {
+    try {
+      const [photo, alt, { mountPortraitReveal }] = await Promise.all([decoded(photoImg), decoded(altImg), import('./portrait-reveal.js')]);
+      reveal = mountPortraitReveal(portrait.querySelector('canvas'), photo, alt, {
+        reducedMotion: reducedMotion(),
+        onLost: () => { reveal = null; setMode('static'); },
+      });
+      reveal.show(layer);
+      setMode('webgl');
+    } catch (err) {
+      console.warn('[hero] WebGL portrait unavailable, using static crossfade:', err);
+      setMode('static');
+    }
+  };
+  if ('requestIdleCallback' in window) requestIdleCallback(boot, { timeout: 800 });
+  else setTimeout(boot, 200);
 }
 
 // --- boot (module scripts run after the DOM is parsed) ---

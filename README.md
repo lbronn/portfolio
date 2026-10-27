@@ -1,19 +1,24 @@
-# Personal Portfolio
+# Le Bronn Samson: Portfolio
 
-A minimalistic, modern, and responsive personal portfolio website built with **HTML**, **Tailwind CSS**, and **Vanilla JavaScript**.
+Static portfolio: HTML, CSS and vanilla JS ES modules with a raw WebGL hero. No build step.
 
-## Features
+## Run locally
 
-- **Modern Design**: Clean aesthetic with a focus on typography and whitespace.
-- **Dark Mode**: Fully supported dark theme that persists user preference.
-- **Responsive**: Mobile-first layout that looks great on all devices.
-- **Animations**: Subtle fade-in animations on scroll.
-- **Scroll-to-Top**: Convenient navigation helper for long pages.
+    npm run dev      # python3 -m http.server 5173 → http://localhost:5173
+    npm test         # node:test suite for src/js/lib.js
 
-## Tech Stack
+## Structure
 
-- **HTML5**: Semantic markup.
-- **Tailwind CSS**: Utility-first CSS framework for styling.
-- **JavaScript**: For interactive elements (theme toggle, mobile menu, scroll observer).
-- **Phosphor Icons**: Beautiful, consistent icon set.
-- **Google Fonts**: Montserrat font family.
+- `index.html`: home page; `project/<slug>/index.html`: case studies
+- `src/css/base.css`: tokens + shared primitives; `home.css`: home page; `case.css`: case studies
+- `src/js/main.js`: DOM wiring (one null-safe init per feature)
+- `src/js/lib.js`: pure helpers (tested)
+- `src/js/portrait-reveal.js`: WebGL burn/trail portrait (lazy-loaded)
+
+## Calibrating the hero portrait
+
+If the photo and render don't line up, change `photoOffset` in `initHero()` (`src/js/main.js`)
+and `.hero-portrait .layer-photo { transform: translateY(...) }` in `home.css` together
+(0.008 = 0.8%).
+
+Design inspired by rinlayheang.me.

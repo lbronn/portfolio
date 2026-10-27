@@ -109,7 +109,22 @@ function initHero() {
   else setTimeout(boot, 200);
 }
 
+/** Adds .is-visible as [data-reveal] elements enter the viewport (CSS does the animation). */
+function initReveal() {
+  window.__revealBooted = true; // tells the head-script safety net that JS is alive
+  if (!document.documentElement.classList.contains('reveal-ready')) return; // reduced motion / no IO / safety net fired
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      io.unobserve(entry.target);
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+  document.querySelectorAll('[data-reveal]:not(.is-visible)').forEach((el) => io.observe(el));
+}
+
 // --- boot (module scripts run after the DOM is parsed) ---
+initReveal();
 initContours();
 initNav();
 initSpark();

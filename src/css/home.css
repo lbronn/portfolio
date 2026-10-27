@@ -133,3 +133,50 @@
   .hero-portrait { width: min(100%, 40.7112svh); }
   .hero-panels { gap: 8px; }
 }
+
+/* ---------- Sections ---------- */
+.section { position: relative; isolation: isolate; max-width: var(--max); margin: 0 auto; padding: clamp(80px, 10vw, 130px) var(--gutter) 0; }
+.sec-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: clamp(32px, 4vw, 48px); }
+.sec-title { font-size: clamp(56px, 8vw, 120px); }
+.sec-meta { padding-bottom: 6px; text-align: right; }
+.sec-sub { color: var(--ink-soft); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+/* ---------- About ---------- */
+.about { display: grid; grid-template-columns: 1.1fr 1fr; align-items: start; gap: clamp(32px, 6vw, 90px); }
+.about-text p { max-width: 32em; font-size: 20px; line-height: 1.55; }
+.about-text p + p { margin-top: 16px; color: var(--ink-soft); }
+.facts { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.facts dd { margin-top: 6px; font-weight: 500; }
+
+/* ---------- Contact ---------- */
+.contact { display: grid; grid-template-columns: 1fr 1fr; align-items: end; gap: clamp(40px, 6vw, 96px); padding-bottom: clamp(80px, 10vw, 130px); }
+.contact-title { font-size: clamp(80px, 11vw, 170px); }
+.contact-sub { margin-top: 20px; color: var(--ink-soft); font-size: 18px; }
+.contact-list { display: grid; gap: 18px; }
+.paper .contact-list a { display: grid; grid-template-columns: 7em 1fr auto; align-items: center; gap: 16px; padding: 16px 20px; }
+.contact-value { overflow-wrap: anywhere; }
+.contact-list .icon { width: 18px; height: 18px; transition: transform 0.3s var(--ease), color 0.2s; }
+.contact-list a:hover .icon { color: var(--teal); transform: translate(2px, -2px); }
+
+/* ---------- Home breakpoints (keep last) ---------- */
+@media (width <= 1024px) {
+  .about, .contact { grid-template-columns: 1fr; }
+}
+@media (width <= 768px) {
+  .sec-head { flex-direction: column; align-items: start; gap: 8px; }
+  .sec-meta { text-align: left; }
+  .facts { grid-template-columns: 1fr; }
+  .paper .contact-list a { grid-template-columns: 1fr auto; gap: 2px 12px; }
+  .contact-list .hud-label, .contact-value { grid-column: 1; }
+  .contact-list .icon { grid-area: 1 / 2 / span 2; }
+}
+@media (width <= 560px) {
+  .section { padding-top: clamp(56px, 14vw, 80px); }
+  .tone { padding-bottom: clamp(56px, 14vw, 80px); }
+  .sec-head { margin-bottom: 24px; }
+  .sec-title { font-size: clamp(44px, 14vw, 72px); }
+  .about-text p { font-size: 17px; }
+  .contact-title { font-size: clamp(64px, 20vw, 110px); }
+  .contact-sub { font-size: 16px; }
+  .footer { flex-direction: column; align-items: start; gap: 8px; }
+}

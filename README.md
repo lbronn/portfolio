@@ -1,4 +1,4 @@
-# Le Bronn Samson: Portfolio
+# Bronn Samson: Portfolio
 
 Static portfolio: HTML, CSS and vanilla JS ES modules with a raw WebGL hero. No build step.
 

@@ -2,7 +2,7 @@
   "name": "portfolio",
   "version": "5.0.0",
   "private": true,
-  "description": "Le Bronn Samson's portfolio: static HTML, CSS and WebGL.",
+  "description": "Bronn Samson's portfolio: static HTML, CSS and WebGL.",
   "type": "module",
   "scripts": {
     "dev": "python3 -m http.server 5173",

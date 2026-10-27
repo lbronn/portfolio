@@ -1,5 +1,5 @@
 /* Case-study pages. Uses base.css tokens; --accent is set per page on .case */
-.case { --accent: var(--teal); position: relative; isolation: isolate; min-height: 100svh; overflow-x: clip; }
+.case { --accent: var(--brand); position: relative; isolation: isolate; min-height: 100svh; overflow-x: clip; }
 .case .contours { position: fixed; }
 .case-wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
 .case-bar { position: sticky; top: 0; z-index: 50; border-bottom: 1px solid var(--rule); background: color-mix(in srgb, var(--paper) 82%, transparent); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }

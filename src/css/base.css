@@ -4,8 +4,8 @@
   --paper: #eef3f4;
   --ink: #0b1026;
   --ink-soft: #4b5575;
-  --teal: #0a7a8c;
-  --yellow: #ffd43b;
+  --brand: #0063ad;
+  --sky: #29a3ff;
   --rule: #0b102624;
   --display: "Bricolage Grotesque", system-ui, sans-serif;
   --body: "Onest", system-ui, sans-serif;
@@ -26,7 +26,7 @@ img { display: block; max-width: 100%; height: auto; }
 ul { list-style: none; }
 a { color: inherit; }
 button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
-:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -70,33 +70,33 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 .hud:nth-child(2) { animation-delay: 0.1s; }
 .hud:nth-child(3) { animation-delay: 0.2s; }
-.hud-link:hover { --c: var(--teal); }
+.hud-link:hover { --c: var(--brand); }
 /* Cards on the paper flow: translucent fill, brackets grow + recolour on hover */
 .paper .hud { --fill: color-mix(in srgb, var(--paper) 78%, transparent); padding: 20px 22px; animation: none; transition: background-size 0.35s var(--ease); }
-.paper .hud:hover { --c: var(--accent, var(--teal)); --b: 22px; }
-.hud-label { color: var(--teal); font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+.paper .hud:hover { --c: var(--accent, var(--brand)); --b: 22px; }
+.hud-label { color: var(--brand); font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
 
 /* Chamfered button (top-left + bottom-right corners cut 10px) */
-.cut-btn { display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0; padding: 11px 18px; border: 1px solid var(--teal); color: var(--teal); background: color-mix(in srgb, var(--paper) 85%, transparent); clip-path: var(--cut); font-size: 13px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; transition: background-color 0.2s, color 0.2s; }
-.cut-btn:hover { background: var(--teal); color: var(--paper); }
+.cut-btn { display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0; padding: 11px 18px; border: 1px solid var(--brand); color: var(--brand); background: color-mix(in srgb, var(--paper) 85%, transparent); clip-path: var(--cut); font-size: 13px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; transition: background-color 0.2s, color 0.2s; }
+.cut-btn:hover { background: var(--brand); color: var(--paper); }
 .cut-btn:focus-visible { outline-color: currentColor; outline-offset: -4px; } /* clip-path would clip an outset ring; currentColor contrasts with the fill in every state */
 .cut-btn .icon { width: 14px; height: 14px; }
-.cut-btn.is-solid { background: var(--teal); color: var(--paper); }
-.cut-btn.is-solid:hover { background: none; color: var(--teal); }
+.cut-btn.is-solid { background: var(--brand); color: var(--paper); }
+.cut-btn.is-solid:hover { background: none; color: var(--brand); }
 
 .tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .tags li { padding: 3px 10px; border: 1px solid var(--rule); color: var(--ink-soft); font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; }
 
-/* Yellow light sweep across media on hover */
+/* Sky-blue light sweep across media on hover */
 .burn { position: relative; overflow: hidden; }
-.burn::after { content: ""; position: absolute; top: -10%; bottom: -10%; left: -90px; width: 70px; pointer-events: none; mix-blend-mode: screen; transform: skew(-14deg); background: linear-gradient(90deg, #0000, #ffd43b00 20%, #ffd43be6 50%, #ffd43b00 80%, #0000); }
+.burn::after { content: ""; position: absolute; top: -10%; bottom: -10%; left: -90px; width: 70px; pointer-events: none; mix-blend-mode: screen; transform: skew(-14deg); background: linear-gradient(90deg, #0000, #29a3ff00 20%, #29a3ffe6 50%, #29a3ff00 80%, #0000); }
 .burn:hover::after, .project:hover .burn::after { animation: burn 0.9s var(--ease) forwards; }
 
 .paper { position: relative; background: var(--paper); border-top: 1px solid var(--rule); }
 
 /* Full-bleed colour band from a max-width element: spread shadow paints the sides, clip-path keeps it horizontal */
 .tone { color: var(--ink); background: var(--paper); box-shadow: 0 0 0 100vmax var(--paper); clip-path: inset(0 -100vmax); padding-bottom: clamp(80px, 10vw, 130px); }
-.tone-ink { --paper: #0b1026; --ink: #eef3f4; --ink-soft: #aab3cf; --teal: #ffd43b; --accent: #ffd43b; --rule: #eef3f433; }
+.tone-ink { --paper: #0b1026; --ink: #eef3f4; --ink-soft: #aab3cf; --brand: #29a3ff; --accent: #29a3ff; --rule: #eef3f433; }
 .tone-ink .contours path { stroke-opacity: 0.08; }
 .tone .cut-btn:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 .tone-ink .cut-btn:hover { background: var(--accent); color: #0b1026; border-color: var(--accent); }
@@ -107,13 +107,13 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   transition: opacity 0.9s var(--ease) var(--d), translate 0.9s var(--ease) var(--d), background-size 0.35s var(--ease);
 }
 .reveal-ready [data-reveal]:not(.is-visible) { opacity: 0; translate: 0 36px; }
-/* "scan" sections: a paper-coloured sheet with a teal leading edge slides down off each element */
+/* "scan" sections: a paper-coloured sheet with a brand-colour leading edge slides down off each element */
 .reveal-ready [data-reveal-style="scan"] [data-reveal]:not([data-reveal="wipe"]) { position: relative; }
 .reveal-ready [data-reveal-style="scan"] [data-reveal]:not([data-reveal="wipe"], :focus-within) { overflow: clip; }
 .reveal-ready [data-reveal-style="scan"] [data-reveal]:not(.is-visible) { opacity: 1; translate: none; }
 .reveal-ready [data-reveal-style="scan"] [data-reveal]:not([data-reveal="wipe"])::after {
   content: ""; position: absolute; top: -60px; left: 0; right: 0; z-index: 3; height: calc(100% + 60px); pointer-events: none;
-  background: linear-gradient(180deg, transparent 0, color-mix(in srgb, var(--teal) 25%, transparent) 56px, var(--teal) 58px, var(--paper) 60px);
+  background: linear-gradient(180deg, transparent 0, color-mix(in srgb, var(--brand) 25%, transparent) 56px, var(--brand) 58px, var(--paper) 60px);
   transition: translate 1.2s var(--ease) var(--d);
 }
 .reveal-ready [data-reveal-style="scan"] [data-reveal].is-visible::after { translate: 0 100%; }

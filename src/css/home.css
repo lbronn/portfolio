@@ -262,7 +262,7 @@
 .gallery-item { flex: 0 0 clamp(220px, 26vw, 320px); scroll-snap-align: center; }
 .gallery-item button { display: block; width: 100%; aspect-ratio: 4 / 5; background: #0b10260f; clip-path: var(--cut-md); }
 .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s var(--ease); }
-.gallery-item button:hover img, .gallery-item button:focus-visible img { transform: scale(1.04); }
+.gallery-item button:hover img { transform: scale(1.04); }
 .gallery-item button:focus-visible, .lb-btn:focus-visible { outline-offset: -4px; } /* clip-path would clip an outset ring */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {

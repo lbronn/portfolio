@@ -83,6 +83,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .cut-btn .icon { width: 14px; height: 14px; }
 .cut-btn.is-solid { background: var(--teal); color: var(--paper); }
 .cut-btn.is-solid:hover { background: none; color: var(--teal); }
+.cut-btn.is-solid:focus-visible { outline-color: var(--paper); } /* teal ring on a teal fill would vanish */
 
 .tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .tags li { padding: 3px 10px; border: 1px solid var(--rule); color: var(--ink-soft); font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; }

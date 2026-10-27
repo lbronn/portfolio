@@ -195,6 +195,19 @@
 .logos li:hover { translate: 0 -2px; border-color: var(--teal); box-shadow: 0 10px 20px -14px #0b102680; }
 .logos li:hover img { scale: 1.15; }
 
+/* ---------- Projects ---------- */
+.projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 48px 28px; }
+.project-media { aspect-ratio: 1200 / 630; background: #0b10260f; clip-path: var(--cut-lg); }
+.project-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s var(--ease); }
+.project:hover .project-media img { transform: scale(1.04); }
+.project-row { margin-top: 16px; }
+.project h3 { margin-top: 6px; font-size: clamp(30px, 3vw, 40px); }
+.project-desc { max-width: 36em; margin-top: 8px; color: var(--ink-soft); font-size: 15px; }
+.project-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.project-btn { color: #fff; background-color: #0a7a8c; border-color: #0a7a8c; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+.project-btn:hover, .project-btn:focus-visible { color: #fff; background-color: #0d96ab; border-color: #0d96ab; transform: translateY(-3px); box-shadow: 0 6px 16px #0a7a8c66; }
+.project-btn:active { transform: translateY(0); box-shadow: 0 2px 4px #0a7a8c66; }
+
 /* ---------- Home breakpoints (keep last) ---------- */
 @media (width <= 1024px) {
   .about, .contact { grid-template-columns: 1fr; }
@@ -209,6 +222,7 @@
   .sec-head { flex-direction: column; align-items: start; gap: 8px; }
   .sec-meta { text-align: left; }
   .facts, .skills-grid { grid-template-columns: 1fr; }
+  .projects-grid { grid-template-columns: 1fr; }
   .paper .contact-list a { grid-template-columns: 1fr auto; gap: 2px 12px; }
   .contact-list .hud-label, .contact-value { grid-column: 1; }
   .contact-list .icon { grid-area: 1 / 2 / span 2; }
@@ -222,6 +236,8 @@
   .contact-title { font-size: clamp(64px, 20vw, 110px); }
   .contact-sub { font-size: 16px; }
   .skill h3 { font-size: 30px; }
+  .projects-grid { gap: 36px 0; }
+  .project h3 { font-size: 28px; }
   .footer { flex-direction: column; align-items: start; gap: 8px; }
   .achievement-facts { grid-template-columns: 1fr 1fr; }
   .carousel-btn { opacity: 1; }

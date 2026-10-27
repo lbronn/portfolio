@@ -30,7 +30,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  *, ::before, ::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+  *, ::before, ::after { transition-duration: 0.01ms !important; transition-delay: 0s !important; animation-duration: 0.01ms !important; animation-delay: 0s !important; animation-iteration-count: 1 !important; }
 }
 
 .icon { width: 1em; height: 1em; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 2px; stroke-linecap: round; stroke-linejoin: round; }
@@ -79,11 +79,10 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 /* Chamfered button (top-left + bottom-right corners cut 10px) */
 .cut-btn { display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0; padding: 11px 18px; border: 1px solid var(--teal); color: var(--teal); background: color-mix(in srgb, var(--paper) 85%, transparent); clip-path: var(--cut); font-size: 13px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; transition: background-color 0.2s, color 0.2s; }
 .cut-btn:hover { background: var(--teal); color: var(--paper); }
-.cut-btn:focus-visible { outline-offset: -4px; } /* clip-path would clip an outset ring */
+.cut-btn:focus-visible { outline-color: currentColor; outline-offset: -4px; } /* clip-path would clip an outset ring; currentColor contrasts with the fill in every state */
 .cut-btn .icon { width: 14px; height: 14px; }
 .cut-btn.is-solid { background: var(--teal); color: var(--paper); }
 .cut-btn.is-solid:hover { background: none; color: var(--teal); }
-.cut-btn.is-solid:focus-visible { outline-color: var(--paper); } /* teal ring on a teal fill would vanish */
 
 .tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .tags li { padding: 3px 10px; border: 1px solid var(--rule); color: var(--ink-soft); font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; }

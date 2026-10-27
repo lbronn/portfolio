@@ -17,8 +17,9 @@ Static portfolio: HTML, CSS and vanilla JS ES modules with a raw WebGL hero. No 
 
 ## Calibrating the hero portrait
 
-If the photo and render don't line up, change `photoOffset` in `initHero()` (`src/js/main.js`)
-and `.hero-portrait .layer-photo { transform: translateY(...) }` in `home.css` together
-(0.008 = 0.8%).
+If the photo and render don't line up, change the `photoOffset` default of `mountPortraitReveal()`
+in `src/js/portrait-reveal.js` and keep it equal to
+`.hero-portrait .layer-photo { transform: translateY(...) }` in `src/css/home.css`
+(0.008 = 0.8%). Both are currently 0 because the photo and render share a crop.
 
 Design inspired by rinlayheang.me.

@@ -54,7 +54,7 @@
 .case-stack { display: flex; flex-wrap: wrap; gap: 8px; }
 .case-stack li { padding: 8px 14px; border: 1px solid var(--rule); background: color-mix(in srgb, var(--paper) 80%, transparent); font-size: 14px; font-weight: 500; }
 
-.case-end { margin-top: clamp(72px, 9vw, 128px); }
+.case-end { margin-top: clamp(72px, 9vw, 128px); padding-bottom: 0; }
 .case-end .case-wrap { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 32px; padding-top: clamp(56px, 7vw, 96px); padding-bottom: clamp(56px, 7vw, 96px); }
 .case-end h2 { font-size: clamp(56px, 8vw, 112px); }
 .case-end p { max-width: 30em; margin-top: 14px; color: var(--ink-soft); }

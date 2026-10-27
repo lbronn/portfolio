@@ -38,6 +38,7 @@ function initNav() {
 
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
+  nav.addEventListener('focusin', () => { hidden = false; nav.classList.remove('is-hidden'); });
   btn.addEventListener('click', () => setOpen(!nav.classList.contains('is-open')));
   nav.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
   window.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });

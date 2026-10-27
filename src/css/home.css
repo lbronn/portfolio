@@ -51,7 +51,7 @@
   .nav-end .nav-cta { display: none; }
   .nav-links-contact { display: block; }
   /* full-screen ink overlay: solid also when scrolled (.nav.is-scrolled > nav beats the desktop glass rule), unfocusable when closed */
-  .nav > nav, .nav.is-scrolled > nav { position: fixed; inset: 0; align-items: start; width: 100%; max-width: none; padding: 96px 24px calc(32px + env(safe-area-inset-bottom)); border: 0; border-radius: 0; background: #0b1026; color: #eef3f4; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.3s var(--ease), visibility 0s 0.3s; }
+  .nav > nav, .nav.is-scrolled > nav { position: fixed; inset: 0; align-items: start; width: 100%; max-width: none; padding: 96px 24px calc(32px + env(safe-area-inset-bottom)); border: 0; border-radius: 0; background: #0b1026; color: #eef3f4; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; overflow-y: auto; overscroll-behavior: contain; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.3s var(--ease), visibility 0s 0.3s; }
   .nav.is-open > nav { opacity: 1; visibility: visible; pointer-events: auto; transition-delay: 0s; }
   .nav-links { display: grid; align-content: start; gap: 6px; width: 100%; font-family: var(--display); font-variation-settings: "wdth" 75, "opsz" 96; font-size: clamp(34px, 11vw, 48px); font-weight: 800; line-height: 1; text-align: left; text-transform: uppercase; }
   .nav-links a { padding: 10px 0; border-radius: 0; }
@@ -76,8 +76,8 @@
 .hero-portrait { position: absolute; bottom: -40px; left: 50%; height: calc(100% - 64px); aspect-ratio: 946 / 883; transform: translate(-50%); animation: fade 1s both; }
 .hero-portrait img, .hero-portrait canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 .hero-portrait canvas { opacity: 0; transition: opacity 0.2s; }
-/* Calibration knob: keep equal to photoOffset in portrait-reveal.js (0.008 = 0.8%) */
-.hero-portrait .layer-photo { transform: translateY(0.8%); }
+/* Calibration knob: keep equal to photoOffset in portrait-reveal.js; 0 while photo and render share a crop */
+.hero-portrait .layer-photo { transform: translateY(0); }
 .hero-portrait.is-intro .layer-photo { opacity: 0; }
 .hero-portrait.is-static img { transition: opacity 0.6s; }
 .hero-portrait.is-static[data-layer="photo"] .layer-alt,
@@ -105,6 +105,7 @@
 .hero-cta-wrap { grid-column: 3; justify-self: end; }
 .hero-cta { display: inline-flex; align-items: center; gap: 10px; padding: 12px 22px; border: 1px solid var(--teal); color: var(--teal); background: #eef3f4d9; clip-path: var(--cut); font-size: 13px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; transition: background-color 0.2s, color 0.2s; }
 .hero-cta:hover { background: var(--teal); color: var(--paper); }
+.hero-cta:focus-visible { outline-color: currentColor; outline-offset: -4px; } /* clip-path clips the outset ring */
 
 @media (width <= 1024px) {
   .hero { display: flex; flex-direction: column; height: auto; min-height: 0; padding: 104px 0 28px; }
@@ -206,6 +207,7 @@
 .project-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
 .project-btn { color: #fff; background-color: #0a7a8c; border-color: #0a7a8c; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
 .project-btn:hover, .project-btn:focus-visible { color: #fff; background-color: #0d96ab; border-color: #0d96ab; transform: translateY(-3px); box-shadow: 0 6px 16px #0a7a8c66; }
+.project-btn:focus-visible { outline-color: currentColor; outline-offset: -4px; }
 .project-btn:active { transform: translateY(0); box-shadow: 0 2px 4px #0a7a8c66; }
 
 /* ---------- Work: sub-heads + role cards ---------- */

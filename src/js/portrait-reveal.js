@@ -91,7 +91,7 @@ function createTexture(gl, unit, source) {
   return texture;
 }
 
-export function mountPortraitReveal(canvas, photo, alt, { reducedMotion = false, glow = '#ffd43b', photoOffset = [0, 0.008], onLost } = {}) {
+export function mountPortraitReveal(canvas, photo, alt, { reducedMotion = false, glow = '#ffd43b', photoOffset = [0, 0], onLost } = {}) {
   const gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: true, antialias: false, powerPreference: 'low-power' });
   if (!gl) throw new Error('WebGL unavailable');
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -206,6 +206,7 @@ export function mountPortraitReveal(canvas, photo, alt, { reducedMotion = false,
   };
 
   window.addEventListener('pointermove', (e) => {
+    if (reducedMotion) return;
     rect = canvas.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width;
     const y = (e.clientY - rect.top) / rect.height;

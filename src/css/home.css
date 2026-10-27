@@ -82,7 +82,7 @@
 .hero-portrait.is-static img { transition: opacity 0.6s; }
 .hero-portrait.is-static[data-layer="photo"] .layer-alt,
 .hero-portrait.is-static[data-layer="alt"] .layer-photo { opacity: 0; }
-.hero-portrait.is-webgl img { visibility: hidden; }
+.hero-portrait.is-webgl img { visibility: hidden; transition: visibility 0s 0.2s; }
 .hero-portrait.is-webgl canvas { opacity: 1; }
 .hero-panels { position: absolute; top: 50%; right: var(--gutter); z-index: 3; display: grid; gap: 14px; width: 236px; transform: translateY(-50%); }
 .hud-title { margin-top: 8px; font-size: 14px; font-weight: 500; letter-spacing: 0.02em; text-transform: uppercase; }
@@ -135,7 +135,7 @@
 }
 
 /* ---------- Sections ---------- */
-.section { position: relative; isolation: isolate; max-width: var(--max); margin: 0 auto; padding: clamp(80px, 10vw, 130px) var(--gutter) 0; }
+.section { position: relative; isolation: isolate; max-width: var(--max); margin: 0 auto; padding-inline: var(--gutter); padding-top: clamp(80px, 10vw, 130px); }
 .sec-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: clamp(32px, 4vw, 48px); }
 .sec-title { font-size: clamp(56px, 8vw, 120px); }
 .sec-meta { padding-bottom: 6px; text-align: right; }

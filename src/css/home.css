@@ -158,9 +158,40 @@
 .contact-list .icon { width: 18px; height: 18px; transition: transform 0.3s var(--ease), color 0.2s; }
 .contact-list a:hover .icon { color: var(--teal); transform: translate(2px, -2px); }
 
+/* ---------- Achievements ---------- */
+.paper .achievement { --accent: var(--teal); display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: center; gap: clamp(24px, 4vw, 56px); padding: clamp(14px, 1.6vw, 20px); }
+.achievement-media { position: relative; }
+.carousel { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: #0b102614; clip-path: var(--cut-lg); }
+.carousel > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; scale: 1.06; transition: opacity 0.9s, scale 0s linear 0.9s; }
+/* current slide fades in and slowly settles from 1.06x (Ken Burns) */
+.carousel > img.is-current { opacity: 1; scale: 1; transition: opacity 0.9s, scale 6s ease-out; }
+.carousel-ui { position: absolute; left: 14px; right: 14px; bottom: 14px; z-index: 2; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.carousel-btn { display: grid; place-items: center; width: 38px; height: 38px; color: #fff; font-size: 18px; background: #0b102673; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); clip-path: var(--cut); opacity: 0; transition: opacity 0.3s, background-color 0.2s, color 0.2s; }
+.carousel:hover .carousel-btn, .carousel-btn:focus-visible { opacity: 1; }
+.carousel-btn:hover { background: var(--yellow); color: var(--ink); }
+.carousel-dots { display: flex; gap: 6px; margin: 0 auto; padding: 8px 10px; border-radius: 999px; background: #0b102666; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.carousel-dots button { width: 8px; height: 8px; border-radius: 999px; background: #ffffff80; transition: width 0.4s var(--ease), background-color 0.3s; }
+.carousel-dots button.is-current { width: 26px; background: var(--yellow); }
+.achievement-badge { position: absolute; top: -10px; right: 18px; z-index: 3; display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px 9px 12px; background: var(--yellow); color: var(--ink); clip-path: var(--cut); font: 800 18px/1 var(--display); font-variation-settings: "wdth" 75, "opsz" 96; text-transform: uppercase; box-shadow: 0 10px 24px -10px #0b102680; }
+.achievement-badge .icon { width: 18px; height: 18px; }
+.achievement-body { padding: clamp(8px, 1.5vw, 20px) clamp(8px, 1.5vw, 20px) clamp(8px, 1.5vw, 20px) 0; }
+.achievement-body h3 { margin: 12px 0 18px; font-size: clamp(56px, 7vw, 96px); }
+.achievement-body h3 span { display: block; margin-top: 8px; color: var(--teal); font-size: 0.42em; }
+.achievement-desc { max-width: 34em; color: var(--ink-soft); line-height: 1.6; }
+.achievement-facts { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; gap: 12px 28px; margin: 22px 0 18px; padding: 16px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.achievement-facts dt { color: var(--ink-soft); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+.achievement-facts dd { margin-top: 4px; font-size: 15px; font-weight: 500; }
+.achievement-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 22px; margin-top: 26px; }
+.text-link { padding-bottom: 2px; border-bottom: 1px solid var(--rule); color: var(--ink-soft); font-size: 13px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+.text-link:hover { color: var(--accent, var(--teal)); border-color: var(--accent, var(--teal)); }
+
 /* ---------- Home breakpoints (keep last) ---------- */
 @media (width <= 1024px) {
   .about, .contact { grid-template-columns: 1fr; }
+}
+@media (width <= 900px) {
+  .paper .achievement { grid-template-columns: 1fr; }
+  .achievement-body { padding: 8px; }
 }
 @media (width <= 768px) {
   .sec-head { flex-direction: column; align-items: start; gap: 8px; }
@@ -179,4 +210,6 @@
   .contact-title { font-size: clamp(64px, 20vw, 110px); }
   .contact-sub { font-size: 16px; }
   .footer { flex-direction: column; align-items: start; gap: 8px; }
+  .achievement-facts { grid-template-columns: 1fr 1fr; }
+  .carousel-btn { opacity: 1; }
 }

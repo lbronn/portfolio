@@ -1,4 +1,4 @@
-import { contourPaths, navStep, sparkPoints } from './lib.js';
+import { contourPaths, navStep, sparkPoints, wrapIndex } from './lib.js';
 
 /** Fill every <svg data-contours> with the same topographic rings (generated once). */
 function initContours() {
@@ -123,9 +123,49 @@ function initReveal() {
   document.querySelectorAll('[data-reveal]:not(.is-visible)').forEach((el) => io.observe(el));
 }
 
+/** Crossfading photo carousel: 4.5 s autoplay, paused on hover/focus, off for reduced motion. */
+function initCarousels() {
+  document.querySelectorAll('[data-carousel]').forEach((root) => {
+    const slides = [...root.querySelectorAll(':scope > img')];
+    if (slides.length <= 1) { root.querySelector('.carousel-ui')?.remove(); return; }
+    const dotsWrap = root.querySelector('.carousel-dots');
+    let index = 0;
+    let paused = false;
+    let timer = 0;
+
+    const schedule = () => {
+      clearTimeout(timer);
+      if (!paused && !reducedMotion()) timer = setTimeout(() => go(wrapIndex(index, 1, slides.length)), 4500);
+    };
+    const dots = slides.map((_, i) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.setAttribute('aria-label', `Photo ${i + 1} of ${slides.length}`);
+      dot.addEventListener('click', () => go(i));
+      dotsWrap.append(dot);
+      return dot;
+    });
+    function go(i) {
+      index = i;
+      slides.forEach((s, n) => { s.classList.toggle('is-current', n === i); s.setAttribute('aria-hidden', String(n !== i)); });
+      dots.forEach((d, n) => { d.classList.toggle('is-current', n === i); d.setAttribute('aria-current', String(n === i)); });
+      schedule();
+    }
+
+    root.querySelectorAll('[data-step]').forEach((btn) => btn.addEventListener('click', () => go(wrapIndex(index, Number(btn.dataset.step), slides.length))));
+    const pause = (value) => () => { paused = value; schedule(); };
+    root.addEventListener('mouseenter', pause(true));
+    root.addEventListener('mouseleave', pause(false));
+    root.addEventListener('focusin', pause(true));
+    root.addEventListener('focusout', pause(false));
+    go(0);
+  });
+}
+
 // --- boot (module scripts run after the DOM is parsed) ---
 initReveal();
 initContours();
 initNav();
 initSpark();
 initHero();
+initCarousels();

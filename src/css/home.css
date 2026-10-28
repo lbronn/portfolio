@@ -63,17 +63,20 @@
 
 /* ---------- Hero ---------- */
 .hero { --paper: #eef3f4; --ink-soft: #4b5575; --brand: #0063ad; position: relative; height: 100svh; min-height: 680px; overflow: hidden; background: var(--paper); color: var(--ink); }
-.hero-intro { position: absolute; top: 50%; left: var(--gutter); z-index: 3; transform: translateY(-42%); }
+/* min-content = the name's width, so long meta lines wrap before they reach the portrait */
+.hero-intro { position: absolute; top: 50%; left: var(--gutter); z-index: 3; transform: translateY(-42%); width: min-content; }
 .hero-name { font-family: var(--display); font-variation-settings: "wdth" 75, "opsz" 96; font-size: clamp(64px, 8.4vw, 136px); font-weight: 800; line-height: 0.84; letter-spacing: -0.01em; text-transform: uppercase; }
 .hero-name span { display: block; animation: rise 0.9s var(--ease) both; }
 .hero-name span + span { animation-delay: 80ms; }
 .hero-meta { letter-spacing: 0.05em; text-transform: uppercase; animation: rise 0.9s 0.2s var(--ease) both; }
-.hero-meta li { display: flex; align-items: center; gap: 10px; }
-.hero-meta .icon { width: 15px; height: 15px; color: var(--brand); }
+.hero-meta li { display: flex; align-items: flex-start; gap: 10px; }
+/* icon centred on the first line of a wrapped item (1.6 = inherited line-height) */
+.hero-meta .icon { width: 15px; height: 15px; margin-top: calc((1.6em - 15px) / 2); color: var(--brand); }
 .hero-meta-top { display: grid; gap: 8px; margin-top: 32px; font-size: 13px; }
 .hero-meta-bar { display: none; grid-column: 1 / -1; flex-wrap: wrap; align-items: center; gap: 8px 28px; padding-bottom: 14px; border-bottom: 1px solid #0b102624; font-size: 12px; }
 .hero-stage { position: absolute; inset: 0; z-index: 1; }
-.hero-portrait { position: absolute; bottom: -40px; left: 50%; height: calc(100% - 64px); aspect-ratio: 946 / 883; transform: translate(-50%); animation: fade 1s both; }
+/* 64vw cap: on tall, narrow desktop windows a purely height-driven portrait runs into the name column */
+.hero-portrait { position: absolute; bottom: -40px; left: 50%; height: min(calc(100% - 64px), 64vw); aspect-ratio: 946 / 883; transform: translate(-50%); animation: fade 1s both; }
 .hero-portrait img, .hero-portrait canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 .hero-portrait canvas { opacity: 0; transition: opacity 0.2s; }
 /* Calibration knob: keep equal to photoOffset in portrait-reveal.js; 0 while photo and aura share a crop */
@@ -110,7 +113,7 @@
 @media (width <= 1024px) {
   .hero { display: flex; flex-direction: column; height: auto; min-height: 0; padding: 104px 0 28px; }
   .hero-intro, .hero-panels, .hero-bar { position: relative; inset: auto; transform: none; }
-  .hero-intro { padding: 0 var(--gutter); }
+  .hero-intro { width: auto; padding: 0 var(--gutter); }
   .hero-stage { position: relative; margin-top: 12px; }
   .hero-portrait { position: relative; bottom: auto; left: auto; width: min(100%, 720px); height: auto; margin: 0 auto; transform: none; }
   .hero-panels { width: auto; padding: 24px var(--gutter) 0; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }

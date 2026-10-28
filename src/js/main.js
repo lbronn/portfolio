@@ -79,7 +79,7 @@ function initHero() {
     layer = layer === 'photo' ? 'alt' : 'photo';
     portrait.dataset.layer = layer;
     btn.setAttribute('aria-pressed', String(layer === 'alt'));
-    title.textContent = layer === 'photo' ? 'Show render' : 'Show photo';
+    title.textContent = layer === 'photo' ? 'Show aura' : 'Show photo';
     reveal?.show(layer);
     if (mode === 'intro' && !reveal) setMode('static');
   });

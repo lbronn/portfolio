@@ -14,9 +14,9 @@ precision highp float; // mediump breaks the sin-hash on many mobile GPUs
 uniform sampler2D uPhoto;
 uniform sampler2D uAlt;
 uniform sampler2D uTrail;
-uniform float uProgress;   // 0 = render fully shown, 1 = photo fully shown
+uniform float uProgress;   // 0 = aura fully shown, 1 = photo fully shown
 uniform vec3 uGlow;
-uniform vec2 uPhotoOffset; // calibration knob so the photo's eyes sit on the render's eyes
+uniform vec2 uPhotoOffset; // calibration knob so the photo's eyes sit on the aura's eyes
 varying vec2 vUv;
 
 float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
@@ -63,7 +63,7 @@ const TRAIL_WIDTH = 192;   // trail mask resolution; the noise hides the low res
 const TRAIL_FADE = 0.045;  // alpha erased per frame (~1.5 s trail life at 60 fps)
 const BRUSH_PX = 90;       // brush radius in CSS px
 const IDLE_FRAMES = 150;   // keep rendering after the last pointer move so the trail can fade out
-const BURN_SECONDS = 1.3;  // duration of a full photo <-> render burn
+const BURN_SECONDS = 1.3;  // duration of a full photo <-> aura burn
 
 const hexToRgb = (hex) => {
   const n = parseInt(hex.slice(1), 16);

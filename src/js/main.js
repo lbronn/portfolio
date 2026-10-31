@@ -198,18 +198,86 @@ function initLightbox() {
   });
 }
 
-/** Narrow screens scroll the roadmap sideways: start at the current stop (the figure), the past is a swipe back. No-op when it fits. */
-function initRoadmap() {
-  const road = document.querySelector('.roadmap');
-  if (road) road.scrollLeft = road.scrollWidth;
+/**
+ * Anchor jumps (nav, hero CTA, back-to-top) stay native; this only sets each section's scroll-margin so the jump
+ * centres it in the window. A section taller than the window can't be centred, so it starts at the top of the
+ * window (its 80-130px top padding keeps the heading clear of the nav).
+ */
+function initSectionCentering() {
+  const sections = document.querySelectorAll('main section[id]');
+  const fit = () => {
+    const pad = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0; // html's scroll-padding (for the nav) still applies; cancel it
+    sections.forEach((s) => { s.style.scrollMarginTop = `${Math.max(0, (innerHeight - s.offsetHeight) / 2) - pad}px`; });
+  };
+  fit();
+  new ResizeObserver(fit).observe(document.body); // fonts and images change section heights after load
+  window.addEventListener('resize', fit);
 }
 
-/** Back-to-top link: shown once the hero's bottom passes mid-viewport (About fills the lower half). Scrolling is native: href="#top" + CSS scroll-behavior. */
+/**
+ * Profession roadmap. The first time it's in view the figure hops stop 1 -> 2 -> 3 and the flags go up (CSS: .hop-ready, .is-hopping);
+ * narrow screens scroll the road along with him. Reduced motion: no hops, the road just opens on the current stop.
+ */
+function initRoadmap() {
+  const road = document.querySelector('.roadmap');
+  if (!road) return;
+  const stops = road.querySelectorAll('.stop');
+  const scrollToStop = (i, behavior) => road.scrollTo({ left: stops[i].offsetLeft - stops[0].offsetLeft, behavior }); // no-op when the road fits
+  if (reducedMotion() || !('IntersectionObserver' in window)) { scrollToStop(stops.length - 1, 'instant'); return; }
+  road.classList.add('hop-ready');
+  const io = new IntersectionObserver(([entry]) => {
+    if (!entry.isIntersecting) return;
+    io.disconnect();
+    road.classList.add('is-hopping');
+    setTimeout(() => scrollToStop(1, 'smooth'), 700); // take-offs in hop-x (home.css): 0.4s delay + 14% / 57% of 2.1s
+    setTimeout(() => scrollToStop(2, 'smooth'), 1600);
+  }, { threshold: 0.4 });
+  io.observe(road);
+}
+
+/** Click the figure: his free hand waves (CSS .is-waving) and "Hey!" shows in a live region for 2 s. */
+function initWalker() {
+  const btn = document.querySelector('.walker-btn');
+  if (!btn) return;
+  const bubble = btn.querySelector('.walker-bubble');
+  let timer = 0;
+  btn.addEventListener('click', () => {
+    btn.classList.remove('is-waving');
+    void btn.offsetWidth; // restart the wave on a repeat click
+    btn.classList.add('is-waving');
+    bubble.textContent = 'Hey!';
+    clearTimeout(timer);
+    timer = setTimeout(() => { btn.classList.remove('is-waving'); bubble.textContent = ''; }, 2000);
+  });
+}
+
+/**
+ * Back-to-top link: shown once the hero's bottom passes mid-viewport (About fills the lower half), and .on-ink while
+ * a dark band sits under it. Scrolling is native: href="#top" + CSS scroll-behavior.
+ */
 function initToTop() {
   const btn = document.querySelector('.to-top');
   const hero = document.querySelector('.hero');
   if (!btn || !hero) return;
   new IntersectionObserver(([entry]) => btn.classList.toggle('is-visible', !entry.isIntersecting), { rootMargin: '-50% 0px 0px 0px' }).observe(hero); // root = lower half of the viewport
+
+  const bands = document.querySelectorAll('.tone-ink');
+  const under = new Set();
+  let io;
+  const watch = () => { // root = a 1px line through the button's centre
+    io?.disconnect();
+    under.clear();
+    const r = btn.getBoundingClientRect();
+    const mid = Math.max(0, Math.round(r.top + r.height / 2));
+    const below = Math.max(0, innerHeight - mid - 1); // clamped: a negative value would make "--Npx", which throws
+    io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => (e.isIntersecting ? under.add(e.target) : under.delete(e.target)));
+      btn.classList.toggle('on-ink', under.size > 0);
+    }, { rootMargin: `-${mid}px 0px -${below}px 0px` });
+    bands.forEach((b) => io.observe(b));
+  };
+  watch();
+  window.addEventListener('resize', watch);
 }
 
 // --- boot (module scripts run after the DOM is parsed) ---
@@ -220,5 +288,7 @@ initSpark();
 initHero();
 initCarousels();
 initLightbox();
+initSectionCentering();
 initRoadmap();
+initWalker();
 initToTop();

@@ -143,15 +143,14 @@
 .sec-sub { color: var(--ink-soft); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
 
 /* ---------- About ---------- */
-/* wide text column; the two cards stack in a narrower column centred under it; LinkedIn closes the section, flush right like "Who I am" */
-.about { display: grid; grid-template-columns: minmax(0, 920px) 1fr; row-gap: 40px; }
-.about > * { grid-column: 1; }
-.about-text p { font-size: 20px; line-height: 1.55; }
+/* text takes the width; the cards sit in a narrow column to its right, vertically centred on it; LinkedIn goes under them, flush right like "Who I am" */
+.about { display: grid; grid-template-columns: minmax(0, 1fr) minmax(240px, 300px); align-items: center; gap: 32px clamp(32px, 5vw, 72px); }
+.about-text p { max-width: 42em; font-size: 20px; line-height: 1.55; }
 .about-text p + p { margin-top: 16px; color: var(--ink-soft); }
-.facts { display: grid; gap: 14px; justify-self: center; width: min(100%, 400px); }
+.facts { display: grid; gap: 14px; }
 .facts dd { margin-top: 6px; font-weight: 500; }
-.about-cta { grid-column: 1 / -1; justify-self: end; }
-.about-cta .cut-btn { background: #fff; border-color: #fff; color: #0b1026; }
+/* .hero-cta ("View projects") with the hero's colours, not the ink band's */
+.about-cta { --brand: #0063ad; --paper: #eef3f4; grid-column: 2; justify-self: end; }
 
 /* ---------- Contact ---------- */
 .contact { display: grid; grid-template-columns: 1fr 1fr; align-items: end; gap: clamp(40px, 6vw, 96px); padding-bottom: clamp(80px, 10vw, 130px); }
@@ -216,7 +215,7 @@
 .project-btn:focus-visible { outline-color: currentColor; outline-offset: -4px; }
 .project-btn:active { transform: translateY(0); box-shadow: 0 2px 4px #0063ad66; }
 
-/* ---------- Work: horizontal roadmap, oldest stop first ---------- */
+/* ---------- Profession: horizontal roadmap, oldest stop first ---------- */
 .roadmap { --gap: clamp(20px, 2.4vw, 32px); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--gap); }
 .stop { display: flex; flex-direction: column; }
 .stop-sky { position: relative; height: 250px; }
@@ -228,32 +227,33 @@
 .stop:last-child .stop-road::before { width: 50%; -webkit-mask: linear-gradient(90deg, #000 20%, transparent); mask: linear-gradient(90deg, #000 20%, transparent); }
 .stop-node { position: absolute; top: 13px; left: 50%; z-index: 1; width: 18px; height: 18px; translate: -50% -50%; rotate: 45deg; border: 2px solid var(--ink); background: var(--paper); }
 .stop.is-current .stop-node { border-color: var(--paper); background: var(--brand); animation: node-pulse 2.4s ease-out infinite; }
-.stop-flag { position: absolute; bottom: 0; left: 50%; width: 2px; height: 76px; translate: -50%; background: var(--ink); }
+.stop-flag { position: absolute; bottom: 0; left: 50%; width: 2px; height: 76px; translate: -50%; background: var(--ink); transform-origin: 50% 100%; }
 .stop-flag::after { content: ""; position: absolute; top: 0; left: 2px; width: 34px; height: 22px; background: var(--brand); clip-path: polygon(0 0, 100% 50%, 0 100%); }
 .stop-date { margin-top: 8px; color: var(--ink-soft); font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-align: center; text-transform: uppercase; }
 .stop.is-current .stop-date { color: var(--brand); }
-.paper .stop-card { display: flex; flex-direction: column; flex: 1; margin-top: 18px; padding: 22px 24px; }
-.stop.is-current .stop-card { --c: var(--brand); }
-.stop-card h3 { margin: 10px 0 4px; font-size: clamp(32px, 3.2vw, 44px); }
-.stop-role { color: var(--brand); font-weight: 500; }
-.stop-desc { margin: 10px 0 18px; color: var(--ink-soft); font-size: 15px; }
-.stop-card .tags { margin-top: auto; }
+/* the cards are Skills cards (.hud.skill, .skill-desc, .logos chips, scan reveal); this only lays them out under the road */
+.stop-card { display: flex; flex-direction: column; flex: 1; margin-top: 18px; }
+.stop-role { margin-bottom: 10px; color: var(--brand); font-weight: 500; }
+.stop-card .logos { margin-top: auto; }
 @keyframes node-pulse { from { box-shadow: 0 0 0 0 #29a3ffaa; } to { box-shadow: 0 0 0 14px #29a3ff00; } }
 
-/* The figure standing on the current stop: real CSS 3D. Each <b class="cube"> is a cuboid of six <i> faces;
-   its inline style gives size (--w --h --d), centre (--x --y --z, feet at 0 0 0) and colour (--c).
-   --rx + --py pivot a part at a joint: rotate about the centre, then slide --py px along the part. */
-.walker-stage { position: absolute; inset: 0; perspective: 900px; perspective-origin: 50% 35%; }
+/* The figure on the current stop: real CSS 3D. Each <b class="cube"> is a cuboid of six <i> faces;
+   its inline style gives size (--w --h --d), centre (--x --y --z, feet at 0 0 0), colour (--c) and an optional --rz tilt.
+   A <b class="limb"> sits at a shoulder (--x --y): its cubes hang from there, so one `rotate` swings the whole arm. */
+.walker-track { position: absolute; inset: 0; pointer-events: none; }
+.walker-btn { position: absolute; bottom: 0; left: 50%; width: 110px; height: 240px; margin-left: -55px; perspective: 900px; perspective-origin: 50% 35%; pointer-events: auto; }
+.walker-btn:focus-visible { outline-offset: 6px; }
 .walker-shadow { position: absolute; bottom: -10px; left: 50%; width: 78px; height: 16px; translate: -50%; border-radius: 50%; background: radial-gradient(closest-side, #0b102655, #0b102600); }
 .walker {
   --skin: #d9a68e; --hair: #151821; --knit: #1d2234; --pants: #2c3348; --shoe: #6e4128; --frame: #3b4358;
-  --eye: #141414; --lip: #8a4a48; --dial: #1d4fa8; --wood: #8b5a34; --cloth: #29a3ff;
+  --eye: #141414; --lip: #8a4a48; --dial: #1d4fa8; --wood: #8b5a34; --cloth: #29a3ff; --alu: #c3c8cf;
   position: absolute; bottom: -8px; left: 50%;
   transform: rotateX(-10deg) rotateY(30deg);
   animation: walker-look 7s ease-in-out infinite alternate;
 }
-.walker, .cube { transform-style: preserve-3d; }
-.cube { position: absolute; transform: translate3d(calc(var(--x) * 1px), calc(var(--y) * 1px), calc(var(--z) * 1px)) rotateX(calc(var(--rx, 0) * 1deg)) translateY(calc(var(--py, 0) * 1px)); }
+.walker, .cube, .limb { transform-style: preserve-3d; }
+.limb { position: absolute; translate: calc(var(--x) * 1px) calc(var(--y) * 1px); }
+.cube { position: absolute; transform: translate3d(calc(var(--x) * 1px), calc(var(--y) * 1px), calc(var(--z) * 1px)) rotateZ(calc(var(--rz, 0) * 1deg)); }
 .cube i { position: absolute; width: calc(var(--w) * 1px); height: calc(var(--h) * 1px); translate: -50% -50%; background-color: var(--c); }
 .cube i:nth-child(1) { transform: translateZ(calc(var(--d) * 0.5px)); }
 .cube i:nth-child(2) { transform: rotateY(180deg) translateZ(calc(var(--d) * 0.5px)); background-color: color-mix(in srgb, var(--c) 70%, #000); }
@@ -265,7 +265,48 @@
 .cube.lens i:nth-child(1) { border: 1.5px solid var(--frame); background-color: #29a3ff2e; }
 .cube.lens i:nth-child(2) { background-color: transparent; }
 .cube.cloth i { background-image: radial-gradient(#fff 0 1.6px, transparent 2.2px); background-size: 7px 7px; }
+/* closed aluminium laptop: a soft glowing mark on the lid (the outward face) */
+.cube.laptop i:nth-child(4) { background-image: radial-gradient(circle, #fffffff2 0 2.4px, #ffffff00 3.4px), linear-gradient(160deg, #ffffff59, #ffffff00 60%); }
 @keyframes walker-look { from { transform: rotateX(-10deg) rotateY(14deg); } to { transform: rotateX(-10deg) rotateY(44deg); } }
+
+/* Click: his free hand waves and "Hey!" pops up to the right of his head (main.js initWalker) */
+.walker-btn.is-waving .wave-arm { animation: wave 1.6s var(--ease); }
+.walker-bubble { position: absolute; bottom: 196px; left: calc(50% + 24px); padding: 7px 12px 6px; border-radius: 12px 12px 12px 2px; background: var(--brand); color: #fff; font: 800 20px/1 var(--display); font-variation-settings: "wdth" 75, "opsz" 48; text-transform: uppercase; white-space: nowrap; box-shadow: 0 10px 24px -12px #0b102699; opacity: 0; scale: 0.5; transform-origin: 0 100%; pointer-events: none; transition: opacity 0.2s, scale 0.35s var(--ease); }
+.walker-btn.is-waving .walker-bubble { opacity: 1; scale: 1; }
+@keyframes wave {
+  0%, 100% { rotate: 0deg; }
+  18%, 50%, 82% { rotate: -158deg; }
+  34%, 66% { rotate: -128deg; }
+}
+
+/* First time the road is in view (main.js initRoadmap adds .hop-ready, then .is-hopping) the figure hops
+   stop 1 -> 2 -> 3, and each flag goes up once he has hopped on from it. 100% + gap = one stop to the next. */
+.hop-ready .walker-track { translate: calc(-2 * (100% + var(--gap))) 0; }
+.hop-ready .stop-flag { scale: 1 0; }
+.is-hopping .walker-track { animation: hop-x 2.1s 0.4s both; }
+.is-hopping .walker { animation: walker-look 7s ease-in-out infinite alternate, hop-y 2.1s 0.4s both; }
+.is-hopping .walker-shadow { animation: hop-shadow 2.1s 0.4s both; }
+.is-hopping .stop-flag { animation: flag-up 0.5s var(--ease) both; }
+.is-hopping .stop:nth-child(1) .stop-flag { animation-delay: 1.3s; } /* 0.4s + landing on stop 2 at 43% */
+.is-hopping .stop:nth-child(2) .stop-flag { animation-delay: 2.2s; } /* 0.4s + landing on stop 3 at 86% */
+@keyframes hop-x {
+  0%, 14% { translate: calc(-2 * (100% + var(--gap))) 0; }
+  43%, 57% { translate: calc(-1 * (100% + var(--gap))) 0; }
+  86%, 100% { translate: 0 0; }
+}
+/* crouch, stretch on take-off, ease up to the top of the arc, fall, squash on landing */
+@keyframes hop-y {
+  0%, 50%, 93%, 100% { translate: 0 0; scale: 1; }
+  10%, 53% { translate: 0 0; scale: 1.08 0.9; }
+  14%, 57% { translate: 0 0; scale: 0.94 1.08; animation-timing-function: cubic-bezier(0.25, 0.6, 0.4, 1); }
+  28.5%, 71.5% { translate: 0 -64px; scale: 1; animation-timing-function: cubic-bezier(0.6, 0, 0.75, 0.4); }
+  43%, 86% { translate: 0 0; scale: 1.1 0.88; }
+}
+@keyframes hop-shadow {
+  0%, 14%, 43%, 57%, 86%, 100% { scale: 1; opacity: 1; }
+  28.5%, 71.5% { scale: 0.55; opacity: 0.45; }
+}
+@keyframes flag-up { from { scale: 1 0; } 70% { scale: 1 1.1; } to { scale: 1 1; } }
 
 /* ---------- Off the clock + coverflow gallery ---------- */
 .paper .offclock { padding: clamp(22px, 3vw, 34px) 0; }
@@ -306,9 +347,12 @@ body:has(.lightbox[open]) { overflow: hidden; }
 .lb-next { top: 50%; right: 16px; translate: 0 -50%; }
 
 /* ---------- Back to top: a nav glass pill (initToTop shows it once About fills the lower half of the viewport) ---------- */
-.to-top { position: fixed; right: clamp(16px, 2.5vw, 32px); bottom: clamp(16px, 2.5vw, 32px); z-index: 90; display: grid; place-items: center; width: 48px; height: 48px; border: 1px solid var(--glass-border); border-radius: 999px; background: var(--glass); color: var(--ink); box-shadow: var(--glass-shadow); -webkit-backdrop-filter: blur(18px) saturate(170%); backdrop-filter: blur(18px) saturate(170%); opacity: 0; visibility: hidden; translate: 0 12px; transition: opacity 0.3s var(--ease), translate 0.3s var(--ease), visibility 0s 0.3s, color 0.2s; }
+.to-top { position: fixed; right: clamp(16px, 2.5vw, 32px); bottom: clamp(16px, 2.5vw, 32px); z-index: 90; display: grid; place-items: center; width: 48px; height: 48px; border: 1px solid var(--glass-border); border-radius: 999px; background: var(--glass); color: var(--brand); box-shadow: var(--glass-shadow); -webkit-backdrop-filter: blur(18px) saturate(170%); backdrop-filter: blur(18px) saturate(170%); opacity: 0; visibility: hidden; translate: 0 12px; transition: opacity 0.3s var(--ease), translate 0.3s var(--ease), visibility 0s 0.3s, color 0.2s; }
 .to-top.is-visible { opacity: 1; visibility: visible; translate: none; transition-delay: 0s; }
-.to-top:hover { background: var(--ink); color: #fff; } /* same ink as the nav's Contact button */
+.to-top:hover { background: var(--brand); color: #fff; }
+/* over a dark band (About, Contact, footer; initToTop sets .on-ink): the glass turns sky blue */
+.to-top.on-ink { --glass: linear-gradient(135deg, #29a3ff73, #29a3ff1f); --glass-border: #29a3ff8c; --glass-shadow: inset 0 1px 0 #29a3ff99, 0 12px 32px -14px #000a; color: #29a3ff; }
+.to-top.on-ink:hover { background: #29a3ff; color: #0b1026; }
 .to-top .icon { width: 20px; height: 20px; }
 
 /* ---------- Home breakpoints (keep last) ---------- */
@@ -316,6 +360,8 @@ body:has(.lightbox[open]) { overflow: hidden; }
   .offclock-head { grid-template-columns: auto 1fr; }
   .offclock-links { grid-column: 2; }
   .about, .contact { grid-template-columns: 1fr; }
+  .facts { grid-template-columns: 1fr 1fr; }
+  .about-cta { grid-column: auto; }
   .skills-grid { grid-template-columns: 1fr 1fr; }
   .skills-grid > :last-child { grid-column: 1 / -1; }
 }
@@ -323,7 +369,7 @@ body:has(.lightbox[open]) { overflow: hidden; }
   .paper .achievement { grid-template-columns: 1fr; }
   .achievement-body { padding: 8px; }
   /* three stops no longer fit "SMARTSOURCING": the roadmap stays horizontal, swipe along it, one stop per snap */
-  .roadmap { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: min(78vw, 320px); margin-inline: calc(-1 * var(--gutter)); padding: 0 var(--gutter) 12px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter); scrollbar-width: none; }
+  .roadmap { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: min(78vw, 320px); margin: -48px calc(-1 * var(--gutter)) 0; padding: 48px var(--gutter) 12px; /* headroom: the scroller clips the top of a hop */ overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter); scrollbar-width: none; }
   .roadmap::-webkit-scrollbar { display: none; }
   .stop { scroll-snap-align: start; }
 }
@@ -340,6 +386,7 @@ body:has(.lightbox[open]) { overflow: hidden; }
   .contact-list .icon { grid-area: 1 / 2 / span 2; }
 }
 @media (width <= 560px) {
+  .facts { grid-template-columns: 1fr; }
   .gallery { gap: 14px; }
   .gallery-item { flex-basis: 74vw; }
   .section { padding-top: clamp(56px, 14vw, 80px); }

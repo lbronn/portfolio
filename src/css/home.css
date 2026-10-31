@@ -143,13 +143,14 @@
 .sec-sub { color: var(--ink-soft); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
 
 /* ---------- About ---------- */
-/* text takes the width; the cards sit in a narrow column, centred on the text; LinkedIn goes under them, flush right like "Who I am" */
-.about { display: grid; grid-template-columns: minmax(0, 1fr) minmax(240px, 300px); align-items: center; gap: 32px clamp(32px, 5vw, 72px); }
-.about-text p { max-width: 42em; font-size: 20px; line-height: 1.55; }
+/* wide text column; the two cards stack in a narrower column centred under it; LinkedIn closes the section, flush right like "Who I am" */
+.about { display: grid; grid-template-columns: minmax(0, 920px) 1fr; row-gap: 40px; }
+.about > * { grid-column: 1; }
+.about-text p { font-size: 20px; line-height: 1.55; }
 .about-text p + p { margin-top: 16px; color: var(--ink-soft); }
-.facts { display: grid; gap: 14px; }
+.facts { display: grid; gap: 14px; justify-self: center; width: min(100%, 400px); }
 .facts dd { margin-top: 6px; font-weight: 500; }
-.about-cta { grid-column: 2; justify-self: end; }
+.about-cta { grid-column: 1 / -1; justify-self: end; }
 .about-cta .cut-btn { background: #fff; border-color: #fff; color: #0b1026; }
 
 /* ---------- Contact ---------- */
@@ -315,8 +316,6 @@ body:has(.lightbox[open]) { overflow: hidden; }
   .offclock-head { grid-template-columns: auto 1fr; }
   .offclock-links { grid-column: 2; }
   .about, .contact { grid-template-columns: 1fr; }
-  .facts { grid-template-columns: 1fr 1fr; }
-  .about-cta { grid-column: auto; }
   .skills-grid { grid-template-columns: 1fr 1fr; }
   .skills-grid > :last-child { grid-column: 1 / -1; }
 }
@@ -341,7 +340,6 @@ body:has(.lightbox[open]) { overflow: hidden; }
   .contact-list .icon { grid-area: 1 / 2 / span 2; }
 }
 @media (width <= 560px) {
-  .facts { grid-template-columns: 1fr; }
   .gallery { gap: 14px; }
   .gallery-item { flex-basis: 74vw; }
   .section { padding-top: clamp(56px, 14vw, 80px); }

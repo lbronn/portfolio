@@ -153,7 +153,7 @@
 .about-cta { --brand: #0063ad; --paper: #eef3f4; grid-column: 2; justify-self: end; }
 
 /* ---------- Contact ---------- */
-.contact { display: grid; grid-template-columns: 1fr 1fr; align-items: end; gap: clamp(40px, 6vw, 96px); padding-bottom: clamp(80px, 10vw, 130px); }
+.contact { display: grid; grid-template-columns: 1fr 1fr; align-items: end; align-content: center; gap: clamp(40px, 6vw, 96px); padding-bottom: clamp(80px, 10vw, 130px); }
 .contact-title { font-size: clamp(80px, 11vw, 170px); }
 .contact-sub { margin-top: 20px; color: var(--ink-soft); font-size: 18px; }
 .contact-list { display: grid; gap: 18px; }

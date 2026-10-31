@@ -199,18 +199,22 @@ function initLightbox() {
 }
 
 /**
- * Anchor jumps (nav, hero CTA, back-to-top) stay native; this only sets each section's scroll-margin so the jump
- * centres it in the window. A section taller than the window can't be centred, so it starts at the top of the
- * window (its 80-130px top padding keeps the heading clear of the nav).
+ * Anchor jumps (nav, hero CTA, "Experience") stay native; this only sets each section's scroll-margin so the jump
+ * puts the section's middle at the window's middle (taller sections included). The page ends just below the last
+ * section, so it gets a min-height that leaves it room to centre. The hero (#top) is left alone: it means "the top".
  */
 function initSectionCentering() {
-  const sections = document.querySelectorAll('main section[id]');
+  const sections = [...document.querySelectorAll('main section[id]:not(.hero)')];
+  const last = sections.at(-1);
   const fit = () => {
+    last.style.minHeight = '';
+    const below = document.documentElement.scrollHeight - (last.getBoundingClientRect().bottom + scrollY); // the footer
+    last.style.minHeight = `${innerHeight - 2 * below}px`; // centred at max scroll; min-height never shrinks it
     const pad = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0; // html's scroll-padding (for the nav) still applies; cancel it
-    sections.forEach((s) => { s.style.scrollMarginTop = `${Math.max(0, (innerHeight - s.offsetHeight) / 2) - pad}px`; });
+    sections.forEach((s) => { s.style.scrollMarginTop = `${(innerHeight - s.offsetHeight) / 2 - pad}px`; });
   };
   fit();
-  new ResizeObserver(fit).observe(document.body); // fonts and images change section heights after load
+  document.fonts.ready.then(fit); // web fonts change section heights; images have fixed width/height
   window.addEventListener('resize', fit);
 }
 

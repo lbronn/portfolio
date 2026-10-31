@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&family=Onest:wght@400;500&display=swap" />
-    <!-- LCP image: the aura (snake) layer shows first, then burns into the photo -->
+    <!-- LCP image: the 3D model layer shows first, then burns into the photo -->
     <link rel="preload" as="image" href="./src/assets/images/hero-alt-933.webp" imagesrcset="./src/assets/images/hero-alt-600.webp 600w, ./src/assets/images/hero-alt-933.webp 933w" imagesizes="(max-width: 1024px) 100vw, 90vh" fetchpriority="high" />
 
     <meta property="og:type" content="website" />
@@ -40,7 +40,7 @@
   <body style="background:#eef3f4">
     <a href="#about" class="skip-link">Skip to content</a>
     <header class="nav">
-      <a href="#top" class="nav-brand">Bronn.</a>
+      <a href="#top" class="nav-brand">Bronny.</a>
       <nav aria-label="Sections">
         <ul class="nav-links">
           <li><a href="#about">About</a></li>
@@ -104,7 +104,7 @@
           </ul>
           <button type="button" class="hero-switch" aria-pressed="false">
             <span class="switch-icon" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><path d="M4 8h14l-4-4M18 8l-4 4M20 16H6l4-4M6 16l4 4" /></svg></span>
-            <span><span class="hero-switch-title">Show aura</span><span class="hero-switch-sub">Switch portrait</span></span>
+            <span><span class="hero-switch-title">Show 3D model</span><span class="hero-switch-sub">Switch portrait</span></span>
           </button>
           <div class="hero-cta-wrap">
             <a href="#projects" class="hero-cta">View projects <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg></a>
@@ -299,22 +299,30 @@
             <article class="hud skill" data-reveal style="--i:0">
               <p class="hud-label">AI</p>
               <h3 class="cond">AI engineering</h3>
-              <p class="skill-desc">Agents, retrieval and the plumbing that keeps them honest: prompt and context engineering, token optimization, orchestration, evals and logs.</p>
+              <p class="skill-desc">Designing and deploying production-ready AI agents, RAG systems, and intelligent workflows through LLM integration, orchestration, and evaluation, with a focus on security, reliability, and cost efficiency.</p>
               <ul class="logos">
-                <li><img src="./src/assets/logos/claude.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Claude SDK</span></li>
-                <li><img src="./src/assets/logos/spark.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>OpenAI SDK</span></li>
+                <li><img src="./src/assets/logos/claude.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Claude Code</span></li>
+                <li><img src="./src/assets/logos/openai.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Codex</span></li>
+                <li><img src="./src/assets/logos/claude.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Claude Skills</span></li>
+                <li><img src="./src/assets/logos/huggingface.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Open-weight models</span></li>
+                <li><img src="./src/assets/logos/anthropic.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Claude SDK</span></li>
+                <li><img src="./src/assets/logos/openai.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>OpenAI SDK</span></li>
                 <li><img src="./src/assets/logos/googlegemini.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Gemini</span></li>
-                <li><img src="./src/assets/logos/spark.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Agentic RAG</span></li>
-                <li><img src="./src/assets/logos/spark.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Vectors &amp; embeddings</span></li>
-                <li><img src="./src/assets/logos/spark.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>LLMOps &amp; evals</span></li>
+                <li><img src="./src/assets/logos/icon-agents.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>AI Agents</span></li>
+                <li><img src="./src/assets/logos/icon-rag.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Agentic RAG</span></li>
+                <li><img src="./src/assets/logos/icon-context.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Context Engineering</span></li>
+                <li><img src="./src/assets/logos/icon-harness.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Harness Engineering</span></li>
+                <li><img src="./src/assets/logos/icon-tokenomics.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Tokenomics</span></li>
+                <li><img src="./src/assets/logos/icon-vectors.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Vector DBs &amp; Embeddings</span></li>
+                <li><img src="./src/assets/logos/icon-evals.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>LLMOps &amp; Evals</span></li>
                 <li><img src="./src/assets/logos/n8n.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>n8n</span></li>
-                <li><img src="./src/assets/logos/spark.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Power Automate</span></li>
+                <li><img src="./src/assets/logos/microsoft.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Power Automate</span></li>
               </ul>
             </article>
             <article class="hud skill" data-reveal style="--i:1">
               <p class="hud-label">Build</p>
               <h3 class="cond">Software Engineering</h3>
-              <p class="skill-desc">Web and mobile apps end to end, from the interface to the API and the database behind it.</p>
+              <p class="skill-desc">Building scalable, full-stack softwares and internal platforms, from interfaces and APIs to databases and integrations, with a focus on solving business challenges and streamlining operations.</p>
               <ul class="logos">
                 <li><img src="./src/assets/logos/python-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Python</span></li>
                 <li><img src="./src/assets/logos/typescript-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>TypeScript</span></li>
@@ -322,25 +330,30 @@
                 <li><img src="./src/assets/logos/react-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>React</span></li>
                 <li><img src="./src/assets/logos/django-plain.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Django</span></li>
                 <li><img src="./src/assets/logos/fastapi-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>FastAPI</span></li>
-                <li><img src="./src/assets/logos/kotlin-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Kotlin</span></li>
-                <li><img src="./src/assets/logos/jetpackcompose-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Jetpack Compose</span></li>
                 <li><img src="./src/assets/logos/postgresql-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>PostgreSQL</span></li>
-                <li><img src="./src/assets/logos/firebase-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Firebase</span></li>
+                <li><img src="./src/assets/logos/microsoftsqlserver-plain.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>MS SQL Server</span></li>
+                <li><img src="./src/assets/logos/supabase-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Supabase</span></li>
+                <li><img src="./src/assets/logos/playwright-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Playwright</span></li>
+                <li><img src="./src/assets/logos/jest-plain.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Jest</span></li>
+                <li><img src="./src/assets/logos/cypressio-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Cypress</span></li>
               </ul>
             </article>
             <article class="hud skill" data-reveal style="--i:2">
-              <p class="hud-label">Tools</p>
-              <h3 class="cond">Cloud &amp; tools</h3>
-              <p class="skill-desc">The environments and tooling behind shipped work: containers, cloud, version control and API testing.</p>
+              <p class="hud-label">Deploy</p>
+              <h3 class="cond">DevOps &amp; Infrastructure</h3>
+              <p class="skill-desc">Taking softwares from development to production through containerization, deployment, testing, and monitoring, while optimizing performance, strengthening security, and maintaining system reliability.</p>
               <ul class="logos">
-                <li><img src="./src/assets/logos/docker-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Docker</span></li>
-                <li><img src="./src/assets/logos/linuxcontainers.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>LXC</span></li>
-                <li><img src="./src/assets/logos/azure-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Azure</span></li>
+                <li><img src="./src/assets/logos/icon-cicd.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>CI/CD Pipeline</span></li>
+                <li><img src="./src/assets/logos/yaml-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>YAML Workflows</span></li>
                 <li><img src="./src/assets/logos/git-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Git</span></li>
                 <li><img src="./src/assets/logos/github-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>GitHub</span></li>
-                <li><img src="./src/assets/logos/postman-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Postman</span></li>
+                <li><img src="./src/assets/logos/docker-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Docker</span></li>
+                <li><img src="./src/assets/logos/linuxcontainers.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>LXC</span></li>
+                <li><img src="./src/assets/logos/icon-terminal.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Terminal</span></li>
                 <li><img src="./src/assets/logos/vscode-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>VS Code</span></li>
-                <li><img src="./src/assets/logos/claude.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Claude Code</span></li>
+                <li><img src="./src/assets/logos/postman-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Postman</span></li>
+                <li><img src="./src/assets/logos/azure-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Azure</span></li>
+                <li><img src="./src/assets/logos/microsoft.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>M365</span></li>
               </ul>
             </article>
           </div>
@@ -389,8 +402,8 @@
           <div class="sec-head" data-reveal="wipe">
             <h2 class="cond sec-title">Off the clock</h2>
             <div class="sec-meta" data-reveal style="--i:1">
-              <p class="hud-label">Beyond the code</p>
-              <p class="sec-sub">Basketball, games, coffee and TV</p>
+              <p class="hud-label">Beyond the Nerd Stuffs</p>
+              <p class="sec-sub">Games, Coffee, and Binge-watching</p>
             </div>
           </div>
           <div class="hud offclock" data-reveal>
@@ -411,6 +424,7 @@
                   <b class="cube" style="--w:9;--h:2;--d:1;--x:-7;--y:-188.5;--z:15.3;--c:var(--hair)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
                   <b class="cube" style="--w:5;--h:1.5;--d:1;--x:-1.5;--y:-171;--z:15.2;--c:var(--lip)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
                   <b class="cube" style="--w:3.5;--h:1.5;--d:1;--x:2.3;--y:-171.8;--z:15.2;--c:var(--lip);--rz:-28"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                  <b class="cube mouth" style="--w:6;--h:var(--talk);--d:1;--x:-0.5;--y:-171;--z:15.05;--c:var(--mouth)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
                   <b class="cube lens" style="--w:11;--h:8;--d:1.5;--x:7;--y:-182;--z:15.8;--c:var(--frame)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
                   <b class="cube lens" style="--w:11;--h:8;--d:1.5;--x:-7;--y:-182;--z:15.8;--c:var(--frame)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
                   <b class="cube" style="--w:4;--h:1.5;--d:1.5;--x:0;--y:-183;--z:15.8;--c:var(--frame)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
@@ -419,19 +433,18 @@
                 </span>
               </span>
               <div class="offclock-bubble">
-                <p class="hud-label">Personal</p>
-                <p class="offclock-desc">When I'm not debugging or designing systems, I'm on the basketball court, deep in a video game or a TV series, or hopping between coffee shops around the city.</p>
-                <ul class="tags"><li>Basketball</li><li>Video games</li><li>Coffee hopping</li><li>TV series</li></ul>
+                <p class="hud-label">Bronny</p>
+                <p class="offclock-desc">When I'm not debugging or designing systems, I'm on the basketball or pickleball court, hiking trails and mountains, deep in a video game or a TV series, or hopping between coffee shops around the city.</p>
+                <ul class="tags hobby-tags"><li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18ZM3 12h18M12 3v18M5.6 5.6c3.2 3.4 3.2 9.4 0 12.8M18.4 5.6c-3.2 3.4-3.2 9.4 0 12.8" /></svg>Basketball</li><li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 3.5a5 5 0 0 1 6 6l-6.6 6.6a2 2 0 0 1-2.8 0l-3.2-3.2a2 2 0 0 1 0-2.8ZM8.6 13.8l-5.1 5.1 1.6 1.6 5.1-5.1M18.5 16.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z" /></svg>Pickleball</li><li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 20 6.5-11 4 6.5 2.5-4L21 20H3ZM7.6 12.2 9.5 14l1.7-1.5" /></svg>Hiking</li><li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8h10a4 4 0 0 1 4 4v2.5a2.5 2.5 0 0 1-4.6 1.4L15 14H9l-1.4 1.9A2.5 2.5 0 0 1 3 14.5V12a4 4 0 0 1 4-4ZM8 10.5v3M6.5 12h3M15.5 11.5h.01M17.5 13h.01" /></svg>Video games</li><li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h12v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9ZM16 10h1.5a2.5 2.5 0 0 1 0 5H16M8 3.5v2.5M12 3.5v2.5" /></svg>Coffee hopping</li><li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2ZM8 2.5 12 6l4-3.5" /></svg>TV series</li></ul>
               </div>
-              <ul class="offclock-links">
-                <li><a class="cut-btn" href="https://www.instagram.com/lbroooooonn/" target="_blank" rel="noopener noreferrer">Instagram <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg></a></li>
-              </ul>
             </div>
             <ul class="gallery" aria-label="Off-the-clock photos">
-              <li class="gallery-item"><button type="button" class="burn" data-lightbox-src="./src/assets/images/offclock-1-1080.webp" data-lightbox-alt="Illustration tile: Basketball" aria-label="Open photo 1 of 4"><img src="./src/assets/images/offclock-1-480.webp" srcset="./src/assets/images/offclock-1-480.webp 480w, ./src/assets/images/offclock-1-1080.webp 1080w" sizes="320px" width="1080" height="1350" alt="" loading="lazy" decoding="async" /></button></li>
-              <li class="gallery-item"><button type="button" class="burn" data-lightbox-src="./src/assets/images/offclock-2-1080.webp" data-lightbox-alt="Illustration tile: Video games" aria-label="Open photo 2 of 4"><img src="./src/assets/images/offclock-2-480.webp" srcset="./src/assets/images/offclock-2-480.webp 480w, ./src/assets/images/offclock-2-1080.webp 1080w" sizes="320px" width="1080" height="1350" alt="" loading="lazy" decoding="async" /></button></li>
-              <li class="gallery-item"><button type="button" class="burn" data-lightbox-src="./src/assets/images/offclock-3-1080.webp" data-lightbox-alt="Illustration tile: Coffee hopping" aria-label="Open photo 3 of 4"><img src="./src/assets/images/offclock-3-480.webp" srcset="./src/assets/images/offclock-3-480.webp 480w, ./src/assets/images/offclock-3-1080.webp 1080w" sizes="320px" width="1080" height="1350" alt="" loading="lazy" decoding="async" /></button></li>
-              <li class="gallery-item"><button type="button" class="burn" data-lightbox-src="./src/assets/images/offclock-4-1080.webp" data-lightbox-alt="Illustration tile: TV series" aria-label="Open photo 4 of 4"><img src="./src/assets/images/offclock-4-480.webp" srcset="./src/assets/images/offclock-4-480.webp 480w, ./src/assets/images/offclock-4-1080.webp 1080w" sizes="320px" width="1080" height="1350" alt="" loading="lazy" decoding="async" /></button></li>
+              <li class="gallery-item"><button type="button" class="burn" data-lightbox-src="./src/assets/images/offclock-1-1080.webp" data-lightbox-alt="Illustration tile: Basketball" aria-label="Open photo 1 of 6"><img src="./src/assets/images/offclock-1-480.webp" srcset="./src/assets/images/offclock-1-480.webp 480w, ./src/assets/images/offclock-1-1080.webp 1080w" sizes="320px" width="1080" height="1350" alt="" loading="lazy" decoding="async" /></button></li>
+              <li class="gallery-item"><button type="button" class="burn" data-lightbox-src="./src/assets/images/offclock-2-1080.webp" data-lightbox-alt="Illustration tile: Video games" aria-label="Open photo 2 of 6"><img src="./src/assets/images/offclock-2-480.webp" srcset="./src/assets/images/offclock-2-480.webp 480w, ./src/assets/images/offclock-2-1080.webp 1080w" sizes="320px" width="1080" height="1350" alt="" loading="lazy" decoding="async" /></button></li>
+              <li class="gallery-item"><button type="button" class="burn" data-lightbox-src="./src/assets/images/offclock-3-1080.webp" data-lightbox-alt="Illustration tile: Coffee hopping" aria-label="Open photo 3 of 6"><img src="./src/assets/images/offclock-3-480.webp" srcset="./src/assets/images/offclock-3-480.webp 480w, ./src/assets/images/offclock-3-1080.webp 1080w" sizes="320px" width="1080" height="1350" alt="" loading="lazy" decoding="async" /></button></li>
+              <li class="gallery-item"><button type="button" class="burn" data-lightbox-src="./src/assets/images/offclock-4-1080.webp" data-lightbox-alt="Illustration tile: TV series" aria-label="Open photo 4 of 6"><img src="./src/assets/images/offclock-4-480.webp" srcset="./src/assets/images/offclock-4-480.webp 480w, ./src/assets/images/offclock-4-1080.webp 1080w" sizes="320px" width="1080" height="1350" alt="" loading="lazy" decoding="async" /></button></li>
+              <li class="gallery-item"><button type="button" class="burn" data-lightbox-src="./src/assets/images/offclock-5-1080.webp" data-lightbox-alt="Illustration tile: Pickleball" aria-label="Open photo 5 of 6"><img src="./src/assets/images/offclock-5-480.webp" srcset="./src/assets/images/offclock-5-480.webp 480w, ./src/assets/images/offclock-5-1080.webp 1080w" sizes="320px" width="1080" height="1350" alt="" loading="lazy" decoding="async" /></button></li>
+              <li class="gallery-item"><button type="button" class="burn" data-lightbox-src="./src/assets/images/offclock-6-1080.webp" data-lightbox-alt="Illustration tile: Trail hiking" aria-label="Open photo 6 of 6"><img src="./src/assets/images/offclock-6-480.webp" srcset="./src/assets/images/offclock-6-480.webp 480w, ./src/assets/images/offclock-6-1080.webp 1080w" sizes="320px" width="1080" height="1350" alt="" loading="lazy" decoding="async" /></button></li>
             </ul>
           </div>
         </section>
@@ -449,7 +462,7 @@
           </ul>
         </section>
         <footer class="footer tone tone-ink">
-          <span class="cond footer-name">Bronn Samson</span>
+          <span class="footer-brand"><img class="footer-logo" src="./src/assets/images/logo-white.png" width="30" height="32" alt="" /><span class="cond footer-name">Bronn Samson</span></span>
           <span>&copy; 2026 · All rights reserved</span>
         </footer>
       </div>

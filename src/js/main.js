@@ -79,7 +79,7 @@ function initHero() {
     layer = layer === 'photo' ? 'alt' : 'photo';
     portrait.dataset.layer = layer;
     btn.setAttribute('aria-pressed', String(layer === 'alt'));
-    title.textContent = layer === 'photo' ? 'Show aura' : 'Show photo';
+    title.textContent = layer === 'photo' ? 'Show 3D model' : 'Show photo';
     reveal?.show(layer);
     if (mode === 'intro' && !reveal) setMode('static');
   });
@@ -277,6 +277,24 @@ function initWalker() {
   });
 }
 
+/** The Off the clock avatar talks (CSS .is-talking) the first time it's on screen, then every 10 s. */
+function initAvatarTalk() {
+  const head = document.querySelector('.avatar-head');
+  if (!head || reducedMotion() || !('IntersectionObserver' in window)) return;
+  const talk = () => {
+    head.classList.remove('is-talking');
+    void head.offsetWidth; // restart the animation
+    head.classList.add('is-talking');
+  };
+  const io = new IntersectionObserver(([entry]) => {
+    if (!entry.isIntersecting) return;
+    io.disconnect();
+    talk();
+    setInterval(talk, 10000);
+  }, { threshold: 0.6 });
+  io.observe(head.parentElement);
+}
+
 /**
  * Back-to-top link: shown once the hero's bottom passes mid-viewport (About fills the lower half), and .on-ink while
  * a dark band sits under it. Scrolling is native: href="#top" + CSS scroll-behavior.
@@ -318,4 +336,5 @@ initLightbox();
 initSectionCentering();
 initRoadmap();
 initWalker();
+initAvatarTalk();
 initToTop();

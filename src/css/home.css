@@ -3,6 +3,8 @@
 /* ---------- Footer ---------- */
 .footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; max-width: var(--max); margin: 0 auto; padding: 24px var(--gutter); border-top: 1px solid var(--rule); color: var(--ink-soft); font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; }
 .footer-name { color: var(--ink); font-size: 22px; }
+.footer-brand { display: inline-flex; align-items: center; gap: 12px; }
+.footer-logo { width: auto; height: 32px; } /* the favicon's "B." in white on a transparent background */
 .footer.tone { padding-bottom: 24px; }
 
 /* ---------- Nav: one glass pill that splits into three pills after 40px of scroll ---------- */
@@ -76,7 +78,7 @@
 .hero-portrait { position: absolute; bottom: -40px; left: 50%; height: min(calc(100% - 64px), 64vw); aspect-ratio: 946 / 883; transform: translate(-50%); animation: fade 1s both; }
 .hero-portrait img, .hero-portrait canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 .hero-portrait canvas { opacity: 0; transition: opacity 0.2s; }
-/* Calibration knob: keep equal to photoOffset in portrait-reveal.js; 0 while photo and aura share a crop */
+/* Calibration knob: keep equal to photoOffset in portrait-reveal.js; 0 while photo and 3D model share a frame */
 .hero-portrait .layer-photo { transform: translateY(0); }
 .hero-portrait.is-intro .layer-photo { opacity: 0; }
 .hero-portrait.is-static img { transition: opacity 0.6s; }
@@ -257,7 +259,7 @@
 .walker-shadow { position: absolute; bottom: -10px; left: 50%; width: 78px; height: 16px; translate: -50%; border-radius: 50%; background: radial-gradient(closest-side, #0b102655, #0b102600); scale: calc(1 - var(--lift) / 140); opacity: calc(1 - var(--lift) / 120); }
 .walker, .avatar-head {
   --skin: #d9a68e; --hair: #151821; --knit: #1d2234; --pants: #2c3348; --shoe: #6e4128; --frame: #3b4358;
-  --eye: #141414; --lip: #8a4a48; --dial: #1d4fa8; --wood: #8b5a34; --cloth: #29a3ff; --alu: #c3c8cf;
+  --eye: #141414; --lip: #8a4a48; --dial: #1d4fa8; --wood: #8b5a34; --cloth: #29a3ff; --alu: #c3c8cf; --mouth: #4a1f24;
 }
 /* folded legs lose 84 * (1 - cos bend) of height; dropping him by that keeps his feet on the road */
 .walker {
@@ -335,7 +337,7 @@
 
 /* ---------- Off the clock + coverflow gallery ---------- */
 .paper .offclock { padding: clamp(22px, 3vw, 34px) 0; }
-.offclock-head { display: grid; grid-template-columns: auto 1fr auto; align-items: start; gap: 24px; padding: 0 clamp(20px, 3vw, 34px); }
+.offclock-head { display: grid; grid-template-columns: auto 1fr; align-items: start; gap: 24px; padding: 0 clamp(20px, 3vw, 34px); }
 /* his 3D head (the figure's head cubes) in a round frame, slowly looking around */
 .offclock-avatar { position: relative; display: block; width: 96px; height: 96px; overflow: hidden; border: 1px solid var(--rule); border-radius: 50%; background: radial-gradient(circle at 50% 30%, #29a3ff2e, #29a3ff00 70%), color-mix(in srgb, var(--paper) 60%, #fff); perspective: 600px; }
 .avatar-head { position: absolute; top: 50%; left: 50%; transform: scale(1.5) rotateX(-8deg) rotateY(24deg) translateY(181px); animation: avatar-look 6s ease-in-out infinite alternate; } /* 181: his eyes sit mid-circle */
@@ -344,7 +346,16 @@
 .offclock-bubble { position: relative; padding: 18px 22px 20px; border: 1px solid var(--rule); border-radius: 16px; background: #fff; box-shadow: 0 16px 32px -24px #0b102680; }
 .offclock-bubble::before { content: ""; position: absolute; top: 52px; left: -8px; width: 14px; height: 14px; rotate: 45deg; border-bottom: 1px solid var(--rule); border-left: 1px solid var(--rule); background: inherit; }
 .offclock-desc { margin: 8px 0 14px; color: var(--ink-soft); }
-.offclock-links { display: flex; gap: 8px; }
+.hobby-tags li { display: inline-flex; align-items: center; gap: 7px; }
+.hobby-tags .icon { width: 14px; height: 14px; color: var(--brand); }
+/* he talks (main.js initAvatarTalk: first time in view, then every 10 s): the mouth behind his lips opens and closes */
+@property --talk { syntax: "<number>"; inherits: true; initial-value: 0; }
+.avatar-head.is-talking { animation: avatar-look 6s ease-in-out infinite alternate, talk 1.8s ease-in-out; }
+@keyframes talk {
+  0%, 100% { --talk: 0; }
+  10% { --talk: 3.4; } 20% { --talk: 0.6; } 31% { --talk: 3.8; } 42% { --talk: 1; }
+  53% { --talk: 3; } 64% { --talk: 0.4; } 75% { --talk: 3.4; } 87% { --talk: 0.8; }
+}
 .gallery { display: flex; gap: 20px; margin-top: 28px; padding: 16px clamp(20px, 3vw, 34px); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; perspective: 1200px; }
 .gallery::-webkit-scrollbar { display: none; }
 .gallery-item { flex: 0 0 clamp(220px, 26vw, 320px); scroll-snap-align: center; }
@@ -388,8 +399,6 @@ body:has(.lightbox[open]) { overflow: hidden; }
 
 /* ---------- Home breakpoints (keep last) ---------- */
 @media (width <= 1024px) {
-  .offclock-head { grid-template-columns: auto 1fr; }
-  .offclock-links { grid-column: 2; }
   .about, .contact { grid-template-columns: 1fr; }
   .facts { grid-template-columns: 1fr 1fr; }
   .about-cta { grid-column: auto; }
@@ -406,7 +415,6 @@ body:has(.lightbox[open]) { overflow: hidden; }
 }
 @media (width <= 768px) {
   .offclock-head { grid-template-columns: 1fr; }
-  .offclock-links { grid-column: auto; }
   .sec-head { flex-direction: column; align-items: start; gap: 8px; }
   .sec-meta { text-align: left; }
   .about-cta { justify-self: start; } /* "Who I am" is left-aligned at this width */

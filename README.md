@@ -17,9 +17,12 @@ Static portfolio: HTML, CSS and vanilla JS ES modules with a raw WebGL hero. No 
 
 ## Calibrating the hero portrait
 
-If the photo and aura layers don't line up, change the `photoOffset` default of `mountPortraitReveal()`
+The second layer (`hero-alt-*.webp`) is a still render of the 3D figure in the photo's pose (arms crossed),
+framed like `hero-photo-*.webp`: hair top at y=48 and the head about as wide, in the same 933x871 frame.
+
+If the photo and 3D model layers don't line up, change the `photoOffset` default of `mountPortraitReveal()`
 in `src/js/portrait-reveal.js` and keep it equal to
 `.hero-portrait .layer-photo { transform: translateY(...) }` in `src/css/home.css`
-(0.008 = 0.8%). Both are currently 0 because the photo and aura share a crop.
+(0.008 = 0.8%). Both are currently 0 because the two layers share a frame.
 
 Design inspired by rinlayheang.me.

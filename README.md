@@ -18,7 +18,8 @@ Static portfolio: HTML, CSS and vanilla JS ES modules with a raw WebGL hero. No 
 ## Calibrating the hero portrait
 
 The second layer (`hero-alt-*.webp`) is a still render of the 3D figure in the photo's pose (arms crossed),
-framed like `hero-photo-*.webp`: hair top at y=48 and the head about as wide, in the same 933x871 frame.
+framed like `hero-photo-*.webp` in the same 933x871 frame. Measured on both: silhouette top y=43, bottom y=871,
+turtleneck starts at y=402 (hair-to-collar height 359px), head centred at x=469, crossed arms around y=640-760.
 
 If the photo and 3D model layers don't line up, change the `photoOffset` default of `mountPortraitReveal()`
 in `src/js/portrait-reveal.js` and keep it equal to

@@ -163,6 +163,28 @@ function initCarousels() {
   });
 }
 
+/** Projects carousel: a scroll-snap track (CSS does the coverflow). It opens on the middle card; the arrows step and wrap around. */
+function initProjects() {
+  const track = document.querySelector('.projects-track');
+  if (!track) return;
+  const cards = [...track.children];
+  const count = document.querySelector('.projects-count');
+  const pad = (n) => String(n).padStart(2, '0');
+  let index = 0;
+  const go = (i, behavior) => track.scrollTo({ left: cards[i].offsetLeft + cards[i].offsetWidth / 2 - track.clientWidth / 2, behavior });
+  // the card over the middle of the track is the current one, however it got there (arrows, swipe, trackpad)
+  const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+    if (!e.isIntersecting) return;
+    index = cards.indexOf(e.target);
+    count.textContent = `${pad(index + 1)} / ${pad(cards.length)}`;
+  }), { root: track, rootMargin: '0px -49% 0px -49%' });
+  cards.forEach((c) => io.observe(c));
+  document.querySelectorAll('[data-project-step]').forEach((btn) => btn.addEventListener('click', () => {
+    go(wrapIndex(index, Number(btn.dataset.projectStep), cards.length), reducedMotion() ? 'instant' : 'smooth');
+  }));
+  go(Math.floor(cards.length / 2), 'instant');
+}
+
 /** Gallery lightbox on a native <dialog>: Esc, focus trap and focus return come from the platform. */
 function initLightbox() {
   const dialog = document.querySelector('dialog.lightbox');
@@ -291,6 +313,7 @@ initNav();
 initSpark();
 initHero();
 initCarousels();
+initProjects();
 initLightbox();
 initSectionCentering();
 initRoadmap();

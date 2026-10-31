@@ -169,7 +169,10 @@
 
 /* ---------- Achievements ---------- */
 .paper .achievement { --accent: var(--brand); display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: center; gap: clamp(24px, 4vw, 56px); padding: clamp(14px, 1.6vw, 20px); }
-.achievements { display: grid; gap: 28px; }
+/* a straight sideways slider (no loop, no tilt), opening on Cum Laude; the next card peeks in at the edge */
+.achievements { display: flex; gap: 28px; margin-inline: calc(-1 * var(--gutter)); padding: 4px var(--gutter) 16px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter); scrollbar-width: none; }
+.achievements::-webkit-scrollbar { display: none; }
+.paper .achievement { flex: 0 0 min(100% - 64px, 1000px); scroll-snap-align: start; }
 /* every second card mirrors: photo on the right */
 .paper .achievement:nth-child(even) { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); }
 .paper .achievement:nth-child(even) .achievement-media { order: 2; }
@@ -210,10 +213,13 @@
 .logos li:hover img { scale: 1.15; }
 
 /* ---------- Projects: HUD cards on a sideways scroll-snap track, coverflow like the gallery (main.js initProjects: arrows, wrap-around) ---------- */
-.projects-nav { display: flex; align-items: center; gap: 10px; padding-bottom: 0; }
-.projects-count { margin-right: 6px; font-variant-numeric: tabular-nums; }
+/* slider controls shared by Projects and Achievements: "01 / 03" + prev/next (main.js initSliders) */
+.slide-nav { display: flex; justify-content: flex-end; align-items: center; gap: 10px; }
+.sec-sub + .slide-nav { margin-top: 12px; }
+.slide-count { margin-right: 6px; font-variant-numeric: tabular-nums; }
 .icon-btn { padding: 11px; }
 .icon-btn .icon { width: 18px; height: 18px; }
+.icon-btn[aria-disabled="true"] { opacity: 0.35; cursor: default; } /* a straight slider at either end */
 /* full width of the section (out to the gutters); side padding lets the first and last card reach the middle */
 .projects-track { --card: min(560px, 82vw); position: relative; display: flex; gap: 28px; margin-inline: calc(-1 * var(--gutter)); padding: 12px calc(50% + var(--gutter) - var(--card) / 2) 24px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; perspective: 1200px; -webkit-mask: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); mask: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); }
 .projects-track::-webkit-scrollbar { display: none; }
@@ -423,6 +429,7 @@ body:has(.lightbox[open]) { overflow: hidden; }
   .offclock-head { grid-template-columns: 1fr; }
   .sec-head { flex-direction: column; align-items: start; gap: 8px; }
   .sec-meta { text-align: left; }
+  .slide-nav { justify-content: flex-start; }
   .about-cta { justify-self: start; } /* "Who I am" is left-aligned at this width */
   .skills-grid { grid-template-columns: 1fr; }
   /* avatar above the bubble: the tail points up at him */

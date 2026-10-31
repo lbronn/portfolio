@@ -20,7 +20,10 @@
     <meta property="og:url" content="https://portfolio-bronnys-projects.vercel.app/" />
     <meta property="og:title" content="Bronn Samson | AI Engineer Portfolio" />
     <meta property="og:description" content="AI Engineer in Cebu City building AI agents, agentic RAG and full-stack applications." />
-    <meta property="og:image" content="https://portfolio-bronnys-projects.vercel.app/src/assets/images/og.jpg" />
+    <meta property="og:image" content="https://portfolio-bronnys-projects.vercel.app/src/assets/images/og.webp" />
+    <meta property="og:image:type" content="image/webp" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="675" />
     <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="stylesheet" href="./src/css/base.css" />
@@ -251,13 +254,15 @@
           <svg class="contours" data-contours viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
           <div class="sec-head" data-reveal="wipe">
             <h2 class="cond sec-title">Projects</h2>
-            <div class="sec-meta projects-nav" data-reveal style="--i:1">
-              <p class="hud-label projects-count" aria-live="polite">01 / 03</p>
-              <button type="button" class="cut-btn icon-btn" data-project-step="-1" aria-label="Previous project"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7" /></svg></button>
-              <button type="button" class="cut-btn icon-btn" data-project-step="1" aria-label="Next project"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg></button>
+            <div class="sec-meta" data-reveal style="--i:1">
+              <div class="slide-nav" data-slider-nav="projects-track">
+                <p class="hud-label slide-count" aria-live="polite">01 / 03</p>
+                <button type="button" class="cut-btn icon-btn" data-slide-step="-1" aria-label="Previous project"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7" /></svg></button>
+                <button type="button" class="cut-btn icon-btn" data-slide-step="1" aria-label="Next project"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg></button>
+              </div>
             </div>
           </div>
-          <ul class="projects-track" data-reveal aria-label="Projects">
+          <ul class="projects-track" id="projects-track" data-slider="loop" data-reveal aria-label="Projects">
             <li class="project hud">
               <div class="project-media burn"><img src="./src/assets/images/thrombolaize-1200.webp" srcset="./src/assets/images/thrombolaize-640.webp 640w, ./src/assets/images/thrombolaize-1200.webp 1200w" sizes="(max-width: 900px) 92vw, 46vw" width="1200" height="630" alt="Thrombolaize mobile app" loading="lazy" decoding="async" /></div>
               <div class="project-row"><p class="hud-label">Mobile app · 2025</p><h3 class="cond">Thrombolaize</h3></div>
@@ -365,10 +370,15 @@
             <div class="sec-meta" data-reveal style="--i:1">
               <p class="hud-label">Milestones</p>
               <p class="sec-sub">Academics &amp; certifications</p>
+              <div class="slide-nav" data-slider-nav="achievements-track">
+                <p class="hud-label slide-count" aria-live="polite">01 / 03</p>
+                <button type="button" class="cut-btn icon-btn" data-slide-step="-1" aria-label="Previous achievement"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7" /></svg></button>
+                <button type="button" class="cut-btn icon-btn" data-slide-step="1" aria-label="Next achievement"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg></button>
+              </div>
             </div>
           </div>
-          <ul class="achievements">
-            <li class="hud achievement" data-reveal>
+          <ul class="achievements" id="achievements-track" data-slider="straight" data-reveal aria-label="Achievements">
+            <li class="hud achievement">
               <div class="achievement-media">
                 <div class="carousel" data-carousel>
                   <img class="is-current" src="./src/assets/images/barong-1080.webp" srcset="./src/assets/images/barong-480.webp 480w, ./src/assets/images/barong-1080.webp 1080w" sizes="(max-width: 900px) 92vw, 46vw" alt="Bronn Samson in a barong Tagalog" width="1080" height="810" decoding="async" />
@@ -390,12 +400,9 @@
                   <div><dt>Certification</dt><dd>PhilNITS FE</dd></div>
                 </dl>
                 <ul class="tags"><li>Computer Science</li><li>Honors</li><li>PhilNITS</li></ul>
-                <div class="achievement-actions">
-                  <a class="text-link" href="#profession">Experience</a>
-                </div>
               </div>
             </li>
-            <li class="hud achievement" data-reveal>
+            <li class="hud achievement">
               <div class="achievement-media">
                 <div class="carousel" data-carousel>
                   <img class="is-current" src="./src/assets/images/cvhric-1080.webp" srcset="./src/assets/images/cvhric-480.webp 480w, ./src/assets/images/cvhric-1080.webp 1080w" sizes="(max-width: 900px) 92vw, 46vw" alt="Bronn Samson holding his certificate on stage at the 10th Central Visayas Health Research &amp; Innovation Conference" width="1080" height="810" loading="lazy" decoding="async" />
@@ -410,13 +417,37 @@
               <div class="achievement-body">
                 <p class="hud-label">Health Research Conference Speaker</p>
                 <h3 class="cond">Speaker<span>AI for Healthcare</span></h3>
-                <p class="achievement-desc">Spoke on AI for healthcare at the 10th Central Visayas Health Research &amp; Innovation Conference (CVHRIC) in Tagbilaran City, Bohol.</p>
+                <p class="achievement-desc">Presented research on the application of AI in stroke detection and patient triage at the 10th Central Visayas Health Research &amp; Innovation Conference (CVHRIC) in Tagbilaran City, Bohol.</p>
                 <dl class="achievement-facts">
                   <div><dt>Conference</dt><dd>10th CVHRIC</dd></div>
-                  <div><dt>Venue</dt><dd>Bohol Cultural Center</dd></div>
+                  <div><dt>Award</dt><dd>4th Best Student Research</dd></div>
                   <div><dt>Date</dt><dd>May 2025</dd></div>
                 </dl>
                 <ul class="tags"><li>AI for healthcare</li><li>Health research</li><li>Public speaking</li></ul>
+              </div>
+            </li>
+            <li class="hud achievement">
+              <div class="achievement-media">
+                <div class="carousel" data-carousel>
+                  <img class="is-current" src="./src/assets/images/bluewater-1080.webp" srcset="./src/assets/images/bluewater-480.webp 480w, ./src/assets/images/bluewater-1080.webp 1080w" sizes="(max-width: 900px) 92vw, 46vw" alt="Certificate of appreciation for speaking at the AI Essentials at Work training, Bluewater Maribago" width="1080" height="810" loading="lazy" decoding="async" />
+                  <div class="carousel-ui">
+                    <button type="button" class="carousel-btn" data-step="-1" aria-label="Previous photo"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7" /></svg></button>
+                    <div class="carousel-dots"></div>
+                    <button type="button" class="carousel-btn" data-step="1" aria-label="Next photo"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg></button>
+                  </div>
+                </div>
+                <span class="achievement-badge"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3ZM5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7" /></svg>Speaker</span>
+              </div>
+              <div class="achievement-body">
+                <p class="hud-label">AI Essentials at Work Speaker</p>
+                <h3 class="cond">Speaker<span>AI at Work</span></h3>
+                <p class="achievement-desc">One of the speakers at the AI Essentials at Work training held at Bluewater Maribago Beach Resort in Lapu-Lapu City, Cebu, sharing knowledge and expertise on AI in the workplace.</p>
+                <dl class="achievement-facts">
+                  <div><dt>Training</dt><dd>AI Essentials at Work</dd></div>
+                  <div><dt>Host</dt><dd>Bluewater Maribago</dd></div>
+                  <div><dt>Date</dt><dd>Oct 2026</dd></div>
+                </dl>
+                <ul class="tags"><li>AI at work</li><li>Training</li><li>Public speaking</li></ul>
               </div>
             </li>
           </ul>
@@ -486,7 +517,7 @@
           </ul>
         </section>
         <footer class="footer tone tone-ink">
-          <span class="footer-brand"><img class="footer-logo" src="./src/assets/images/logo-white.png" width="30" height="32" alt="" /><span class="cond footer-name">Bronn Samson</span></span>
+          <span class="footer-brand"><img class="footer-logo" src="./src/assets/images/logo-white.webp" width="30" height="32" alt="" /><span class="cond footer-name">Bronn Samson</span></span>
           <span>&copy; 2026 · All rights reserved</span>
         </footer>
       </div>

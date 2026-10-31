@@ -163,26 +163,49 @@ function initCarousels() {
   });
 }
 
-/** Projects carousel: a scroll-snap track (CSS does the coverflow). It opens on the middle card; the arrows step and wrap around. */
-function initProjects() {
-  const track = document.querySelector('.projects-track');
-  if (!track) return;
-  const cards = [...track.children];
-  const count = document.querySelector('.projects-count');
-  const pad = (n) => String(n).padStart(2, '0');
-  let index = 0;
-  const go = (i, behavior) => track.scrollTo({ left: cards[i].offsetLeft + cards[i].offsetWidth / 2 - track.clientWidth / 2, behavior });
-  // the card over the middle of the track is the current one, however it got there (arrows, swipe, trackpad)
-  const io = new IntersectionObserver((entries) => entries.forEach((e) => {
-    if (!e.isIntersecting) return;
-    index = cards.indexOf(e.target);
-    count.textContent = `${pad(index + 1)} / ${pad(cards.length)}`;
-  }), { root: track, rootMargin: '0px -49% 0px -49%' });
-  cards.forEach((c) => io.observe(c));
-  document.querySelectorAll('[data-project-step]').forEach((btn) => btn.addEventListener('click', () => {
-    go(wrapIndex(index, Number(btn.dataset.projectStep), cards.length), reducedMotion() ? 'instant' : 'smooth');
-  }));
-  go(Math.floor(cards.length / 2), 'instant');
+/**
+ * Sideways card sliders: a scroll-snap track, an "01 / 03" counter and prev/next arrows ([data-slider-nav]).
+ * data-slider="loop" (Projects): cards centred, wraps around, opens on the middle card.
+ * data-slider="straight" (Achievements): cards start-aligned, stops at either end, opens on the first card.
+ */
+function initSliders() {
+  document.querySelectorAll('[data-slider]').forEach((track) => {
+    const loop = track.dataset.slider === 'loop';
+    const cards = [...track.children];
+    const nav = document.querySelector(`[data-slider-nav="${track.id}"]`);
+    const count = nav.querySelector('.slide-count');
+    const [prev, next] = nav.querySelectorAll('[data-slide-step]');
+    const pad = (n) => String(n).padStart(2, '0');
+    let index = 0;
+    const left = (card) => (loop
+      ? card.offsetLeft + card.offsetWidth / 2 - track.clientWidth / 2
+      : card.offsetLeft - (parseFloat(getComputedStyle(track).scrollPaddingLeft) || 0));
+    const go = (i, behavior) => track.scrollTo({ left: left(cards[i]), behavior });
+    const show = (i) => {
+      index = i;
+      count.textContent = `${pad(i + 1)} / ${pad(cards.length)}`;
+      if (loop) return;
+      prev.setAttribute('aria-disabled', String(i === 0)); // aria-disabled, not disabled: keeps keyboard focus
+      next.setAttribute('aria-disabled', String(i === cards.length - 1));
+    };
+    // the card over the middle of the track is the current one, however it got there (arrows, swipe, trackpad)
+    const io = new IntersectionObserver((entries) => entries.forEach((e) => { if (e.isIntersecting) show(cards.indexOf(e.target)); }),
+      { root: track, rootMargin: '0px -49% 0px -49%' });
+    cards.forEach((c) => io.observe(c));
+    let moved = false; // the visitor took over: never snap back to the start card
+    nav.querySelectorAll('[data-slide-step]').forEach((btn) => btn.addEventListener('click', () => {
+      moved = true;
+      const step = Number(btn.dataset.slideStep);
+      const to = loop ? wrapIndex(index, step, cards.length) : clampIndex(index, step, cards.length);
+      if (to !== index) go(to, reducedMotion() ? 'instant' : 'smooth');
+    }));
+    ['pointerdown', 'wheel', 'keydown'].forEach((type) => track.addEventListener(type, () => { moved = true; }, { passive: true }));
+    const start = loop ? Math.floor(cards.length / 2) : 0;
+    show(0);
+    go(start, 'instant');
+    // web fonts resize the cards after first layout and the browser may re-snap to another card: put the start card back
+    document.fonts.ready.then(() => { if (!moved) go(start, 'instant'); });
+  });
 }
 
 /** Gallery lightbox on a native <dialog>: Esc, focus trap and focus return come from the platform. */
@@ -331,7 +354,7 @@ initNav();
 initSpark();
 initHero();
 initCarousels();
-initProjects();
+initSliders();
 initLightbox();
 initSectionCentering();
 initRoadmap();

@@ -158,7 +158,9 @@
 .contact-sub { margin-top: 20px; color: var(--ink-soft); font-size: 18px; }
 .contact-list { display: grid; gap: 18px; }
 .paper .contact-list a { display: grid; grid-template-columns: 7em 1fr auto; align-items: center; gap: 16px; padding: 16px 20px; }
-.contact-value { overflow-wrap: anywhere; }
+.contact-value { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.contact-value span { min-width: 0; overflow-wrap: anywhere; }
+.contact-logo { width: 20px; height: 20px; flex-shrink: 0; fill: currentColor; }
 .contact-list .icon { width: 18px; height: 18px; transition: transform 0.3s var(--ease), color 0.2s; }
 .contact-list a:hover .icon { color: var(--brand); transform: translate(2px, -2px); }
 
@@ -293,6 +295,12 @@ body:has(.lightbox[open]) { overflow: hidden; }
 .lb-close { top: 16px; right: 16px; }
 .lb-prev { top: 50%; left: 16px; translate: 0 -50%; }
 .lb-next { top: 50%; right: 16px; translate: 0 -50%; }
+
+/* ---------- Back to top (initToTop shows it once About fills the lower half of the viewport) ---------- */
+.to-top { position: fixed; right: clamp(16px, 2.5vw, 32px); bottom: clamp(16px, 2.5vw, 32px); z-index: 90; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--brand); color: #fff; box-shadow: 0 10px 24px -12px #0b102699; opacity: 0; visibility: hidden; translate: 0 12px; transition: opacity 0.3s var(--ease), translate 0.3s var(--ease), visibility 0s 0.3s, background-color 0.2s; }
+.to-top.is-visible { opacity: 1; visibility: visible; translate: none; transition-delay: 0s; }
+.to-top:hover { background: #006ec2; }
+.to-top .icon { width: 20px; height: 20px; }
 
 /* ---------- Home breakpoints (keep last) ---------- */
 @media (width <= 1024px) {

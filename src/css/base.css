@@ -92,7 +92,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .burn::after { content: ""; position: absolute; top: -10%; bottom: -10%; left: -90px; width: 70px; pointer-events: none; mix-blend-mode: screen; transform: skew(-14deg); background: linear-gradient(90deg, #0000, #29a3ff00 20%, #29a3ffe6 50%, #29a3ff00 80%, #0000); }
 .burn:hover::after, .project:hover .burn::after { animation: burn 0.9s var(--ease) forwards; }
 
-.paper { position: relative; background: var(--paper); border-top: 1px solid var(--rule); }
+.paper { position: relative; background: var(--paper); }
 
 /* Full-bleed colour band from a max-width element: spread shadow paints the sides, clip-path keeps it horizontal */
 .tone { color: var(--ink); background: var(--paper); box-shadow: 0 0 0 100vmax var(--paper); clip-path: inset(0 -100vmax); padding-bottom: clamp(80px, 10vw, 130px); }

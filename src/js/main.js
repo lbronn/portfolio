@@ -198,6 +198,14 @@ function initLightbox() {
   });
 }
 
+/** Back-to-top link: shown once the hero's bottom passes mid-viewport (About fills the lower half). Scrolling is native: href="#top" + CSS scroll-behavior. */
+function initToTop() {
+  const btn = document.querySelector('.to-top');
+  const hero = document.querySelector('.hero');
+  if (!btn || !hero) return;
+  new IntersectionObserver(([entry]) => btn.classList.toggle('is-visible', !entry.isIntersecting), { rootMargin: '-50% 0px 0px 0px' }).observe(hero); // root = lower half of the viewport
+}
+
 // --- boot (module scripts run after the DOM is parsed) ---
 initReveal();
 initContours();
@@ -206,3 +214,4 @@ initSpark();
 initHero();
 initCarousels();
 initLightbox();
+initToTop();

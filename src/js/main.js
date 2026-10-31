@@ -198,6 +198,12 @@ function initLightbox() {
   });
 }
 
+/** Narrow screens scroll the roadmap sideways: start at the current stop (the figure), the past is a swipe back. No-op when it fits. */
+function initRoadmap() {
+  const road = document.querySelector('.roadmap');
+  if (road) road.scrollLeft = road.scrollWidth;
+}
+
 /** Back-to-top link: shown once the hero's bottom passes mid-viewport (About fills the lower half). Scrolling is native: href="#top" + CSS scroll-behavior. */
 function initToTop() {
   const btn = document.querySelector('.to-top');
@@ -214,4 +220,5 @@ initSpark();
 initHero();
 initCarousels();
 initLightbox();
+initRoadmap();
 initToTop();

@@ -7,9 +7,6 @@
 
 /* ---------- Nav: one glass pill that splits into three pills after 40px of scroll ---------- */
 .nav {
-  --glass: linear-gradient(135deg, #ffffff80, #ffffff2e);
-  --glass-border: #fff9;
-  --glass-shadow: inset 0 1px 0 #fff, inset 0 -1px 0 #ffffff59, 0 12px 32px -14px #283c6e59;
   position: fixed; top: 16px; left: 50%; z-index: 100;
   display: grid; grid-template-columns: auto auto auto; align-items: stretch;
   width: fit-content; max-width: calc(100% - 32px);
@@ -146,11 +143,14 @@
 .sec-sub { color: var(--ink-soft); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
 
 /* ---------- About ---------- */
-.about { display: grid; grid-template-columns: 1.1fr 1fr; align-items: start; gap: clamp(32px, 6vw, 90px); }
-.about-text p { max-width: 32em; font-size: 20px; line-height: 1.55; }
+/* text takes the width; the cards sit in a narrow column, centred on the text; LinkedIn goes under them, flush right like "Who I am" */
+.about { display: grid; grid-template-columns: minmax(0, 1fr) minmax(240px, 300px); align-items: center; gap: 32px clamp(32px, 5vw, 72px); }
+.about-text p { max-width: 42em; font-size: 20px; line-height: 1.55; }
 .about-text p + p { margin-top: 16px; color: var(--ink-soft); }
 .facts { display: grid; gap: 14px; }
 .facts dd { margin-top: 6px; font-weight: 500; }
+.about-cta { grid-column: 2; justify-self: end; }
+.about-cta .cut-btn { background: #fff; border-color: #fff; color: #0b1026; }
 
 /* ---------- Contact ---------- */
 .contact { display: grid; grid-template-columns: 1fr 1fr; align-items: end; gap: clamp(40px, 6vw, 96px); padding-bottom: clamp(80px, 10vw, 130px); }
@@ -215,54 +215,62 @@
 .project-btn:focus-visible { outline-color: currentColor; outline-offset: -4px; }
 .project-btn:active { transform: translateY(0); box-shadow: 0 2px 4px #0063ad66; }
 
-/* ---------- Work: sub-heads + role cards ---------- */
-.sub-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 14px; margin: 40px 0 16px; padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
-.sub-head h3 { font-size: clamp(26px, 3vw, 34px); }
-.sub-head .hud-label { order: -1; width: 100%; }
-.sub-sub { color: var(--ink-soft); font-size: 13px; }
-.roles { display: grid; gap: 24px; margin-top: 20px; }
-.role { display: flex; padding-top: 4px; margin-top: -4px; } /* headroom so the hover lift is not clipped by the scan-reveal overflow: clip */
-.paper .role-card { --c: var(--accent); --fill: color-mix(in srgb, var(--paper) 90%, transparent); display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr); width: 100%; padding: 0; overflow: hidden; transition: translate 0.4s var(--ease), background-size 0.35s var(--ease); }
-.role:hover .role-card { --b: 22px; translate: 0 -4px; }
-.role-screen { position: relative; display: grid; place-items: center; padding: 56px clamp(24px, 4vw, 56px); }
-.role-card.is-reverse .role-screen { order: 2; }
-.role-status { position: absolute; top: 18px; left: 18px; z-index: 2; padding: 5px 12px; border-radius: 999px; background: var(--ink); color: var(--paper); font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
-.role-domain { position: absolute; right: 18px; bottom: 16px; color: var(--ink-soft); font-size: 12px; letter-spacing: 0.06em; }
-.browser { width: 100%; overflow: hidden; border: 1px solid var(--rule); border-bottom: 0; border-radius: 10px 10px 0 0; background: var(--paper); box-shadow: inset 0 -1px #fff9, 0 18px 40px -26px #0b102699; }
-.browser-bar { display: flex; align-items: center; gap: 6px; padding: 9px 12px; border-bottom: 1px solid var(--rule); background: color-mix(in srgb, var(--ink) 6%, transparent); }
-.browser-bar .dot { width: 8px; height: 8px; border-radius: 50%; background: color-mix(in srgb, var(--ink) 22%, transparent); }
-.browser-url { margin-left: 10px; padding: 3px 12px; border-radius: 999px; background: color-mix(in srgb, var(--paper) 80%, transparent); color: var(--ink-soft); font-size: 11px; letter-spacing: 0.04em; }
-.mock { display: grid; grid-template-columns: 54px 1fr; gap: 10px; aspect-ratio: 1200 / 630; padding: 12px; background: color-mix(in srgb, var(--ink) 4%, transparent); }
-.mock-side { display: grid; align-content: start; gap: 7px; padding: 8px 6px; border-radius: 8px; background: color-mix(in srgb, var(--accent) 12%, transparent); }
-.mock-logo { display: grid; place-items: center; width: 22px; height: 22px; margin-bottom: 4px; border-radius: 6px; background: var(--accent); color: #fff; font: 800 12px/1 var(--display); font-variation-settings: "wdth" 75; }
-.mock-side i { height: 6px; border-radius: 3px; background: color-mix(in srgb, var(--accent) 34%, transparent); }
-.mock-side i:nth-child(3) { width: 70%; }
-.mock-side i:nth-child(5) { width: 55%; }
-.mock-main { display: grid; align-content: start; gap: 10px; }
-.mock-row { display: flex; gap: 8px; }
-.mock-pill { width: 64px; height: 12px; border-radius: 999px; background: color-mix(in srgb, var(--ink) 14%, transparent); }
-.mock-pill.wide { width: 40%; background: color-mix(in srgb, var(--accent) 30%, transparent); }
-.mock-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-.mock-cards span { height: 34px; border-radius: 8px; border-top: 3px solid color-mix(in srgb, var(--accent) 45%, transparent); background: color-mix(in srgb, var(--ink) 9%, transparent); }
-.mock-chart { display: flex; align-items: end; gap: 6px; height: 64px; padding-top: 4px; }
-.mock-chart i { flex: 1; border-radius: 3px 3px 0 0; background: color-mix(in srgb, var(--accent) 55%, transparent); }
-.role-body { display: flex; flex-direction: column; justify-content: center; padding: clamp(28px, 3.5vw, 48px); }
-.role-body h3 { margin: 10px 0 6px; font-size: clamp(40px, 5vw, 64px); }
-.role-tagline { color: var(--accent); font-size: 17px; font-weight: 500; }
-.role-desc { margin-top: 10px; color: var(--ink-soft); font-size: 15px; }
-.role-features { display: grid; gap: 8px; margin-top: 16px; font-size: 14px; }
-.role-features li { display: flex; align-items: start; gap: 10px; }
-.role-features .icon { width: 16px; height: 16px; margin-top: 3px; color: var(--accent); }
-.role-foot { display: grid; gap: 16px; margin-top: auto; padding-top: 20px; }
-.role-stack li { border-color: color-mix(in srgb, var(--accent) 40%, transparent); }
-.role-period { padding-top: 16px; border-top: 1px solid var(--rule); color: var(--ink-soft); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
+/* ---------- Work: horizontal roadmap, oldest stop first ---------- */
+.roadmap { --gap: clamp(20px, 2.4vw, 32px); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--gap); }
+.stop { display: flex; flex-direction: column; }
+.stop-sky { position: relative; height: 250px; }
+.stop-road { position: relative; height: 26px; }
+/* road: 12px ink with a dashed centre line, drawn from each stop's node to the next one's */
+.stop-road::before, .stop:first-child .stop-road::after { content: ""; position: absolute; top: 7px; left: 50%; width: calc(100% + var(--gap)); height: 12px; background: repeating-linear-gradient(90deg, #eef3f4cc 0 10px, transparent 10px 22px) center / 100% 2px no-repeat, var(--ink); }
+.stop:first-child .stop-road::after { left: 0; width: 50%; -webkit-mask: linear-gradient(90deg, transparent, #000 60%); mask: linear-gradient(90deg, transparent, #000 60%); }
+/* past the current stop the road runs on and fades out: what's next */
+.stop:last-child .stop-road::before { width: 50%; -webkit-mask: linear-gradient(90deg, #000 20%, transparent); mask: linear-gradient(90deg, #000 20%, transparent); }
+.stop-node { position: absolute; top: 13px; left: 50%; z-index: 1; width: 18px; height: 18px; translate: -50% -50%; rotate: 45deg; border: 2px solid var(--ink); background: var(--paper); }
+.stop.is-current .stop-node { border-color: var(--paper); background: var(--brand); animation: node-pulse 2.4s ease-out infinite; }
+.stop-flag { position: absolute; bottom: 0; left: 50%; width: 2px; height: 76px; translate: -50%; background: var(--ink); }
+.stop-flag::after { content: ""; position: absolute; top: 0; left: 2px; width: 34px; height: 22px; background: var(--brand); clip-path: polygon(0 0, 100% 50%, 0 100%); }
+.stop-date { margin-top: 8px; color: var(--ink-soft); font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-align: center; text-transform: uppercase; }
+.stop.is-current .stop-date { color: var(--brand); }
+.paper .stop-card { display: flex; flex-direction: column; flex: 1; margin-top: 18px; padding: 22px 24px; }
+.stop.is-current .stop-card { --c: var(--brand); }
+.stop-card h3 { margin: 10px 0 4px; font-size: clamp(32px, 3.2vw, 44px); }
+.stop-role { color: var(--brand); font-weight: 500; }
+.stop-desc { margin: 10px 0 18px; color: var(--ink-soft); font-size: 15px; }
+.stop-card .tags { margin-top: auto; }
+@keyframes node-pulse { from { box-shadow: 0 0 0 0 #29a3ffaa; } to { box-shadow: 0 0 0 14px #29a3ff00; } }
+
+/* The figure standing on the current stop: real CSS 3D. Each <b class="cube"> is a cuboid of six <i> faces;
+   its inline style gives size (--w --h --d), centre (--x --y --z, feet at 0 0 0) and colour (--c).
+   --rx + --py pivot a part at a joint: rotate about the centre, then slide --py px along the part. */
+.walker-stage { position: absolute; inset: 0; perspective: 900px; perspective-origin: 50% 35%; }
+.walker-shadow { position: absolute; bottom: -10px; left: 50%; width: 78px; height: 16px; translate: -50%; border-radius: 50%; background: radial-gradient(closest-side, #0b102655, #0b102600); }
+.walker {
+  --skin: #d9a68e; --hair: #151821; --knit: #1d2234; --pants: #2c3348; --shoe: #6e4128; --frame: #3b4358;
+  --eye: #141414; --lip: #8a4a48; --dial: #1d4fa8; --wood: #8b5a34; --cloth: #29a3ff;
+  position: absolute; bottom: -8px; left: 50%;
+  transform: rotateX(-10deg) rotateY(30deg);
+  animation: walker-look 7s ease-in-out infinite alternate;
+}
+.walker, .cube { transform-style: preserve-3d; }
+.cube { position: absolute; transform: translate3d(calc(var(--x) * 1px), calc(var(--y) * 1px), calc(var(--z) * 1px)) rotateX(calc(var(--rx, 0) * 1deg)) translateY(calc(var(--py, 0) * 1px)); }
+.cube i { position: absolute; width: calc(var(--w) * 1px); height: calc(var(--h) * 1px); translate: -50% -50%; background-color: var(--c); }
+.cube i:nth-child(1) { transform: translateZ(calc(var(--d) * 0.5px)); }
+.cube i:nth-child(2) { transform: rotateY(180deg) translateZ(calc(var(--d) * 0.5px)); background-color: color-mix(in srgb, var(--c) 70%, #000); }
+.cube i:nth-child(3) { width: calc(var(--d) * 1px); transform: rotateY(90deg) translateZ(calc(var(--w) * 0.5px)); background-color: color-mix(in srgb, var(--c) 78%, #000); }
+.cube i:nth-child(4) { width: calc(var(--d) * 1px); transform: rotateY(-90deg) translateZ(calc(var(--w) * 0.5px)); background-color: color-mix(in srgb, var(--c) 86%, #fff); }
+.cube i:nth-child(5) { height: calc(var(--d) * 1px); transform: rotateX(90deg) translateZ(calc(var(--h) * 0.5px)); background-color: color-mix(in srgb, var(--c) 78%, #fff); }
+.cube i:nth-child(6) { height: calc(var(--d) * 1px); transform: rotateX(-90deg) translateZ(calc(var(--h) * 0.5px)); background-color: color-mix(in srgb, var(--c) 60%, #000); }
+/* glasses: a rim with a tinted lens; the back face goes clear so the eye shows through */
+.cube.lens i:nth-child(1) { border: 1.5px solid var(--frame); background-color: #29a3ff2e; }
+.cube.lens i:nth-child(2) { background-color: transparent; }
+.cube.cloth i { background-image: radial-gradient(#fff 0 1.6px, transparent 2.2px); background-size: 7px 7px; }
+@keyframes walker-look { from { transform: rotateX(-10deg) rotateY(14deg); } to { transform: rotateX(-10deg) rotateY(44deg); } }
 
 /* ---------- Off the clock + coverflow gallery ---------- */
 .paper .offclock { padding: clamp(22px, 3vw, 34px) 0; }
 .offclock-head { display: grid; grid-template-columns: auto 1fr auto; align-items: start; gap: 24px; padding: 0 clamp(20px, 3vw, 34px); }
 .offclock-avatar { width: 80px; height: 80px; border: 1px solid var(--rule); border-radius: 50%; }
-.offclock-head h3 { margin: 6px 0 8px; font-size: 48px; }
-.offclock-desc { margin-bottom: 14px; color: var(--ink-soft); }
+.offclock-desc { margin: 8px 0 14px; color: var(--ink-soft); }
 .offclock-links { display: flex; gap: 8px; }
 .gallery { display: flex; gap: 20px; margin-top: 28px; padding: 16px clamp(20px, 3vw, 34px); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; perspective: 1200px; }
 .gallery::-webkit-scrollbar { display: none; }
@@ -296,10 +304,10 @@ body:has(.lightbox[open]) { overflow: hidden; }
 .lb-prev { top: 50%; left: 16px; translate: 0 -50%; }
 .lb-next { top: 50%; right: 16px; translate: 0 -50%; }
 
-/* ---------- Back to top (initToTop shows it once About fills the lower half of the viewport) ---------- */
-.to-top { position: fixed; right: clamp(16px, 2.5vw, 32px); bottom: clamp(16px, 2.5vw, 32px); z-index: 90; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--brand); color: #fff; box-shadow: 0 10px 24px -12px #0b102699; opacity: 0; visibility: hidden; translate: 0 12px; transition: opacity 0.3s var(--ease), translate 0.3s var(--ease), visibility 0s 0.3s, background-color 0.2s; }
+/* ---------- Back to top: a nav glass pill (initToTop shows it once About fills the lower half of the viewport) ---------- */
+.to-top { position: fixed; right: clamp(16px, 2.5vw, 32px); bottom: clamp(16px, 2.5vw, 32px); z-index: 90; display: grid; place-items: center; width: 48px; height: 48px; border: 1px solid var(--glass-border); border-radius: 999px; background: var(--glass); color: var(--ink); box-shadow: var(--glass-shadow); -webkit-backdrop-filter: blur(18px) saturate(170%); backdrop-filter: blur(18px) saturate(170%); opacity: 0; visibility: hidden; translate: 0 12px; transition: opacity 0.3s var(--ease), translate 0.3s var(--ease), visibility 0s 0.3s, color 0.2s; }
 .to-top.is-visible { opacity: 1; visibility: visible; translate: none; transition-delay: 0s; }
-.to-top:hover { background: #006ec2; }
+.to-top:hover { background: var(--ink); color: #fff; } /* same ink as the nav's Contact button */
 .to-top .icon { width: 20px; height: 20px; }
 
 /* ---------- Home breakpoints (keep last) ---------- */
@@ -307,21 +315,25 @@ body:has(.lightbox[open]) { overflow: hidden; }
   .offclock-head { grid-template-columns: auto 1fr; }
   .offclock-links { grid-column: 2; }
   .about, .contact { grid-template-columns: 1fr; }
+  .facts { grid-template-columns: 1fr 1fr; }
+  .about-cta { grid-column: auto; }
   .skills-grid { grid-template-columns: 1fr 1fr; }
   .skills-grid > :last-child { grid-column: 1 / -1; }
 }
 @media (width <= 900px) {
   .paper .achievement { grid-template-columns: 1fr; }
   .achievement-body { padding: 8px; }
-  .paper .role-card { grid-template-columns: 1fr; }
-  .role-card.is-reverse .role-screen { order: 0; }
-  .role-screen { padding: 48px 24px 40px; }
+  /* three stops no longer fit "SMARTSOURCING": the roadmap stays horizontal, swipe along it, one stop per snap */
+  .roadmap { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: min(78vw, 320px); margin-inline: calc(-1 * var(--gutter)); padding: 0 var(--gutter) 12px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter); scrollbar-width: none; }
+  .roadmap::-webkit-scrollbar { display: none; }
+  .stop { scroll-snap-align: start; }
 }
 @media (width <= 768px) {
   .offclock-head { grid-template-columns: 1fr; }
   .offclock-links { grid-column: auto; }
   .sec-head { flex-direction: column; align-items: start; gap: 8px; }
   .sec-meta { text-align: left; }
+  .about-cta { justify-self: start; } /* "Who I am" is left-aligned at this width */
   .skills-grid { grid-template-columns: 1fr; }
   .projects-grid { grid-template-columns: 1fr; }
   .paper .contact-list a { grid-template-columns: 1fr auto; gap: 2px 12px; }
@@ -329,7 +341,7 @@ body:has(.lightbox[open]) { overflow: hidden; }
   .contact-list .icon { grid-area: 1 / 2 / span 2; }
 }
 @media (width <= 560px) {
-  .offclock-head h3 { font-size: 36px; }
+  .facts { grid-template-columns: 1fr; }
   .gallery { gap: 14px; }
   .gallery-item { flex-basis: 74vw; }
   .section { padding-top: clamp(56px, 14vw, 80px); }

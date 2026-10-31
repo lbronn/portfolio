@@ -149,7 +149,7 @@
 .about { display: grid; grid-template-columns: 1.1fr 1fr; align-items: start; gap: clamp(32px, 6vw, 90px); }
 .about-text p { max-width: 32em; font-size: 20px; line-height: 1.55; }
 .about-text p + p { margin-top: 16px; color: var(--ink-soft); }
-.facts { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.facts { display: grid; gap: 14px; }
 .facts dd { margin-top: 6px; font-weight: 500; }
 
 /* ---------- Contact ---------- */
@@ -322,7 +322,7 @@ body:has(.lightbox[open]) { overflow: hidden; }
   .offclock-links { grid-column: auto; }
   .sec-head { flex-direction: column; align-items: start; gap: 8px; }
   .sec-meta { text-align: left; }
-  .facts, .skills-grid { grid-template-columns: 1fr; }
+  .skills-grid { grid-template-columns: 1fr; }
   .projects-grid { grid-template-columns: 1fr; }
   .paper .contact-list a { grid-template-columns: 1fr auto; gap: 2px 12px; }
   .contact-list .hud-label, .contact-value { grid-column: 1; }

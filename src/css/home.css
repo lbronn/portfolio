@@ -121,6 +121,7 @@
 .hero-cta { display: inline-flex; align-items: center; gap: 10px; padding: 12px 22px; border: 1px solid var(--brand); color: var(--brand); background: color-mix(in srgb, var(--paper) 85%, transparent); clip-path: var(--cut); font-size: 13px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; transition: background-color 0.2s, color 0.2s; }
 .hero-cta:hover { background: var(--brand); color: var(--paper); }
 .hero-cta:focus-visible { outline-color: currentColor; outline-offset: -4px; } /* clip-path clips the outset ring */
+.hero-cta .icon-grid { display: none; } /* stands in for the label when the hero button is icon-only (mobile) */
 
 /* Mobile hero: a one-column grid. .hero-bar becomes display: contents so the portrait switch and "View projects"
    become grid items too: a row of two buttons right above the Currently / Latest project cards, one per card column.
@@ -137,17 +138,20 @@
   .hero-cta-wrap { justify-self: start; margin-left: calc(var(--gutter) + var(--cell) + var(--pgap)); }
   .hero-panels { grid-row: 4; grid-column: 1 / -1; width: auto; gap: var(--pgap); padding: var(--pgap) var(--gutter) 0; grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); }
   .hero-meta-bar { grid-row: 5; grid-column: 1 / -1; margin: 20px var(--gutter) 0; padding-bottom: 0; border-bottom: 0; animation: fade 1s 0.4s both; }
-  /* both buttons: 44px tall, full card-column width, icon + label; the switch in ink, "View projects" in brand blue */
-  .hero-switch, .hero-cta-wrap .hero-cta { justify-content: center; gap: 8px; height: 44px; padding: 0 12px; font-size: 12px; white-space: nowrap; }
+  /* both buttons: 44px tall, full card-column width, icon only (the labels stay as their accessible names);
+     the switch in ink, "View projects" in brand blue */
+  .hero-switch, .hero-cta-wrap .hero-cta { justify-content: center; gap: 0; height: 44px; padding: 0; }
   .hero-cta-wrap .hero-cta { width: 100%; } /* the wrap carries the column width */
   .hero-switch { border: 1px solid var(--ink); border-radius: 0; background: color-mix(in srgb, var(--paper) 85%, transparent); clip-path: var(--cut); }
   .hero-switch:hover { background: color-mix(in srgb, var(--paper) 85%, transparent); } /* touch: no sticky grey */
   .hero-switch:focus-visible { outline-color: currentColor; outline-offset: -4px; } /* clip-path clips the outset ring */
   .switch-icon, .hero-switch:hover .switch-icon { width: auto; height: auto; border: 0; background: none; color: inherit; }
-  .switch-icon .icon { width: 15px; height: 15px; }
-  .hero-switch-title { font-size: inherit; }
+  .switch-icon .icon { width: 20px; height: 20px; }
   .hero-switch-sub { display: none; }
-  .hero-cta-wrap .hero-cta .icon { width: 14px; height: 14px; }
+  .hero-switch-title, .hero-cta-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .hero-cta-wrap .hero-cta .icon { width: 18px; height: 18px; }
+  .hero-cta-wrap .icon-arrow { display: none; }
+  .hero-cta-wrap .icon-grid { display: block; }
 }
 @media (width <= 768px) {
   .hero { --pw: min(100%, 420px, 44.9966svh); --cols: 2; --pgap: 10px; padding: 84px 0 20px; }
@@ -162,7 +166,6 @@
 }
 @media (width <= 400px) {
   .hero { --pw: min(100%, 40.7112svh); --pgap: 8px; }
-  .hero-switch, .hero-cta-wrap .hero-cta { gap: 6px; padding: 0 8px; font-size: 11px; }
 }
 /* Phones in landscape: name and meta on the left, the portrait (with its two buttons) on the right */
 @media (width <= 1024px) and (orientation: landscape) and (height <= 600px) {
@@ -496,6 +499,7 @@ body:has(.lightbox[open]) { overflow: hidden; }
   .logos li { gap: 0; padding: 9px; }
   .logos img { width: 22px; height: 22px; }
   .logos li span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .logos li[data-repeat-icon] { display: none; } /* a second skill with the same icon (e.g. Claude Skills after Claude Code) */
 
   /* Profession, stacked: oldest stop on top. A vertical road runs down the left rail; each stop has a "sky"
      (flag + teleport circle + room for the figure), its date, then its card. */

@@ -20,9 +20,9 @@ Static portfolio: HTML, CSS and vanilla JS ES modules with a raw WebGL hero. No 
 - `width <= 1024px` (phones in both orientations, tablets in portrait) is the stacked layout. Keep `STACKED` in
   `src/js/main.js` equal to it. There:
   - the nav is always the compact menu-button form;
-  - the portrait switch and "View projects" sit in a row above the Currently / Latest project cards;
+  - the portrait switch and "View projects" are icon-only buttons in a row above the Currently / Latest project cards;
   - Projects and Achievements stack vertically and show only their `data-featured` cards until "Show all";
-  - Skills show icons only (names stay as accessible text);
+  - Skills show icons only (names stay as accessible text), each icon once (`data-repeat-icon` hides repeats);
   - the Off-the-clock gallery shows one photo at a time, with dots;
   - on the stacked Profession roadmap the figure teleports down a stop each time the next stop scrolls into view.
 - Every page ends on an ink band, so `html.is-past-middle` turns the overscroll (rubber-band) colour ink in the

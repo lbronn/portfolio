@@ -1,11 +1,13 @@
 /* Home page: nav, hero, sections, lightbox, footer. Breakpoints at the end of the file. */
 
 /* ---------- Footer ---------- */
-.footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; max-width: var(--max); margin: 0 auto; padding: 24px var(--gutter); border-top: 1px solid var(--rule); color: var(--ink-soft); font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; }
+.footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; max-width: var(--max); margin: 0 auto; padding: 24px var(--gutter); color: var(--ink-soft); font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; }
 .footer-name { color: var(--ink); font-size: 22px; }
 .footer-brand { display: inline-flex; align-items: center; gap: 12px; }
 .footer-logo { width: auto; height: 32px; } /* the favicon's "B." in white on a transparent background */
-.footer.tone { padding-bottom: 24px; }
+/* Contact and the footer share one ink band and one contour artwork, so nothing divides them */
+.contact-end { position: relative; isolation: isolate; max-width: var(--max); margin: 0 auto; }
+.contact-end.tone { padding-bottom: 0; }
 
 /* ---------- Nav: one glass pill that splits into three pills after 40px of scroll ---------- */
 .nav {
@@ -169,19 +171,20 @@
 
 /* ---------- Achievements ---------- */
 .paper .achievement { --accent: var(--brand); display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: center; gap: clamp(24px, 4vw, 56px); padding: clamp(14px, 1.6vw, 20px); }
-/* a straight sideways slider (no loop, no tilt), opening on Cum Laude; the next card peeks in at the edge */
-.achievements { display: flex; gap: 28px; margin-inline: calc(-1 * var(--gutter)); padding: 4px var(--gutter) 16px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter); scrollbar-width: none; }
+/* a straight sideways slider (no loop, no tilt), opening on Cum Laude; one full-width card per slide */
+.achievements { display: flex; gap: 28px; padding: 4px 0 16px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
 .achievements::-webkit-scrollbar { display: none; }
-.paper .achievement { flex: 0 0 min(100% - 64px, 1000px); scroll-snap-align: start; }
+.paper .achievement { flex: 0 0 100%; scroll-snap-align: start; }
 /* every second card mirrors: photo on the right */
 .paper .achievement:nth-child(even) { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); }
 .paper .achievement:nth-child(even) .achievement-media { order: 2; }
 .paper .achievement:nth-child(even) .achievement-body { padding: clamp(8px, 1.5vw, 20px) 0 clamp(8px, 1.5vw, 20px) clamp(8px, 1.5vw, 20px); }
 .achievement-media { position: relative; }
 .carousel { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: #0b102614; clip-path: var(--cut-lg); }
-.carousel > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; scale: 1.06; transition: opacity 0.9s, scale 0s linear 0.9s; }
+.carousel > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; scale: 1.06; transition: opacity 0.9s, scale 0s linear 0.9s, transform 0.7s var(--ease); }
+.carousel:hover > img { transform: scale(1.04); } /* with .burn's light sweep: the Projects photo hover */
 /* current slide fades in and slowly settles from 1.06x (Ken Burns) */
-.carousel > img.is-current { opacity: 1; scale: 1; transition: opacity 0.9s, scale 6s ease-out; }
+.carousel > img.is-current { opacity: 1; scale: 1; transition: opacity 0.9s, scale 6s ease-out, transform 0.7s var(--ease); }
 .carousel-ui { position: absolute; left: 14px; right: 14px; bottom: 14px; z-index: 2; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 .carousel-btn { display: grid; place-items: center; width: 38px; height: 38px; color: #fff; font-size: 18px; background: #0b102673; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); clip-path: var(--cut); opacity: 0; transition: opacity 0.3s, background-color 0.2s, color 0.2s; }
 .carousel:hover .carousel-btn, .carousel-btn:focus-visible { opacity: 1; }
@@ -189,7 +192,7 @@
 .carousel-dots { display: flex; gap: 6px; margin: 0 auto; padding: 8px 10px; border-radius: 999px; background: #0b102666; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
 .carousel-dots button { width: 8px; height: 8px; border-radius: 999px; background: #ffffff80; transition: width 0.4s var(--ease), background-color 0.3s; }
 .carousel-dots button.is-current { width: 26px; background: var(--sky); }
-.achievement-badge { position: absolute; top: -10px; right: 18px; z-index: 3; display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px 9px 12px; background: var(--sky); color: var(--ink); clip-path: var(--cut); font: 800 18px/1 var(--display); font-variation-settings: "wdth" 75, "opsz" 96; text-transform: uppercase; box-shadow: 0 10px 24px -10px #0b102680; }
+.achievement-badge { position: absolute; top: -10px; right: 18px; z-index: 3; display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px 9px 12px; background: var(--sky); color: #0b1026; clip-path: var(--cut); font: 800 18px/1 var(--display); font-variation-settings: "wdth" 75, "opsz" 96; text-transform: uppercase; box-shadow: 0 10px 24px -10px #0b102680; }
 .achievement-badge .icon { width: 18px; height: 18px; }
 .achievement-body { padding: clamp(8px, 1.5vw, 20px) clamp(8px, 1.5vw, 20px) clamp(8px, 1.5vw, 20px) 0; }
 .achievement-body h3 { margin: 12px 0 18px; font-size: clamp(56px, 7vw, 96px); }
@@ -302,7 +305,7 @@
 .cube.laptop i:nth-child(4) { background-image: radial-gradient(circle, #fffffff2 0 2.4px, #ffffff00 3.4px), linear-gradient(160deg, #ffffff59, #ffffff00 60%); }
 @keyframes walker-look { from { transform: rotateX(-10deg) rotateY(14deg); } to { transform: rotateX(-10deg) rotateY(44deg); } }
 
-/* Click: his free hand waves and "Hey!" pops up to the right of his head (main.js initWalker) */
+/* Click: his free hand waves and "I Freelance Too!" pops up to the right of his head (main.js initWalker) */
 .walker-btn.is-waving .wave-arm { animation: wave 1.6s var(--ease); }
 .walker-bubble { position: absolute; bottom: 196px; left: calc(50% + 24px); padding: 7px 12px 6px; border-radius: 12px 12px 12px 2px; background: var(--brand); color: #fff; font: 800 20px/1 var(--display); font-variation-settings: "wdth" 75, "opsz" 48; text-transform: uppercase; white-space: nowrap; box-shadow: 0 10px 24px -12px #0b102699; opacity: 0; scale: 0.5; transform-origin: 0 100%; pointer-events: none; transition: opacity 0.2s, scale 0.35s var(--ease); }
 .walker-btn.is-waving .walker-bubble { opacity: 1; scale: 1; }
@@ -451,6 +454,7 @@ body:has(.lightbox[open]) { overflow: hidden; }
   .contact-sub { font-size: 16px; }
   .skill h3 { font-size: 30px; }
   .project h3 { font-size: 28px; }
+  .walker-bubble { left: calc(50% + 16px); font-size: 16px; } /* "I Freelance Too!" stays on narrow phones */
   .footer { flex-direction: column; align-items: start; gap: 8px; }
   .achievement-facts { grid-template-columns: 1fr 1fr; }
   .carousel-btn { opacity: 1; }

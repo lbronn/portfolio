@@ -284,7 +284,7 @@ function initRoadmap() {
   io.observe(road);
 }
 
-/** Click the figure: his free hand waves (CSS .is-waving) and "Hey!" shows in a live region for 2 s. */
+/** Click the figure: his free hand waves (CSS .is-waving) and "I Freelance Too!" shows in a live region for 2 s. */
 function initWalker() {
   const btn = document.querySelector('.walker-btn');
   if (!btn) return;
@@ -294,7 +294,7 @@ function initWalker() {
     btn.classList.remove('is-waving');
     void btn.offsetWidth; // restart the wave on a repeat click
     btn.classList.add('is-waving');
-    bubble.textContent = 'Hey!';
+    bubble.textContent = 'I Freelance Too!';
     clearTimeout(timer);
     timer = setTimeout(() => { btn.classList.remove('is-waving'); bubble.textContent = ''; }, 2000);
   });

@@ -25,6 +25,11 @@
 *, ::before, ::after { box-sizing: border-box; }
 * { margin: 0; padding: 0; }
 html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+/* Elastic overscroll (iOS, iPadOS, macOS trackpads) shows the root background past the page's edges. Every page ends on an
+   ink band, so: paper above the page, ink below it (main.js initOverscrollTint() adds .is-past-middle in the lower half).
+   body keeps its own paper background, so this colour only ever shows in the overscroll area. */
+html { background: var(--paper); }
+html.is-past-middle { background: #0b1026; }
 body { background: var(--paper); color: var(--ink); font: 400 17px/1.6 var(--body); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 img { display: block; max-width: 100%; height: auto; }
 ul { list-style: none; }

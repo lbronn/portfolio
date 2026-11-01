@@ -46,6 +46,25 @@ function initNav() {
 }
 
 const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+/** Phones (both orientations) and portrait screens under 1200px (tablets upright, up to the iPad Pro 13"): sliders and
+ * the roadmap are stacked. Keep equal to the stacked query in home.css. */
+const STACKED = '(width <= 1024px), (orientation: portrait) and (width < 1200px)';
+
+/**
+ * Adds `cls` to `el` (restarting its animation if the class was already there) and resolves when that animation ends.
+ * The timeout is a safety net for an animation that never runs (e.g. the element is display: none).
+ */
+function playClass(el, cls, timeoutMs = 2500) {
+  return new Promise((resolve) => {
+    const done = () => { clearTimeout(timer); el.removeEventListener('animationend', onEnd); resolve(); };
+    const onEnd = (e) => { if (e.target === el && !e.pseudoElement) done(); };
+    const timer = setTimeout(done, timeoutMs);
+    el.addEventListener('animationend', onEnd);
+    el.classList.remove(cls);
+    void el.offsetWidth; // restart
+    el.classList.add(cls);
+  });
+}
 
 /** <polyline data-spark="1,2,3"> -> points. Bad data hides the sparkline instead of breaking the hero. */
 function initSpark() {
@@ -205,6 +224,8 @@ function initSliders() {
     go(start, 'instant');
     // web fonts resize the cards after first layout and the browser may re-snap to another card: put the start card back
     document.fonts.ready.then(() => { if (!moved) go(start, 'instant'); });
+    // stacked on small screens (no scrolling there): back on a wide screen, open on the start card again
+    window.matchMedia(STACKED).addEventListener('change', (e) => { if (!e.matches && !moved) go(start, 'instant'); });
   });
 }
 
@@ -246,7 +267,9 @@ function initLightbox() {
 /**
  * Anchor jumps (nav, hero CTA, "Experience") stay native; this only sets each section's scroll-margin so the jump
  * puts the section's middle at the window's middle (taller sections included). The page ends just below the last
- * section, so it gets a min-height that leaves it room to centre. The hero (#top) is left alone: it means "the top".
+ * section, so it gets a min-height that leaves it room to centre, but never more than 10% of the window on top of its
+ * own height: on tall screens (a portrait iPad Pro) full centring meant a near-empty screen of padding, so there the
+ * jump simply stops at the bottom of the page. The hero (#top) is left alone: it means "the top".
  */
 function initSectionCentering() {
   const sections = [...document.querySelectorAll('main section[id]:not(.hero)')];
@@ -255,34 +278,173 @@ function initSectionCentering() {
   const fit = () => {
     last.style.minHeight = '';
     const below = document.documentElement.scrollHeight - (last.getBoundingClientRect().bottom + scrollY); // the footer
-    last.style.minHeight = `${innerHeight - 2 * below}px`; // centred at max scroll; min-height never shrinks it
+    const natural = last.offsetHeight;
+    // centred at max scroll (min-height never shrinks it), capped so it never adds more than 10% of the window
+    last.style.minHeight = `${Math.min(innerHeight - 2 * below, natural + 0.1 * innerHeight)}px`;
     const pad = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0; // html's scroll-padding (for the nav) still applies; cancel it
     sections.forEach((s) => { s.style.scrollMarginTop = `${(innerHeight - s.offsetHeight) / 2 - pad}px`; });
   };
   fit();
   document.fonts.ready.then(fit); // web fonts change section heights; images have fixed width/height
   window.addEventListener('resize', fit);
+  document.addEventListener('sections:resized', fit); // a section changed height without a resize (initShowAll)
 }
 
 /**
- * Profession roadmap. The first time it's in view the figure hops stop 1 -> 2 -> 3 and the flags go up (CSS: .hop-ready, .is-hopping);
- * narrow screens scroll the road along with him. Reduced motion: no hops, the road just opens on the current stop.
+ * "Show all" on stacked screens ([data-show-all] -> its [data-collapsible] list): only the [data-featured] cards show
+ * until it's pressed. The CSS for .is-collapsed lives in the stacked breakpoint, so wide screens always show every card.
+ * Without JS nothing is collapsed (the button's markup starts as aria-expanded="true").
+ */
+function initShowAll() {
+  document.querySelectorAll('[data-show-all]').forEach((btn) => {
+    const list = document.getElementById(btn.dataset.showAll);
+    const label = btn.querySelector('.show-all-label');
+    if (!list || !label) return;
+    const set = (open) => {
+      list.classList.toggle('is-collapsed', !open);
+      list.classList.toggle('is-expanded', open);
+      btn.setAttribute('aria-expanded', String(open));
+      label.textContent = open ? 'Show less' : 'Show all';
+      document.dispatchEvent(new Event('sections:resized'));
+    };
+    list.classList.add('is-collapsed');
+    btn.setAttribute('aria-expanded', 'false');
+    label.textContent = 'Show all';
+    btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') !== 'true';
+      set(open);
+      // collapsing from far down the list: bring the heading back instead of leaving the visitor in the next section
+      const head = btn.closest('.sec-head');
+      if (!open && head && head.getBoundingClientRect().top < 0) head.scrollIntoView({ block: 'start', behavior: reducedMotion() ? 'instant' : 'smooth' });
+    });
+  });
+}
+
+/** Off the clock on stacked screens: one photo at a time; dots under the gallery show which one and jump to any. */
+function initGalleryDots() {
+  const gallery = document.querySelector('.gallery');
+  if (!gallery) return;
+  const items = [...gallery.children];
+  if (items.length < 2) return;
+  const dots = document.createElement('div');
+  dots.className = 'gallery-dots';
+  const buttons = items.map((item, i) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('aria-label', `Show photo ${i + 1} of ${items.length}`);
+    b.addEventListener('click', () => {
+      const g = gallery.getBoundingClientRect();
+      const r = item.getBoundingClientRect();
+      gallery.scrollBy({ left: r.left + r.width / 2 - (g.left + g.width / 2), behavior: reducedMotion() ? 'instant' : 'smooth' });
+    });
+    dots.append(b);
+    return b;
+  });
+  const mark = (i) => buttons.forEach((b, n) => { b.classList.toggle('is-current', n === i); b.setAttribute('aria-current', String(n === i)); });
+  mark(0);
+  gallery.after(dots);
+  // the photo over the middle of the gallery is the current one, however it got there
+  const io = new IntersectionObserver((entries) => entries.forEach((e) => { if (e.isIntersecting) mark(items.indexOf(e.target)); }),
+    { root: gallery, rootMargin: '0px -49% 0px -49%' });
+  items.forEach((item) => io.observe(item));
+}
+
+/** Overscroll colour: paper while in the top half of the page, ink in the bottom half (see html.is-past-middle in base.css). */
+function initOverscrollTint() {
+  const root = document.documentElement;
+  const update = () => root.classList.toggle('is-past-middle', window.scrollY > (root.scrollHeight - window.innerHeight) / 2);
+  update();
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+}
+
+/**
+ * Profession roadmap: the figure travels stop 1 -> 2 -> 3 once, and each stop's flag goes up when he has left it.
+ * - Desktop (three columns): he hops sideways the first time the road is in view (CSS .hop-ready, .is-hopping).
+ * - Stacked (STACKED): he teleports down, one stop each time the next stop's sky has scrolled fully into view
+ *   (CSS .tp-ready + the .stop-pad teleport circles); --tp-y lifts him from the current stop's sky to the one he is on.
+ * Reduced motion, no IntersectionObserver, or the layout switching mid-way (a rotated tablet): he is simply on the current stop.
  */
 function initRoadmap() {
   const road = document.querySelector('.roadmap');
-  if (!road) return;
-  const stops = road.querySelectorAll('.stop');
-  const scrollToStop = (i, behavior) => road.scrollTo({ left: stops[i].offsetLeft - stops[0].offsetLeft, behavior }); // no-op when the road fits
-  if (reducedMotion() || !('IntersectionObserver' in window)) { scrollToStop(stops.length - 1, 'instant'); return; }
-  road.classList.add('hop-ready');
-  const io = new IntersectionObserver(([entry]) => {
-    if (!entry.isIntersecting) return;
-    io.disconnect();
-    road.classList.add('is-hopping');
-    setTimeout(() => scrollToStop(1, 'smooth'), 700); // take-offs in hop-x (home.css): 0.4s delay + 14% / 57% of 2.1s
-    setTimeout(() => scrollToStop(2, 'smooth'), 1600);
-  }, { threshold: 0.4 });
-  io.observe(road);
+  if (!road || reducedMotion() || !('IntersectionObserver' in window)) return;
+  const stops = [...road.querySelectorAll('.stop')];
+  const track = road.querySelector('.walker-track');
+  const btn = road.querySelector('.walker-btn');
+  if (!track || !btn || stops.length < 2) return;
+  const stacked = window.matchMedia(STACKED);
+  const observers = [];
+  let finished = false;
+  const finish = () => {
+    if (finished) return;
+    finished = true;
+    observers.forEach((o) => o.disconnect());
+    road.classList.remove('hop-ready', 'is-hopping', 'tp-ready');
+    stops.forEach((stop) => stop.classList.remove('is-left'));
+    road.querySelectorAll('.stop-pad').forEach((pad) => pad.classList.remove('is-on', 'is-departing', 'is-arriving'));
+    btn.classList.remove('is-tp-out', 'is-tp-in');
+    track.style.removeProperty('--tp-y');
+  };
+  stacked.addEventListener('change', finish, { once: true });
+
+  if (!stacked.matches) {
+    road.classList.add('hop-ready');
+    const io = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      io.disconnect();
+      road.classList.add('is-hopping');
+    }, { threshold: 0.4 });
+    io.observe(road);
+    observers.push(io);
+    return;
+  }
+
+  const skies = stops.map((stop) => stop.querySelector('.stop-sky'));
+  const pads = stops.map((stop) => stop.querySelector('.stop-pad'));
+  if (skies.includes(null) || pads.includes(null)) return; // markup changed: leave him on the current stop
+  const last = stops.length - 1;
+  let at = 0; // the stop he is on
+  let target = 0; // the furthest stop the visitor has reached
+  let running = false;
+  const place = () => {
+    if (!finished) track.style.setProperty('--tp-y', `${skies[at].getBoundingClientRect().top - skies[last].getBoundingClientRect().top}px`);
+  };
+  road.classList.add('tp-ready');
+  pads[0].classList.add('is-on');
+  place();
+  const ro = new ResizeObserver(place); // card heights change with width, fonts and rotation
+  ro.observe(road);
+  observers.push(ro);
+
+  const run = async () => {
+    if (running) return;
+    running = true;
+    while (at < target && !finished) {
+      pads[at].classList.remove('is-on');
+      playClass(pads[at], 'is-departing');
+      await playClass(btn, 'is-tp-out');
+      if (finished) return;
+      stops[at].classList.add('is-left'); // its flag goes up
+      at += 1;
+      place();
+      btn.classList.remove('is-tp-out');
+      await Promise.all([playClass(btn, 'is-tp-in'), playClass(pads[at], 'is-arriving')]);
+      if (finished) return;
+      btn.classList.remove('is-tp-in');
+      pads[at].classList.add('is-on');
+    }
+    running = false;
+    if (at === last) finish(); // the end state is the plain layout: him on the current stop, every flag up
+  };
+  // a stop counts as reached once its whole sky is on screen, or once it has been scrolled past (a fast fling)
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.intersectionRatio >= 0.99 || (!e.isIntersecting && e.boundingClientRect.top < 0)) target = Math.max(target, skies.indexOf(e.target));
+    });
+    run();
+  }, { threshold: [0, 1], rootMargin: '0px 0px -10% 0px' });
+  skies.slice(1).forEach((sky) => io.observe(sky));
+  observers.push(io);
 }
 
 /** Click the figure: his free hand waves (CSS .is-waving) and "I Freelance Too!" shows in a live region for 2 s. */
@@ -328,6 +490,9 @@ initHero();
 initCarousels();
 initSliders();
 initLightbox();
+initShowAll();
+initGalleryDots();
+initOverscrollTint();
 initSectionCentering();
 initRoadmap();
 initWalker();

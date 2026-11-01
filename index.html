@@ -1,463 +1,556 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<!doctype html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Personal Portfolio of Bronny - AI / Software Engineer"
-    />
-    <title>Bronny.</title>
+    <meta name="theme-color" content="#eef3f4" />
+    <title>Bronn Samson — AI &amp; Software Engineer</title>
+    <meta name="description" content="AI Engineer in Cebu City building AI agents, agentic RAG and full-stack applications." />
     <link rel="icon" type="image/png" sizes="32x32" href="./src/assets/images/favicon-32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="./src/assets/images/favicon-16.png" />
-    <link rel="icon" type="image/png" href="./src/assets/images/favicon.png" />
-    <link rel="apple-touch-icon" href="./src/assets/images/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="64x64" href="./src/assets/images/favicon-64.png" />
+    <link rel="apple-touch-icon" href="./src/assets/images/favicon-180.png" />
 
-    <!-- Google Fonts: Sora (display) + Inter (body) + JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&family=Onest:wght@400;500&display=swap" />
+    <!-- LCP image: the 3D model layer shows first, then burns into the photo -->
+    <link rel="preload" as="image" href="./src/assets/images/hero-alt-933.webp" imagesrcset="./src/assets/images/hero-alt-600.webp 600w, ./src/assets/images/hero-alt-933.webp 933w" imagesizes="(max-width: 1024px) 100vw, 90vh" fetchpriority="high" />
 
-    <!-- Phosphor Icons -->
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://portfolio-bronnys-projects.vercel.app/" />
+    <meta property="og:title" content="Bronn Samson — AI &amp; Software Engineer" />
+    <meta property="og:description" content="AI Engineer in Cebu City building AI agents, agentic RAG and full-stack applications." />
+    <meta property="og:image" content="https://portfolio-bronnys-projects.vercel.app/src/assets/images/og.webp" />
+    <meta property="og:image:type" content="image/webp" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="675" />
+    <meta name="twitter:card" content="summary_large_image" />
 
-    <!-- Tailwind CSS (compiled) -->
-    <link href="./dist/output.css" rel="stylesheet" />
-
+    <link rel="stylesheet" href="./src/css/base.css" />
+    <link rel="stylesheet" href="./src/css/home.css" />
     <script>
-      // Default to light unless the user explicitly chose dark
-      if (localStorage.theme === "dark") {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
+      // Hide [data-reveal] content before first paint so it can animate in.
+      // Safety net: if main.js never boots (404, blocked module), show everything after 3 s.
+      (function () {
+        var root = document.documentElement;
+        if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
+        root.classList.add("reveal-ready");
+        setTimeout(function () { if (!window.__revealBooted) root.classList.remove("reveal-ready"); }, 3000);
+      })();
     </script>
+    <script type="module" src="./src/js/main.js"></script>
   </head>
-  <body
-    class="bg-ink-50 text-ink-900 dark:bg-ink-900 dark:text-ink-50 font-sans transition-colors duration-300"
-  >
-    <!-- Navbar (Floating Liquid Glass) -->
-    <nav class="fixed w-full z-50 top-6 pointer-events-none">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative flex items-center justify-center">
-        <!-- Centered Pill: Logo + Nav -->
-        <div class="pointer-events-auto glass rounded-full pl-7 pr-5 py-3 flex items-center gap-8 transition-all duration-300">
-          <a href="#home" class="font-display font-extrabold text-lg tracking-tight text-ink-900 dark:text-white">Bronny<span class="text-primary-600 dark:text-primary-400">.</span></a>
-
-          <!-- Desktop Menu -->
-          <div class="hidden md:flex items-center gap-1">
-            <a href="#about" class="px-4 py-2 rounded-full text-sm font-medium text-ink-600 dark:text-ink-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">About Me</a>
-            <a href="#projects" class="px-4 py-2 rounded-full text-sm font-medium text-ink-600 dark:text-ink-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Projects</a>
-            <a href="#roadmap" class="px-4 py-2 rounded-full text-sm font-medium text-ink-600 dark:text-ink-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Roadmap</a>
-            <a href="#contact" class="px-4 py-2 rounded-full text-sm font-medium text-ink-600 dark:text-ink-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Contact</a>
-          </div>
-
-          <!-- Mobile Menu Toggle -->
-          <button
-            type="button"
-            class="md:hidden inline-flex items-center justify-center text-ink-700 dark:text-ink-200 hover:text-primary-600 dark:hover:text-primary-400 focus:outline-none"
-            aria-controls="mobile-menu"
-            aria-expanded="false"
-          >
-            <i class="ph ph-list text-2xl"></i>
-          </button>
-        </div>
-
-        <!-- Theme Toggle (Right) -->
-        <div class="absolute right-4 sm:right-8 pointer-events-auto">
-          <button
-            id="theme-toggle"
-            class="w-12 h-12 flex items-center justify-center rounded-full glass glass-hover focus:outline-none text-ink-700 dark:text-ink-200"
-            aria-label="Toggle Theme"
-          >
-            <i class="ph ph-sun text-xl hidden dark:block text-secondary-400"></i>
-            <i class="ph ph-moon text-xl block dark:hidden text-primary-600"></i>
-          </button>
-        </div>
+  <body style="background:#eef3f4">
+    <a href="#about" class="skip-link">Skip to content</a>
+    <header class="nav">
+      <a href="#top" class="nav-brand">Bronny.</a>
+      <nav aria-label="Sections">
+        <ul class="nav-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#profession">Profession</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#achievements">Achievements</a></li>
+          <li class="nav-links-contact"><a href="#contact">Contact <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg></a></li>
+        </ul>
+      </nav>
+      <div class="nav-end">
+        <a href="#contact" class="nav-cta">Contact <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg></a>
+        <button type="button" class="nav-menu-btn" aria-expanded="false" aria-label="Open menu">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+        </button>
       </div>
-
-      <!-- Mobile Menu -->
-      <div id="mobile-menu" class="hidden md:hidden mt-3 mx-4">
-        <div class="glass rounded-2xl p-2 pointer-events-auto">
-          <a href="#about" class="block px-4 py-2.5 rounded-xl text-base font-medium hover:bg-primary-500/10 hover:text-primary-600 dark:hover:text-primary-400">About Me</a>
-          <a href="#projects" class="block px-4 py-2.5 rounded-xl text-base font-medium hover:bg-primary-500/10 hover:text-primary-600 dark:hover:text-primary-400">Projects</a>
-          <a href="#roadmap" class="block px-4 py-2.5 rounded-xl text-base font-medium hover:bg-primary-500/10 hover:text-primary-600 dark:hover:text-primary-400">Roadmap</a>
-          <a href="#contact" class="block px-4 py-2.5 rounded-xl text-base font-medium hover:bg-primary-500/10 hover:text-primary-600 dark:hover:text-primary-400">Contact</a>
-        </div>
-      </div>
-    </nav>
-
+    </header>
     <main>
-      <!-- Hero Section -->
-      <section
-        id="home"
-        class="min-h-screen flex items-center pt-16 relative overflow-hidden"
-      >
-        <!-- Ambient colour blobs the glass refracts -->
-        <div class="absolute top-20 right-0 -mr-24 -mt-24 w-[30rem] h-[30rem] bg-primary-500/30 blur-[60px] rounded-full"></div>
-        <div class="absolute bottom-0 left-0 -ml-24 -mb-24 w-[26rem] h-[26rem] bg-secondary-400/20 blur-[70px] rounded-full"></div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <!-- Hero Text -->
-            <div class="order-2 md:order-1 text-center md:text-left">
-              <span class="text-primary-600 dark:text-primary-400 font-semibold tracking-[0.18em] uppercase text-xs mb-3 block animate-fade-in-up">Hmmm, Hi There!</span>
-              <h1 class="font-display text-5xl md:text-7xl font-extrabold tracking-tight mb-6 text-ink-900 dark:text-white">
-                I'm <span class="text-gradient">Le Bronn</span><br />
-                <span class="block mt-3 min-h-[1.2em] text-3xl md:text-5xl font-medium text-ink-500 dark:text-ink-400">
-                  <span id="typewriter-text"></span><span class="animate-blink text-primary-600 dark:text-primary-400 font-bold">|</span>
+      <section id="top" class="hero">
+        <svg class="hero-contours" data-contours viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+        <div class="hero-intro">
+          <h1 class="hero-name"><span>Bronn</span> <span>Samson</span></h1>
+          <ul class="hero-meta hero-meta-top">
+            <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11Zm0-8.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" /></svg>Cebu City, Philippines</li>
+            <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-9.3-9.2A4.8 4.8 0 0 1 12 7a4.8 4.8 0 0 1 9.3 3.8C19.5 15.4 12 20 12 20Z" /></svg>A Passionate Tech Enthusiast</li>
+            <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4c3-1 6-1 6-1s0 3-1 6l-7 7-5-5 7-7Zm-7 7-3-1 3-3h4m2 10 1 3 3-3v-4M5 16c-1 1-2 4-2 4s3-1 4-2" /></svg>Shipped Impactful AI Agents, Systems, and Solutions</li>
+          </ul>
+        </div>
+        <div class="hero-stage">
+          <div class="hero-portrait is-intro" data-layer="photo">
+            <img class="layer-alt" src="./src/assets/images/hero-alt-933.webp" srcset="./src/assets/images/hero-alt-600.webp 600w, ./src/assets/images/hero-alt-933.webp 933w" sizes="(max-width: 1024px) 100vw, 90vh" width="933" height="871" alt="" fetchpriority="high" />
+            <img class="layer-photo" src="./src/assets/images/hero-photo-933.webp" srcset="./src/assets/images/hero-photo-600.webp 600w, ./src/assets/images/hero-photo-933.webp 933w" sizes="(max-width: 1024px) 100vw, 90vh" width="933" height="871" alt="Portrait of Bronn Samson" />
+            <canvas aria-hidden="true"></canvas>
+          </div>
+        </div>
+        <aside class="hero-panels" aria-label="At a glance">
+          <div class="hud">
+            <p class="hud-label">Currently</p>
+            <p class="hud-title">AI Engineer</p>
+            <p class="hud-sub">Solving What Matters</p>
+          </div>
+          <div class="hud">
+            <p class="hud-label">Latest project</p>
+            <p class="hud-title">CRM + ERP System</p>
+            <p class="hud-sub">In-house Solution</p>
+          </div>
+          <div class="hud">
+            <p class="hud-label">At a glance</p>
+            <dl class="hud-stats">
+              <div><dt>Projects</dt><dd>10+</dd></div>
+              <div><dt>Domains</dt><dd>3</dd></div>
+              <div><dt>Years</dt><dd>3+</dd></div>
+            </dl>
+          </div>
+        </aside>
+        <div class="hero-bar">
+          <ul class="hero-meta hero-meta-bar">
+            <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11Zm0-8.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" /></svg>Cebu City, Philippines</li>
+            <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-9.3-9.2A4.8 4.8 0 0 1 12 7a4.8 4.8 0 0 1 9.3 3.8C19.5 15.4 12 20 12 20Z" /></svg>A Passionate Tech Enthusiast</li>
+            <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4c3-1 6-1 6-1s0 3-1 6l-7 7-5-5 7-7Zm-7 7-3-1 3-3h4m2 10 1 3 3-3v-4M5 16c-1 1-2 4-2 4s3-1 4-2" /></svg>Shipped Impactful AI Agents, Systems, and Solutions</li>
+          </ul>
+          <button type="button" class="hero-switch" aria-pressed="false">
+            <span class="switch-icon" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><path d="M4 8h14l-4-4M18 8l-4 4M20 16H6l4-4M6 16l4 4" /></svg></span>
+            <span><span class="hero-switch-title">Show 3D model</span><span class="hero-switch-sub">Switch portrait</span></span>
+          </button>
+          <div class="hero-cta-wrap">
+            <a href="#projects" class="hero-cta">View projects <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg></a>
+          </div>
+        </div>
+      </section>
+      <div class="paper">
+        <section id="about" class="section tone tone-ink">
+          <svg class="contours" data-contours viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+          <div class="sec-head" data-reveal="wipe">
+            <h2 class="cond sec-title">About</h2>
+            <div class="sec-meta" data-reveal style="--i:1">
+              <p class="hud-label">Who I am</p>
+              <p class="sec-sub">Turning Challenges Into Solutions</p>
+            </div>
+          </div>
+          <div class="about">
+            <div class="about-text">
+              <p data-reveal>I’m an AI &amp; Software Engineer passionate about helping businesses solve problems through intelligent, practical, and scalable solutions. Whether it’s automating repetitive workflows, making information easier to access, or building custom softwares, I turn complex challenges into technology that makes work simpler, faster, and more efficient.</p>
+              <p data-reveal style="--i:1">My experience spans designing and deploying production-ready AI systems, streamlining business processes, and developing in-house platforms that reduce reliance on costly third-party softwares. I focus on delivering solutions that aren’t just technically impressive, but reliable, secure, and genuinely useful to the people who depend on them.</p>
+            </div>
+            <dl class="facts">
+              <div class="hud" data-reveal style="--i:1"><dt class="hud-label">Works across</dt><dd>AI Agents, Automations, &amp; Scalable Solutions</dd></div>
+              <div class="hud" data-reveal style="--i:2"><dt class="hud-label">My approach</dt><dd>I put people first in everything I build.</dd></div>
+            </dl>
+            <div class="about-cta" data-reveal style="--i:3"><a class="hero-cta" href="https://www.linkedin.com/in/lebronnsamson/" target="_blank" rel="noopener noreferrer">See on LinkedIn <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg></a></div>
+          </div>
+        </section>
+        <section id="profession" class="section" data-reveal-style="scan">
+          <svg class="contours" data-contours viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+          <div class="sec-head" data-reveal="wipe">
+            <h2 class="cond sec-title">Profession</h2>
+            <div class="sec-meta" data-reveal style="--i:1">
+              <p class="hud-label">Where I've built</p>
+              <p class="sec-sub">2 companies</p>
+            </div>
+          </div>
+          <ol class="roadmap">
+            <li class="stop">
+              <div class="stop-sky"><span class="stop-flag" aria-hidden="true"></span></div>
+              <div class="stop-road" aria-hidden="true"><span class="stop-node"></span></div>
+              <p class="stop-date"><time datetime="2025-06">Jun 2025</time></p>
+              <article class="hud skill stop-card" data-reveal style="--i:0">
+                <p class="hud-label">Full-time · Fintech</p>
+                <h3 class="cond">ChartNexus</h3>
+                <p class="stop-role">Software Systems Developer</p>
+                <p class="skill-desc">Engineered scalable AI systems &amp; intelligent financial analytics, and automated reporting workflows, improving classification accuracy by 20% and reducing report generation from nearly an hour to just 2–3 minutes.</p>
+                <ul class="tags"><li>AI development</li><li>Financial analytics</li><li>Measurable improvements</li></ul>
+              </article>
+            </li>
+            <li class="stop">
+              <div class="stop-sky"><span class="stop-flag" aria-hidden="true"></span></div>
+              <div class="stop-road" aria-hidden="true"><span class="stop-node"></span></div>
+              <p class="stop-date"><time datetime="2025-10">Oct 2025</time></p>
+              <article class="hud skill stop-card" data-reveal style="--i:1">
+                <p class="hud-label">Full-time · Solutions engineering</p>
+                <h3 class="cond">Smartsourcing</h3>
+                <p class="stop-role">Software Solutions Engineer</p>
+                <p class="skill-desc">Developed internal software platforms and automated cross-business workflows, improving operational efficiency while laying the foundation for the company’s first in-house agentic AI system.</p>
+                <ul class="tags"><li>Full-stack engineering</li><li>Automation</li><li>Business process improvements</li></ul>
+              </article>
+            </li>
+            <li class="stop is-current">
+              <div class="stop-sky">
+                <span class="walker-track">
+                  <button type="button" class="walker-btn" aria-label="Say hi to Bronn">
+                    <span class="walker-shadow" aria-hidden="true"></span>
+                    <span class="walker" aria-hidden="true">
+                      <b class="limb leg" style="--x:8.5;--y:-93">
+                        <b class="cube" style="--w:14;--h:42;--d:15;--x:0;--y:21;--z:0;--c:var(--pants)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                        <b class="limb shin" style="--x:0;--y:42">
+                          <b class="cube" style="--w:14;--h:12;--d:15;--x:0;--y:0;--z:0;--c:var(--pants)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                          <b class="cube" style="--w:14;--h:42;--d:15;--x:0;--y:21;--z:0;--c:var(--pants)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                          <b class="limb ankle" style="--x:0;--y:42">
+                            <b class="cube" style="--w:15;--h:9;--d:26;--x:0;--y:4.5;--z:3;--c:var(--shoe)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                          </b>
+                        </b>
+                      </b>
+                      <b class="limb leg" style="--x:-8.5;--y:-93">
+                        <b class="cube" style="--w:14;--h:42;--d:15;--x:0;--y:21;--z:0;--c:var(--pants)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                        <b class="limb shin" style="--x:0;--y:42">
+                          <b class="cube" style="--w:14;--h:12;--d:15;--x:0;--y:0;--z:0;--c:var(--pants)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                          <b class="cube" style="--w:14;--h:42;--d:15;--x:0;--y:21;--z:0;--c:var(--pants)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                          <b class="limb ankle" style="--x:0;--y:42">
+                            <b class="cube" style="--w:15;--h:9;--d:26;--x:0;--y:4.5;--z:3;--c:var(--shoe)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                          </b>
+                        </b>
+                      </b>
+                      <b class="cube" style="--w:36;--h:62;--d:20;--x:0;--y:-124;--z:0;--c:var(--knit)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                      <b class="cube" style="--w:18;--h:10;--d:16;--x:0;--y:-160;--z:0;--c:var(--knit)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                      <b class="cube" style="--w:30;--h:34;--d:30;--x:0;--y:-182;--z:0;--c:var(--skin)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                      <b class="cube" style="--w:34;--h:8;--d:6;--x:0;--y:-181;--z:-1;--c:var(--skin)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                      <b class="cube" style="--w:32;--h:11;--d:32;--x:0;--y:-195.5;--z:0;--c:var(--hair)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                      <b class="cube" style="--w:22;--h:6;--d:20;--x:1;--y:-203;--z:3;--c:var(--hair)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                      <b class="cube" style="--w:32;--h:20;--d:6;--x:0;--y:-186;--z:-13.5;--c:var(--hair)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                      <b class="cube" style="--w:31.5;--h:14;--d:27;--x:0;--y:-191;--z:-2.5;--c:var(--hair)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                      <b class="cube" style="--w:3;--h:3;--d:1;--x:7;--y:-181;--z:15.2;--c:var(--eye)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                      <b class="cube" style="--w:3;--h:3;--d:1;--x:-7;--y:-181;--z:15.2;--c:var(--eye)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                      <b class="cube" style="--w:9;--h:2;--d:1;--x:7;--y:-189.8;--z:15.3;--c:var(--hair)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                      <b class="cube" style="--w:9;--h:2;--d:1;--x:-7;--y:-188.5;--z:15.3;--c:var(--hair)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                      <b class="cube" style="--w:5;--h:1.5;--d:1;--x:-1.5;--y:-171;--z:15.2;--c:var(--lip)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                      <b class="cube" style="--w:3.5;--h:1.5;--d:1;--x:2.3;--y:-171.8;--z:15.2;--c:var(--lip);--rz:-28"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                      <b class="cube lens" style="--w:11;--h:8;--d:1.5;--x:7;--y:-182;--z:15.8;--c:var(--frame)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                      <b class="cube lens" style="--w:11;--h:8;--d:1.5;--x:-7;--y:-182;--z:15.8;--c:var(--frame)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                      <b class="cube" style="--w:4;--h:1.5;--d:1.5;--x:0;--y:-183;--z:15.8;--c:var(--frame)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                      <b class="cube" style="--w:1.5;--h:1.5;--d:16;--x:15.6;--y:-183;--z:8;--c:var(--frame)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                      <b class="cube" style="--w:1.5;--h:1.5;--d:16;--x:-15.6;--y:-183;--z:8;--c:var(--frame)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                      <b class="cube cloth" style="--w:24;--h:22;--d:16;--x:0;--y:-130;--z:-18.5;--c:var(--cloth)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                      <b class="cube" style="--w:8;--h:6;--d:8;--x:0;--y:-143;--z:-18.5;--c:var(--cloth)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                      <b class="cube" style="--w:3.5;--h:34;--d:1;--x:11;--y:-137;--z:10.6;--c:var(--wood)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                      <b class="cube" style="--w:3.5;--h:34;--d:1;--x:-11;--y:-137;--z:10.6;--c:var(--wood)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                      <b class="cube" style="--w:3.5;--h:1;--d:21;--x:11;--y:-155.4;--z:0;--c:var(--wood)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                      <b class="cube" style="--w:3.5;--h:1;--d:21;--x:-11;--y:-155.4;--z:0;--c:var(--wood)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                      <b class="limb arm wave-arm" style="--x:23;--y:-153">
+                        <b class="cube" style="--w:10;--h:56;--d:11;--x:0;--y:28;--z:0;--c:var(--knit)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                        <b class="cube" style="--w:9;--h:16;--d:10;--x:0;--y:64;--z:0;--c:var(--skin)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                        <b class="cube" style="--w:11;--h:4;--d:12;--x:0;--y:60;--z:0;--c:var(--shoe)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                        <b class="cube" style="--w:5;--h:4;--d:1.5;--x:0;--y:60;--z:6.6;--c:var(--dial)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                      </b>
+                      <b class="limb arm" style="--x:-23;--y:-153">
+                        <b class="cube" style="--w:10;--h:56;--d:11;--x:0;--y:28;--z:0;--c:var(--knit)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                        <b class="cube" style="--w:9;--h:16;--d:10;--x:0;--y:64;--z:0;--c:var(--skin)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                        <b class="cube laptop" style="--w:2.8;--h:27;--d:40;--x:-0.4;--y:77.5;--z:7;--c:var(--alu)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                        <b class="cube" style="--w:3;--h:1.2;--d:39;--x:-0.4;--y:90.6;--z:7;--c:var(--frame)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                      </b>
+                    </span>
+                    <span class="walker-bubble" aria-live="polite"></span>
+                  </button>
                 </span>
-              </h1>
-              <p class="text-lg text-ink-600 dark:text-ink-300 mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed">
-                I engineer AI-powered systems — from RAG pipelines and agentic workflows to full-stack applications and automation.
-              </p>
-              <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                <a href="#projects" class="px-8 py-3.5 rounded-full bg-primary-600 text-white font-semibold hover:bg-primary-700 transition-all shadow-glow-brand hover:-translate-y-0.5">View Projects</a>
-                <a href="#contact" class="px-8 py-3.5 rounded-full glass glass-hover text-ink-900 dark:text-white font-semibold">Contact Me</a>
               </div>
-
-              <div class="mt-12 flex items-center justify-center md:justify-start gap-3">
-                <a href="https://github.com/lbronn" target="_blank" aria-label="GitHub" class="w-11 h-11 flex items-center justify-center rounded-full glass glass-hover text-ink-700 dark:text-ink-200 text-xl"><i class="ph ph-github-logo"></i></a>
-                <a href="https://www.linkedin.com/in/lebronnsamson/" target="_blank" aria-label="LinkedIn" class="w-11 h-11 flex items-center justify-center rounded-full glass glass-hover text-ink-700 dark:text-ink-200 text-xl"><i class="ph ph-linkedin-logo"></i></a>
-                <a href="https://www.instagram.com/lbroooooonn/" target="_blank" aria-label="Instagram" class="w-11 h-11 flex items-center justify-center rounded-full glass glass-hover text-ink-700 dark:text-ink-200 text-xl"><i class="ph ph-instagram-logo"></i></a>
-              </div>
-            </div>
-
-            <!-- Hero Image / Visual -->
-            <div class="order-1 md:order-2 flex justify-center relative">
-              <div class="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96">
-                <!-- glowing conic halo -->
-                <div class="absolute -inset-3 rounded-full opacity-40 blur-2xl animate-float-slow" style="background: conic-gradient(from 140deg, #6366F1, #FBBF24, #818CF8, #4F46E5);"></div>
-                <!-- glass ring + portrait -->
-                <div class="glass absolute inset-0 rounded-full p-2 overflow-hidden shadow-glass-lifted">
-                  <img src="./src/assets/images/profile.jpg" alt="Le Bronn" class="w-full h-full object-cover object-[50%_35%] rounded-full" />
-                </div>
+              <div class="stop-road" aria-hidden="true"><span class="stop-node"></span></div>
+              <p class="stop-date"><time datetime="2026-02">Feb 2026</time> · Now</p>
+              <article class="hud skill stop-card" data-reveal style="--i:2">
+                <p class="hud-label">Full-time · AI engineering</p>
+                <h3 class="cond">Smartsourcing</h3>
+                <p class="stop-role">AI Engineer</p>
+                <p class="skill-desc">Co-leading the development of production-ready AI agents and scalable internal platforms, automating complex workflows, reducing reliance on costly SaaS solutions, and delivering secure, reliable systems from concept to deployment.</p>
+                <ul class="tags"><li>AI ownership</li><li>Intelligent agents</li><li>Scalable business solutions</li></ul>
+              </article>
+            </li>
+          </ol>
+        </section>
+        <section id="projects" class="section">
+          <svg class="contours" data-contours viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+          <div class="sec-head" data-reveal="wipe">
+            <h2 class="cond sec-title">Projects</h2>
+            <div class="sec-meta" data-reveal style="--i:1">
+              <div class="slide-nav" data-slider-nav="projects-track">
+                <p class="hud-label slide-count" aria-live="polite">01 / 03</p>
+                <button type="button" class="cut-btn icon-btn" data-slide-step="-1" aria-label="Previous project"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7" /></svg></button>
+                <button type="button" class="cut-btn icon-btn" data-slide-step="1" aria-label="Next project"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg></button>
               </div>
             </div>
           </div>
+          <ul class="projects-track" id="projects-track" data-slider="loop" data-reveal aria-label="Projects">
+            <li class="project hud">
+              <div class="project-media burn"><img src="./src/assets/images/thrombolaize-1200.webp" srcset="./src/assets/images/thrombolaize-640.webp 640w, ./src/assets/images/thrombolaize-1200.webp 1200w" sizes="(max-width: 900px) 92vw, 46vw" width="1200" height="630" alt="Thrombolaize mobile app" loading="lazy" decoding="async" /></div>
+              <div class="project-row"><p class="hud-label">Mobile app · 2025</p><h3 class="cond">Thrombolaize</h3></div>
+              <p class="project-desc">A mobile app powered by an AI image classifier and segmentation model that identifies cerebral ischemic strokes, built to help save lives.</p>
+              <div class="project-actions">
+                <a class="cut-btn project-btn" href="./project/thrombolaize/">Details <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg></a>
+              </div>
+            </li>
+            <li class="project hud">
+              <div class="project-media burn"><img src="./src/assets/images/boardprep-1200.webp" srcset="./src/assets/images/boardprep-640.webp 640w, ./src/assets/images/boardprep-1200.webp 1200w" sizes="(max-width: 900px) 92vw, 46vw" width="1200" height="630" alt="BoardPrep web app" loading="lazy" decoding="async" /></div>
+              <div class="project-row"><p class="hud-label">Web app · 2024</p><h3 class="cond">BoardPrep</h3></div>
+              <p class="project-desc">A full-stack web app that helps engineering students prepare with personalized learning content and assessments, powered by AI.</p>
+              <div class="project-actions">
+                <a class="cut-btn project-btn" href="./project/boardprep/">Details <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg></a>
+              </div>
+            </li>
+            <li class="project hud">
+              <div class="project-media burn"><img src="./src/assets/images/work-to-home-1200.webp" srcset="./src/assets/images/work-to-home-640.webp 640w, ./src/assets/images/work-to-home-1200.webp 1200w" sizes="(max-width: 900px) 92vw, 46vw" width="1200" height="630" alt="Work-to-Home Forecast Discord notification" loading="lazy" decoding="async" /></div>
+              <div class="project-row"><p class="hud-label">Automation · 2025</p><h3 class="cond">Work-to-Home Forecast</h3></div>
+              <p class="project-desc">An n8n automation that pulls Google Routes, Weather and Static Maps data and posts the commute forecast to Discord.</p>
+              <div class="project-actions">
+                <a class="cut-btn project-btn" href="./project/work-to-home/">Details <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg></a>
+              </div>
+            </li>
+          </ul>
+        </section>
+        <section id="skills" class="section" data-reveal-style="scan">
+          <svg class="contours" data-contours viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+          <div class="sec-head" data-reveal="wipe">
+            <h2 class="cond sec-title">Skills</h2>
+            <div class="sec-meta" data-reveal style="--i:1">
+              <p class="hud-label">What I work with</p>
+              <p class="sec-sub">3 domains</p>
+            </div>
+          </div>
+          <div class="skills-grid">
+            <article class="hud skill" data-reveal style="--i:0">
+              <p class="hud-label">Build</p>
+              <h3 class="cond">Software Engineering</h3>
+              <p class="skill-desc">Building scalable, full-stack softwares and internal platforms, from interfaces and APIs to databases and integrations, with a focus on solving business challenges and streamlining operations.</p>
+              <ul class="logos">
+                <li><img src="./src/assets/logos/python-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Python</span></li>
+                <li><img src="./src/assets/logos/typescript-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>TypeScript</span></li>
+                <li><img src="./src/assets/logos/javascript-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>JavaScript</span></li>
+                <li><img src="./src/assets/logos/react-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>React</span></li>
+                <li><img src="./src/assets/logos/django-plain.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Django</span></li>
+                <li><img src="./src/assets/logos/fastapi-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>FastAPI</span></li>
+                <li><img src="./src/assets/logos/postgresql-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>PostgreSQL</span></li>
+                <li><img src="./src/assets/logos/microsoftsqlserver-plain.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>MS SQL Server</span></li>
+                <li><img src="./src/assets/logos/supabase-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Supabase</span></li>
+                <li><img src="./src/assets/logos/playwright-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Playwright</span></li>
+                <li><img src="./src/assets/logos/jest-plain.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Jest</span></li>
+                <li><img src="./src/assets/logos/cypressio-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Cypress</span></li>
+              </ul>
+            </article>
+            <article class="hud skill" data-reveal style="--i:1">
+              <p class="hud-label">AI</p>
+              <h3 class="cond">AI Engineering</h3>
+              <p class="skill-desc">Designing and deploying production-ready AI agents, RAG systems, and intelligent workflows through LLM integration, orchestration, and evaluation, with a focus on security, reliability, and cost efficiency.</p>
+              <ul class="logos">
+                <li><img src="./src/assets/logos/claude.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Claude Code</span></li>
+                <li><img src="./src/assets/logos/openai.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Codex</span></li>
+                <li><img src="./src/assets/logos/claude.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Claude Skills</span></li>
+                <li><img src="./src/assets/logos/huggingface.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Open-weight models</span></li>
+                <li><img src="./src/assets/logos/anthropic.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Claude SDK</span></li>
+                <li><img src="./src/assets/logos/openai.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>OpenAI SDK</span></li>
+                <li><img src="./src/assets/logos/googlegemini.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Gemini</span></li>
+                <li><img src="./src/assets/logos/icon-agents.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>AI Agents</span></li>
+                <li><img src="./src/assets/logos/icon-rag.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Agentic RAG</span></li>
+                <li><img src="./src/assets/logos/icon-context.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Context Engineering</span></li>
+                <li><img src="./src/assets/logos/icon-harness.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Harness Engineering</span></li>
+                <li><img src="./src/assets/logos/icon-tokenomics.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Tokenomics</span></li>
+                <li><img src="./src/assets/logos/icon-vectors.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Vector DBs &amp; Embeddings</span></li>
+                <li><img src="./src/assets/logos/icon-evals.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>LLMOps &amp; Evals</span></li>
+                <li><img src="./src/assets/logos/n8n.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>n8n</span></li>
+                <li><img src="./src/assets/logos/microsoft.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Power Automate</span></li>
+              </ul>
+            </article>
+            <article class="hud skill" data-reveal style="--i:2">
+              <p class="hud-label">Deploy</p>
+              <h3 class="cond">DevOps &amp; Infrastructure</h3>
+              <p class="skill-desc">Taking softwares from development to production through containerization, deployment, testing, and monitoring, while optimizing performance, strengthening security, and maintaining system reliability.</p>
+              <ul class="logos">
+                <li><img src="./src/assets/logos/icon-cicd.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>CI/CD Pipeline</span></li>
+                <li><img src="./src/assets/logos/yaml-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>YAML Workflows</span></li>
+                <li><img src="./src/assets/logos/git-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Git</span></li>
+                <li><img src="./src/assets/logos/github-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>GitHub</span></li>
+                <li><img src="./src/assets/logos/docker-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Docker</span></li>
+                <li><img src="./src/assets/logos/linuxcontainers.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>LXC</span></li>
+                <li><img src="./src/assets/logos/icon-terminal.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Terminal</span></li>
+                <li><img src="./src/assets/logos/vscode-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>VS Code</span></li>
+                <li><img src="./src/assets/logos/postman-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Postman</span></li>
+                <li><img src="./src/assets/logos/azure-original.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>Azure</span></li>
+                <li><img src="./src/assets/logos/microsoft.svg" alt="" width="20" height="20" loading="lazy" decoding="async" /><span>M365</span></li>
+              </ul>
+            </article>
+          </div>
+        </section>
+        <section id="achievements" class="section tone tone-ink">
+          <svg class="contours" data-contours viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+          <div class="sec-head" data-reveal="wipe">
+            <h2 class="cond sec-title">Achievements</h2>
+            <div class="sec-meta" data-reveal style="--i:1">
+              <p class="hud-label">Milestones</p>
+              <p class="sec-sub">Academics &amp; certifications</p>
+              <div class="slide-nav" data-slider-nav="achievements-track">
+                <p class="hud-label slide-count" aria-live="polite">01 / 04</p>
+                <button type="button" class="cut-btn icon-btn" data-slide-step="-1" aria-label="Previous achievement"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7" /></svg></button>
+                <button type="button" class="cut-btn icon-btn" data-slide-step="1" aria-label="Next achievement"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg></button>
+              </div>
+            </div>
+          </div>
+          <ul class="achievements" id="achievements-track" data-slider="straight" data-reveal aria-label="Achievements">
+            <li class="hud achievement">
+              <div class="achievement-media">
+                <div class="carousel burn" data-carousel>
+                  <img class="is-current" src="./src/assets/images/barong-1080.webp" srcset="./src/assets/images/barong-480.webp 480w, ./src/assets/images/barong-1080.webp 1080w" sizes="(max-width: 900px) 92vw, 46vw" alt="Bronn Samson in a barong Tagalog" width="1080" height="810" decoding="async" />
+                  <div class="carousel-ui">
+                    <button type="button" class="carousel-btn" data-step="-1" aria-label="Previous photo"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7" /></svg></button>
+                    <div class="carousel-dots"></div>
+                    <button type="button" class="carousel-btn" data-step="1" aria-label="Next photo"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg></button>
+                  </div>
+                </div>
+                <span class="achievement-badge"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 2l2.5 7M16 2l-2.5 7M12 22a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z" /></svg>Cum Laude</span>
+              </div>
+              <div class="achievement-body">
+                <p class="hud-label">Graduated with honors</p>
+                <h3 class="cond">Cum Laude<span>BS Computer Science</span></h3>
+                <p class="achievement-desc">Graduated Cum Laude in Computer Science from Cebu Institute of Technology–University, and passed the PhilNITS FE exam (Level 2).</p>
+                <dl class="achievement-facts">
+                  <div><dt>School</dt><dd>CIT-U, Cebu</dd></div>
+                  <div><dt>Years</dt><dd>2021 – 2025</dd></div>
+                  <div><dt>Certification</dt><dd>PhilNITS FE</dd></div>
+                </dl>
+                <ul class="tags"><li>Computer Science</li><li>Honors</li><li>PhilNITS</li></ul>
+              </div>
+            </li>
+            <li class="hud achievement">
+              <div class="achievement-media">
+                <div class="carousel burn" data-carousel>
+                  <img class="is-current" src="./src/assets/images/philnits-1080.webp" srcset="./src/assets/images/philnits-480.webp 480w, ./src/assets/images/philnits-1080.webp 1080w" sizes="(max-width: 900px) 92vw, 46vw" alt="CIT-U College of Computer Studies poster congratulating the PhilNITS Gold Medal Awardees 2024-2025, Bronn Samson among them" width="1080" height="810" loading="lazy" decoding="async" />
+                  <div class="carousel-ui">
+                    <button type="button" class="carousel-btn" data-step="-1" aria-label="Previous photo"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7" /></svg></button>
+                    <div class="carousel-dots"></div>
+                    <button type="button" class="carousel-btn" data-step="1" aria-label="Next photo"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg></button>
+                  </div>
+                </div>
+                <span class="achievement-badge"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v5c0 4.5 3 8.3 7 10 4-1.7 7-5.5 7-10V6l-7-3ZM9 12l2 2 4-4" /></svg>Certified</span>
+              </div>
+              <div class="achievement-body">
+                <p class="hud-label">Certified Japanese-Standard Software Engineer</p>
+                <h3 class="cond">Certified<span>PhilNITS FE Exam (Level 2)</span></h3>
+                <p class="achievement-desc">Passed the Philippine National IT Standards (PhilNITS) Fundamental Information Technology Engineers exam, the ITPEC certification based on Japan&#39;s IT engineer standards, and was named a PhilNITS Gold Medal awardee.</p>
+                <dl class="achievement-facts">
+                  <div><dt>Exam</dt><dd>PhilNITS FE</dd></div>
+                  <div><dt>Award</dt><dd>Gold Medal</dd></div>
+                  <div><dt>Year</dt><dd>2024 – 2025</dd></div>
+                </dl>
+                <ul class="tags"><li>Certification</li><li>ITPEC</li><li>Gold medal</li></ul>
+              </div>
+            </li>
+            <li class="hud achievement">
+              <div class="achievement-media">
+                <div class="carousel burn" data-carousel>
+                  <img class="is-current" src="./src/assets/images/cvhric-1080.webp" srcset="./src/assets/images/cvhric-480.webp 480w, ./src/assets/images/cvhric-1080.webp 1080w" sizes="(max-width: 900px) 92vw, 46vw" alt="Bronn Samson holding his certificate on stage at the 10th Central Visayas Health Research &amp; Innovation Conference" width="1080" height="810" loading="lazy" decoding="async" />
+                  <div class="carousel-ui">
+                    <button type="button" class="carousel-btn" data-step="-1" aria-label="Previous photo"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7" /></svg></button>
+                    <div class="carousel-dots"></div>
+                    <button type="button" class="carousel-btn" data-step="1" aria-label="Next photo"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg></button>
+                  </div>
+                </div>
+                <span class="achievement-badge"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3ZM5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7" /></svg>Speaker</span>
+              </div>
+              <div class="achievement-body">
+                <p class="hud-label">Health Research Conference Speaker</p>
+                <h3 class="cond">Speaker<span>AI for Healthcare</span></h3>
+                <p class="achievement-desc">Presented research on the application of AI in stroke detection and patient triage at the 10th Central Visayas Health Research &amp; Innovation Conference (CVHRIC) in Tagbilaran City, Bohol.</p>
+                <dl class="achievement-facts">
+                  <div><dt>Conference</dt><dd>10th CVHRIC</dd></div>
+                  <div><dt>Award</dt><dd>4th Best Student Research</dd></div>
+                  <div><dt>Date</dt><dd>May 2025</dd></div>
+                </dl>
+                <ul class="tags"><li>AI for healthcare</li><li>AI Thesis</li><li>Public speaking</li></ul>
+              </div>
+            </li>
+            <li class="hud achievement">
+              <div class="achievement-media">
+                <div class="carousel burn" data-carousel>
+                  <img class="is-current" src="./src/assets/images/bluewater-1080.webp" srcset="./src/assets/images/bluewater-480.webp 480w, ./src/assets/images/bluewater-1080.webp 1080w" sizes="(max-width: 900px) 92vw, 46vw" alt="Certificate of appreciation for speaking at the AI Essentials at Work training, Bluewater Maribago" width="1080" height="810" loading="lazy" decoding="async" />
+                  <div class="carousel-ui">
+                    <button type="button" class="carousel-btn" data-step="-1" aria-label="Previous photo"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7" /></svg></button>
+                    <div class="carousel-dots"></div>
+                    <button type="button" class="carousel-btn" data-step="1" aria-label="Next photo"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg></button>
+                  </div>
+                </div>
+                <span class="achievement-badge"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3ZM5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7" /></svg>Speaker</span>
+              </div>
+              <div class="achievement-body">
+                <p class="hud-label">AI Essentials at Work Speaker</p>
+                <h3 class="cond">Speaker<span>AI at Work</span></h3>
+                <p class="achievement-desc">One of the speakers at the AI Essentials at Work training held at Bluewater Maribago Beach Resort in Lapu-Lapu City, Cebu, sharing knowledge and expertise on AI in the workplace.</p>
+                <dl class="achievement-facts">
+                  <div><dt>Training</dt><dd>AI Essentials</dd></div>
+                  <div><dt>Host</dt><dd>Bluewater Maribago</dd></div>
+                  <div><dt>Date</dt><dd>Oct 2026</dd></div>
+                </dl>
+                <ul class="tags"><li>AI at work</li><li>Training</li><li>Public speaking</li></ul>
+              </div>
+            </li>
+          </ul>
+        </section>
+        <section id="offclock" class="section" data-reveal-style="scan">
+          <svg class="contours" data-contours viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+          <div class="sec-head" data-reveal="wipe">
+            <h2 class="cond sec-title">Off the clock</h2>
+            <div class="sec-meta" data-reveal style="--i:1">
+              <p class="hud-label">Beyond the Nerd Stuffs</p>
+              <p class="sec-sub">Games, Coffee, and Binge-watching</p>
+            </div>
+          </div>
+          <div class="hud offclock" data-reveal>
+            <div class="offclock-head">
+              <span class="offclock-avatar" aria-hidden="true">
+                <span class="avatar-head">
+                  <b class="cube" style="--w:36;--h:62;--d:20;--x:0;--y:-124;--z:0;--c:var(--knit)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                  <b class="cube" style="--w:18;--h:10;--d:16;--x:0;--y:-160;--z:0;--c:var(--knit)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                  <b class="cube" style="--w:30;--h:34;--d:30;--x:0;--y:-182;--z:0;--c:var(--skin)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                  <b class="cube" style="--w:34;--h:8;--d:6;--x:0;--y:-181;--z:-1;--c:var(--skin)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                  <b class="cube" style="--w:32;--h:11;--d:32;--x:0;--y:-195.5;--z:0;--c:var(--hair)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                  <b class="cube" style="--w:22;--h:6;--d:20;--x:1;--y:-203;--z:3;--c:var(--hair)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                  <b class="cube" style="--w:32;--h:20;--d:6;--x:0;--y:-186;--z:-13.5;--c:var(--hair)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                  <b class="cube" style="--w:31.5;--h:14;--d:27;--x:0;--y:-191;--z:-2.5;--c:var(--hair)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                  <b class="cube" style="--w:3;--h:3;--d:1;--x:7;--y:-181;--z:15.2;--c:var(--eye)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                  <b class="cube" style="--w:3;--h:3;--d:1;--x:-7;--y:-181;--z:15.2;--c:var(--eye)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                  <b class="cube" style="--w:9;--h:2;--d:1;--x:7;--y:-189.8;--z:15.3;--c:var(--hair)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                  <b class="cube" style="--w:9;--h:2;--d:1;--x:-7;--y:-188.5;--z:15.3;--c:var(--hair)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                  <b class="cube" style="--w:5;--h:1.5;--d:1;--x:-1.5;--y:-171;--z:15.2;--c:var(--lip)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                  <b class="cube" style="--w:3.5;--h:1.5;--d:1;--x:2.3;--y:-171.8;--z:15.2;--c:var(--lip);--rz:-28"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                  <b class="cube mouth" style="--w:6;--h:var(--talk);--d:1;--x:-0.5;--y:-171;--z:15.05;--c:var(--mouth)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                  <b class="cube lens" style="--w:11;--h:8;--d:1.5;--x:7;--y:-182;--z:15.8;--c:var(--frame)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                  <b class="cube lens" style="--w:11;--h:8;--d:1.5;--x:-7;--y:-182;--z:15.8;--c:var(--frame)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                  <b class="cube" style="--w:4;--h:1.5;--d:1.5;--x:0;--y:-183;--z:15.8;--c:var(--frame)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                  <b class="cube" style="--w:1.5;--h:1.5;--d:16;--x:15.6;--y:-183;--z:8;--c:var(--frame)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                  <b class="cube" style="--w:1.5;--h:1.5;--d:16;--x:-15.6;--y:-183;--z:8;--c:var(--frame)"><i></i><i></i><i></i><i></i><i></i><i></i></b>
+                </span>
+              </span>
+              <div class="offclock-bubble">
+                <p class="hud-label">Bronny</p>
+                <p class="offclock-desc">When I'm not debugging or designing systems, I'm on the basketball or pickleball court, hiking trails and mountains, deep in a video game or a TV series, or hopping between coffee shops around the city.</p>
+                <ul class="tags hobby-tags"><li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18ZM3 12h18M12 3v18M5.6 5.6c3.2 3.4 3.2 9.4 0 12.8M18.4 5.6c-3.2 3.4-3.2 9.4 0 12.8" /></svg>Basketball</li><li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 3.5a5 5 0 0 1 6 6l-6.6 6.6a2 2 0 0 1-2.8 0l-3.2-3.2a2 2 0 0 1 0-2.8ZM8.6 13.8l-5.1 5.1 1.6 1.6 5.1-5.1M18.5 16.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z" /></svg>Pickleball</li><li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h12v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9ZM16 10h1.5a2.5 2.5 0 0 1 0 5H16M8 3.5v2.5M12 3.5v2.5" /></svg>Coffee hopping</li><li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 20 6.5-11 4 6.5 2.5-4L21 20H3ZM7.6 12.2 9.5 14l1.7-1.5" /></svg>Trail hiking</li><li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8h10a4 4 0 0 1 4 4v2.5a2.5 2.5 0 0 1-4.6 1.4L15 14H9l-1.4 1.9A2.5 2.5 0 0 1 3 14.5V12a4 4 0 0 1 4-4ZM8 10.5v3M6.5 12h3M15.5 11.5h.01M17.5 13h.01" /></svg>Video games</li><li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2ZM8 2.5 12 6l4-3.5" /></svg>TV series</li></ul>
+              </div>
+            </div>
+            <ul class="gallery" aria-label="Off-the-clock photos">
+              <li class="gallery-item"><button type="button" class="burn" data-lightbox-src="./src/assets/images/offclock-1-1080.webp" data-lightbox-alt="Illustration tile: Basketball" aria-label="Open photo 1 of 6"><img src="./src/assets/images/offclock-1-480.webp" srcset="./src/assets/images/offclock-1-480.webp 480w, ./src/assets/images/offclock-1-1080.webp 1080w" sizes="320px" width="1080" height="1350" alt="" loading="lazy" decoding="async" /></button></li>
+              <li class="gallery-item"><button type="button" class="burn" data-lightbox-src="./src/assets/images/offclock-2-1080.webp" data-lightbox-alt="Illustration tile: Pickleball" aria-label="Open photo 2 of 6"><img src="./src/assets/images/offclock-2-480.webp" srcset="./src/assets/images/offclock-2-480.webp 480w, ./src/assets/images/offclock-2-1080.webp 1080w" sizes="320px" width="1080" height="1350" alt="" loading="lazy" decoding="async" /></button></li>
+              <li class="gallery-item"><button type="button" class="burn" data-lightbox-src="./src/assets/images/offclock-3-1080.webp" data-lightbox-alt="Illustration tile: Coffee hopping" aria-label="Open photo 3 of 6"><img src="./src/assets/images/offclock-3-480.webp" srcset="./src/assets/images/offclock-3-480.webp 480w, ./src/assets/images/offclock-3-1080.webp 1080w" sizes="320px" width="1080" height="1350" alt="" loading="lazy" decoding="async" /></button></li>
+              <li class="gallery-item"><button type="button" class="burn" data-lightbox-src="./src/assets/images/offclock-4-1080.webp" data-lightbox-alt="Illustration tile: Trail hiking" aria-label="Open photo 4 of 6"><img src="./src/assets/images/offclock-4-480.webp" srcset="./src/assets/images/offclock-4-480.webp 480w, ./src/assets/images/offclock-4-1080.webp 1080w" sizes="320px" width="1080" height="1350" alt="" loading="lazy" decoding="async" /></button></li>
+              <li class="gallery-item"><button type="button" class="burn" data-lightbox-src="./src/assets/images/offclock-5-1080.webp" data-lightbox-alt="Illustration tile: Video games" aria-label="Open photo 5 of 6"><img src="./src/assets/images/offclock-5-480.webp" srcset="./src/assets/images/offclock-5-480.webp 480w, ./src/assets/images/offclock-5-1080.webp 1080w" sizes="320px" width="1080" height="1350" alt="" loading="lazy" decoding="async" /></button></li>
+              <li class="gallery-item"><button type="button" class="burn" data-lightbox-src="./src/assets/images/offclock-6-1080.webp" data-lightbox-alt="Illustration tile: TV series" aria-label="Open photo 6 of 6"><img src="./src/assets/images/offclock-6-480.webp" srcset="./src/assets/images/offclock-6-480.webp 480w, ./src/assets/images/offclock-6-1080.webp 1080w" sizes="320px" width="1080" height="1350" alt="" loading="lazy" decoding="async" /></button></li>
+            </ul>
+          </div>
+        </section>
+        <div class="contact-end tone tone-ink">
+          <svg class="contours" data-contours viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+        <section id="contact" class="section contact" data-reveal-style="scan">
+          <div data-reveal="wipe">
+            <h2 class="cond contact-title">Let's<br />work.</h2>
+            <p class="contact-sub" data-reveal style="--i:1">Have a challenge in mind? Let's build a solution that works for you.</p>
+          </div>
+          <ul class="contact-list">
+            <li data-reveal style="--i:0"><a class="hud" href="mailto:lebronnsamson@gmail.com?subject=Hi%20Bronn%20Samson"><span class="hud-label">Email</span><span class="contact-value"><svg class="contact-logo" viewBox="0 0 24 24" aria-hidden="true"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z" /></svg><span>lebronnsamson@gmail.com</span></span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg></a></li>
+            <li data-reveal style="--i:1"><a class="hud" href="https://github.com/lbronn" target="_blank" rel="noopener noreferrer"><span class="hud-label">GitHub</span><span class="contact-value"><svg class="contact-logo" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" /></svg><span>github.com/lbronn</span></span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg></a></li>
+            <li data-reveal style="--i:2"><a class="hud" href="https://www.linkedin.com/in/lebronnsamson/" target="_blank" rel="noopener noreferrer"><span class="hud-label">LinkedIn</span><span class="contact-value"><svg class="contact-logo" viewBox="0 0 128 128" aria-hidden="true"><path d="M116 3H12a8.91 8.91 0 00-9 8.8v104.42a8.91 8.91 0 009 8.78h104a8.93 8.93 0 009-8.81V11.77A8.93 8.93 0 00116 3zM39.17 107H21.06V48.73h18.11zm-9-66.21a10.5 10.5 0 1110.49-10.5 10.5 10.5 0 01-10.54 10.48zM107 107H88.89V78.65c0-6.75-.12-15.44-9.41-15.44s-10.87 7.36-10.87 15V107H50.53V48.73h17.36v8h.24c2.42-4.58 8.32-9.41 17.13-9.41C103.6 47.28 107 59.35 107 75z" /></svg><span>linkedin.com/in/lebronnsamson</span></span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg></a></li>
+            <li data-reveal style="--i:3"><a class="hud" href="https://www.instagram.com/lbroooooonn/" target="_blank" rel="noopener noreferrer"><span class="hud-label">Instagram</span><span class="contact-value"><svg class="contact-logo" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077" /></svg><span>instagram.com/lbroooooonn</span></span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg></a></li>
+          </ul>
+        </section>
+        <footer class="footer">
+          <span class="footer-brand"><img class="footer-logo" src="./src/assets/images/logo-white.webp" width="30" height="32" alt="" /><span class="cond footer-name">Bronn Samson</span></span>
+          <span>&copy; 2026 · All rights reserved</span>
+        </footer>
         </div>
-      </section>
-
-      <!-- About Section -->
-      <section id="about" class="py-24 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="text-center mb-16">
-            <span class="text-primary-600 dark:text-primary-400 font-semibold tracking-[0.18em] uppercase text-xs mb-3 block">Who I Am</span>
-            <h2 class="font-display text-3xl md:text-4xl font-bold mb-4 text-ink-900 dark:text-white">About Me</h2>
-            <div class="w-20 h-1 bg-gradient-to-r from-primary-600 to-secondary-500 mx-auto rounded-full"></div>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <!-- About Content -->
-            <div class="space-y-6 text-lg text-ink-600 dark:text-ink-300">
-              <p>
-                I'm an <strong class="text-ink-900 dark:text-white font-semibold">AI Engineer</strong> specializing in <strong class="text-ink-900 dark:text-white font-semibold">hyperspecific AI agents</strong>, <strong class="text-ink-900 dark:text-white font-semibold">agentic multimodal RAG</strong>, and <strong class="text-ink-900 dark:text-white font-semibold">full-stack development</strong>. My passion lies in designing intelligent systems — from vectors-and-embeddings pipelines and LLMOps workflows to fast, decision-ready PoCs.
-              </p>
-              <p>
-                With hands-on experience across prompt &amp; context engineering, token optimization, and orchestration, evals, and logging, I bridge the gap between cutting-edge AI research and production-grade engineering.
-              </p>
-
-              <div class="grid grid-cols-2 gap-6 pt-4">
-                <div>
-                  <h4 class="font-display text-4xl font-extrabold text-gradient">2+</h4>
-                  <span class="text-sm text-ink-500">Years of Experience</span>
-                </div>
-                <div>
-                  <h4 class="font-display text-4xl font-extrabold text-gradient">10+</h4>
-                  <span class="text-sm text-ink-500">Projects Completed</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Skills / Stack (Liquid Glass) -->
-            <div class="glass rounded-2xl p-8">
-              <h3 class="font-display text-xl font-semibold mb-6 text-ink-900 dark:text-white">Technical Arsenal</h3>
-              <div class="space-y-4">
-                <div>
-                  <span class="text-sm font-medium text-ink-500 dark:text-ink-400 block mb-2">Languages</span>
-                  <div class="flex flex-wrap gap-2">
-                    <span class="px-3 py-1 text-sm rounded-full bg-primary-100 dark:bg-primary-500/20 text-primary-700 dark:text-primary-300">Python</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-primary-100 dark:bg-primary-500/20 text-primary-700 dark:text-primary-300">JavaScript</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-primary-100 dark:bg-primary-500/20 text-primary-700 dark:text-primary-300">TypeScript</span>
-                  </div>
-                </div>
-                <div>
-                  <span class="text-sm font-medium text-ink-500 dark:text-ink-400 block mb-2">Frameworks</span>
-                  <div class="flex flex-wrap gap-2">
-                    <span class="px-3 py-1 text-sm rounded-full bg-sky-100 dark:bg-sky-500/15 text-sky-700 dark:text-sky-300">Django</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-sky-100 dark:bg-sky-500/15 text-sky-700 dark:text-sky-300">FastAPI</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-sky-100 dark:bg-sky-500/15 text-sky-700 dark:text-sky-300">React</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-sky-100 dark:bg-sky-500/15 text-sky-700 dark:text-sky-300">BMAD v6</span>
-                  </div>
-                </div>
-                <div>
-                  <span class="text-sm font-medium text-ink-500 dark:text-ink-400 block mb-2">AI/ML &amp; Automation</span>
-                  <div class="flex flex-wrap gap-2">
-                    <span class="px-3 py-1 text-sm rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300">Claude SDK</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300">OpenAI SDK</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300">Gemini</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300">Agentic Multimodal RAG</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300">Hyperspecific AI Agents</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300">LLMOps</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300">Prompt &amp; Context Engineering</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300">Vectors and Embeddings</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300">n8n</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300">Power Automate</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300">Token Optimization</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-violet-100 dark:bg-violet-500/15 text-violet-700 dark:text-violet-300">Orchestration, Evals, and Logs</span>
-                  </div>
-                </div>
-                <div>
-                  <span class="text-sm font-medium text-ink-500 dark:text-ink-400 block mb-2">Tools</span>
-                  <div class="flex flex-wrap gap-2">
-                    <span class="px-3 py-1 text-sm rounded-full bg-ink-100 dark:bg-ink-700 text-ink-700 dark:text-ink-300">VS Code</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-ink-100 dark:bg-ink-700 text-ink-700 dark:text-ink-300">Claude Code</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-ink-100 dark:bg-ink-700 text-ink-700 dark:text-ink-300">Codex</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-ink-100 dark:bg-ink-700 text-ink-700 dark:text-ink-300">Antigravity</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-ink-100 dark:bg-ink-700 text-ink-700 dark:text-ink-300">LXC</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-ink-100 dark:bg-ink-700 text-ink-700 dark:text-ink-300">Docker</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-ink-100 dark:bg-ink-700 text-ink-700 dark:text-ink-300">Microsoft 365</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-ink-100 dark:bg-ink-700 text-ink-700 dark:text-ink-300">Azure</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-ink-100 dark:bg-ink-700 text-ink-700 dark:text-ink-300">Postman</span>
-                  </div>
-                </div>
-                <div>
-                  <span class="text-sm font-medium text-ink-500 dark:text-ink-400 block mb-2">Version Control</span>
-                  <div class="flex flex-wrap gap-2">
-                    <span class="px-3 py-1 text-sm rounded-full bg-emerald-100 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-300">Git</span>
-                    <span class="px-3 py-1 text-sm rounded-full bg-emerald-100 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-300">Github</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Projects Section -->
-      <section id="projects" class="py-24 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="text-center mb-16">
-            <span class="text-primary-600 dark:text-primary-400 font-semibold tracking-[0.18em] uppercase text-xs mb-3 block">Work</span>
-            <h2 class="font-display text-3xl md:text-4xl font-bold mb-4 text-ink-900 dark:text-white">Featured Projects</h2>
-            <p class="text-ink-600 dark:text-ink-400 max-w-2xl mx-auto">
-              A selection of my recent work, specifically designed to showcase my skills and problem-solving abilities.
-            </p>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Thrombolaize -->
-            <div class="group glass glass-hover rounded-2xl overflow-hidden flex flex-col">
-              <div class="h-48 bg-ink-200 dark:bg-ink-700 relative overflow-hidden">
-                <img src="./src/assets/images/thrombolaize.png" alt="Thrombolaize" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                <div class="absolute inset-0 bg-primary-900/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4 backdrop-blur-sm">
-                  <a href="https://github.com/lbronn/Thrombolaize-Mobile-App" target="_blank" class="px-5 py-2.5 bg-white rounded-full text-primary-900 hover:scale-105 transition-transform flex items-center gap-2 font-semibold shadow-lg"><i class="ph ph-github-logo text-xl"></i> Check on Github</a>
-                </div>
-              </div>
-              <div class="p-6 flex-1 flex flex-col">
-                <h3 class="font-display text-xl font-bold text-ink-900 dark:text-white mb-2">Thrombolaize</h3>
-                <p class="text-ink-600 dark:text-ink-400 text-sm mb-4 flex-1">Mobile application powered with an AI image classifier and segmentation to identify cerebral ischemic strokes and help save lives.</p>
-                <div class="flex flex-wrap gap-2 mt-auto">
-                  <span class="text-xs px-2.5 py-1 bg-ink-100 dark:bg-ink-700 rounded-full text-ink-600 dark:text-ink-300">Kotlin</span>
-                  <span class="text-xs px-2.5 py-1 bg-ink-100 dark:bg-ink-700 rounded-full text-ink-600 dark:text-ink-300">FastAPI</span>
-                  <span class="text-xs px-2.5 py-1 bg-ink-100 dark:bg-ink-700 rounded-full text-ink-600 dark:text-ink-300">Firebase</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- BoardPrep -->
-            <div class="group glass glass-hover rounded-2xl overflow-hidden flex flex-col">
-              <div class="h-48 bg-ink-200 dark:bg-ink-700 relative overflow-hidden">
-                <img src="./src/assets/images/boardprep.png" alt="BoardPrep" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                <div class="absolute inset-0 bg-primary-900/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4 backdrop-blur-sm">
-                  <a href="https://github.com/lbronn/BoardPrep-Final-Backend" target="_blank" class="px-5 py-2.5 bg-white rounded-full text-primary-900 hover:scale-105 transition-transform flex items-center gap-2 font-semibold shadow-lg"><i class="ph ph-github-logo text-xl"></i> Check on Github</a>
-                </div>
-              </div>
-              <div class="p-6 flex-1 flex flex-col">
-                <h3 class="font-display text-xl font-bold text-ink-900 dark:text-white mb-2">BoardPrep</h3>
-                <p class="text-ink-600 dark:text-ink-400 text-sm mb-4 flex-1">Full-stack web application assisting engineering students with personalized learning content and assessment, powered with AI for a personalized experience.</p>
-                <div class="flex flex-wrap gap-2 mt-auto">
-                  <span class="text-xs px-2.5 py-1 bg-ink-100 dark:bg-ink-700 rounded-full text-ink-600 dark:text-ink-300">React TS</span>
-                  <span class="text-xs px-2.5 py-1 bg-ink-100 dark:bg-ink-700 rounded-full text-ink-600 dark:text-ink-300">Django</span>
-                  <span class="text-xs px-2.5 py-1 bg-ink-100 dark:bg-ink-700 rounded-full text-ink-600 dark:text-ink-300">PostgreSQL</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Work-to-Home Forecast -->
-            <div class="group glass glass-hover rounded-2xl overflow-hidden flex flex-col">
-              <div class="h-48 relative overflow-hidden flex items-center justify-center" style="background: linear-gradient(135deg, #312E81, #4338CA 55%, #0F172A);">
-                <i class="ph ph-cloud-sun text-6xl text-white/80"></i>
-                <div class="absolute inset-0 bg-primary-900/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4 backdrop-blur-sm">
-                  <a href="#" class="px-5 py-2.5 bg-white rounded-full text-primary-900 hover:scale-105 transition-transform flex items-center gap-2 font-semibold shadow-lg"><i class="ph ph-github-logo text-xl"></i> Check on Github</a>
-                </div>
-              </div>
-              <div class="p-6 flex-1 flex flex-col">
-                <h3 class="font-display text-xl font-bold text-ink-900 dark:text-white mb-2">Work-to-Home Forecast</h3>
-                <p class="text-ink-600 dark:text-ink-400 text-sm mb-4 flex-1">N8N Automation fetching data from Google's Routes, Weather, and Static Maps APIs to notify via Discord about traffic, weather, and maps.</p>
-                <div class="flex flex-wrap gap-2 mt-auto">
-                  <span class="text-xs px-2.5 py-1 bg-ink-100 dark:bg-ink-700 rounded-full text-ink-600 dark:text-ink-300">N8N</span>
-                  <span class="text-xs px-2.5 py-1 bg-ink-100 dark:bg-ink-700 rounded-full text-ink-600 dark:text-ink-300">Google API</span>
-                  <span class="text-xs px-2.5 py-1 bg-ink-100 dark:bg-ink-700 rounded-full text-ink-600 dark:text-ink-300">Discord</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Roadmap Section -->
-      <section id="roadmap" class="py-24 relative overflow-hidden">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="text-center mb-16">
-            <span class="text-primary-600 dark:text-primary-400 font-semibold tracking-[0.18em] uppercase text-xs mb-3 block">Timeline</span>
-            <h2 class="font-display text-3xl md:text-4xl font-bold mb-4 text-ink-900 dark:text-white">My Journey</h2>
-            <p class="text-ink-600 dark:text-ink-400">The path that led me to where I am today.</p>
-          </div>
-
-          <div class="relative">
-            <!-- Vertical gradient spine -->
-            <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 -translate-x-1/2 md:translate-x-0" style="background: linear-gradient(180deg, #6366F1, rgba(148,163,184,.45) 28%, rgba(148,163,184,.45));"></div>
-
-            <div class="space-y-10">
-              <!-- Item 1 (current) -->
-              <div class="relative flex flex-col md:flex-row items-center md:justify-between">
-                <div class="absolute left-4 md:left-1/2 w-4 h-4 bg-primary-600 rounded-full border-4 border-ink-50 dark:border-ink-900 -translate-x-2 z-10 shadow-glow-brand"></div>
-                <div class="ml-12 md:ml-0 md:w-[45%] md:pr-8 order-1">
-                  <div class="glass rounded-2xl p-5 text-left md:text-right">
-                    <span class="inline-block px-3 py-1 bg-primary-100 dark:bg-primary-500/20 text-primary-700 dark:text-primary-300 rounded-full text-xs font-semibold mb-2">Feb 2026 - Present</span>
-                    <h3 class="font-display text-xl font-bold text-ink-900 dark:text-white">AI Engineer</h3>
-                    <p class="text-primary-600 dark:text-primary-400 text-sm font-semibold mt-1">Smartsourcing</p>
-                    <p class="text-ink-500 dark:text-ink-400 text-sm mt-2">Building AI-powered automation and solutions leveraging AI Agents, RAG pipelines, and LLMOps workflows.</p>
-                  </div>
-                </div>
-                <div class="hidden md:block md:w-[45%] order-2"></div>
-              </div>
-
-              <!-- Item 2 -->
-              <div class="relative flex flex-col md:flex-row items-center md:justify-between">
-                <div class="absolute left-4 md:left-1/2 w-4 h-4 bg-ink-400 dark:bg-ink-600 rounded-full border-4 border-ink-50 dark:border-ink-900 -translate-x-2 z-10 shadow"></div>
-                <div class="hidden md:block md:w-[45%] order-1"></div>
-                <div class="ml-12 md:ml-0 md:w-[45%] md:pl-8 order-2">
-                  <div class="glass rounded-2xl p-5 text-left">
-                    <span class="inline-block px-3 py-1 bg-ink-100 dark:bg-ink-700 text-ink-600 dark:text-ink-300 rounded-full text-xs font-semibold mb-2">Oct 2025 - Feb 2026</span>
-                    <h3 class="font-display text-xl font-bold text-ink-900 dark:text-white">Software Solutions Engineer</h3>
-                    <p class="text-primary-600 dark:text-primary-400 text-sm font-semibold mt-1">Smartsourcing</p>
-                    <p class="text-ink-500 dark:text-ink-400 text-sm mt-2">Drove innovation through robust software solutions and automation.</p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Item 3 -->
-              <div class="relative flex flex-col md:flex-row items-center md:justify-between">
-                <div class="absolute left-4 md:left-1/2 w-4 h-4 bg-ink-400 dark:bg-ink-600 rounded-full border-4 border-ink-50 dark:border-ink-900 -translate-x-2 z-10 shadow"></div>
-                <div class="ml-12 md:ml-0 md:w-[45%] md:pr-8 order-1">
-                  <div class="glass rounded-2xl p-5 text-left md:text-right">
-                    <span class="inline-block px-3 py-1 bg-ink-100 dark:bg-ink-700 text-ink-600 dark:text-ink-300 rounded-full text-xs font-semibold mb-2">Jun 2025 - Oct 2025</span>
-                    <h3 class="font-display text-xl font-bold text-ink-900 dark:text-white">Software Systems Developer</h3>
-                    <p class="text-primary-600 dark:text-primary-400 text-sm font-semibold mt-1">ChartNexus</p>
-                    <p class="text-ink-500 dark:text-ink-400 text-sm mt-2">Developed financial charting systems and backend services.</p>
-                  </div>
-                </div>
-                <div class="hidden md:block md:w-[45%] order-2"></div>
-              </div>
-
-              <!-- Item 4 -->
-              <div class="relative flex flex-col md:flex-row items-center md:justify-between">
-                <div class="absolute left-4 md:left-1/2 w-4 h-4 bg-ink-400 dark:bg-ink-600 rounded-full border-4 border-ink-50 dark:border-ink-900 -translate-x-2 z-10 shadow"></div>
-                <div class="hidden md:block md:w-[45%] order-1"></div>
-                <div class="ml-12 md:ml-0 md:w-[45%] md:pl-8 order-2">
-                  <div class="glass rounded-2xl p-5 text-left">
-                    <span class="inline-block px-3 py-1 bg-ink-100 dark:bg-ink-700 text-ink-600 dark:text-ink-300 rounded-full text-xs font-semibold mb-2">2021 - May 2025</span>
-                    <h3 class="font-display text-xl font-bold text-ink-900 dark:text-white">Computer Science</h3>
-                    <p class="text-primary-600 dark:text-primary-400 text-sm font-semibold mt-1">Cebu Institute of Technology-University</p>
-                    <p class="text-ink-500 dark:text-ink-400 text-sm mt-2">Graduated Cum Laude. Level 2 FE PHILNITS Passer.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Personal Section -->
-      <section class="py-24 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-            <div class="glass-tinted rounded-2xl p-8">
-              <h3 class="font-display text-2xl font-bold text-ink-900 dark:text-white mb-4">Beyond the Code</h3>
-              <p class="text-ink-600 dark:text-ink-300 leading-relaxed mb-6">
-                When I'm not debugging or designing systems, I stay competitive on the basketball court or immerse myself in video game worlds and TV series. I believe that a balanced life fuels creativity.
-              </p>
-              <p class="text-ink-600 dark:text-ink-300 leading-relaxed">
-                I also love exploring the city through coffee shop hopping, finding new spots and flavors.
-              </p>
-            </div>
-            <div>
-              <span class="text-primary-600 dark:text-primary-400 font-semibold tracking-[0.18em] uppercase text-xs mb-3 block">Off the clock</span>
-              <h2 class="font-display text-3xl md:text-4xl font-bold mb-6 text-ink-900 dark:text-white">Personal Life</h2>
-              <div class="grid grid-cols-2 gap-4">
-                <div class="glass glass-hover rounded-xl p-6 text-center">
-                  <i class="ph ph-basketball text-4xl text-orange-500 mb-2"></i>
-                  <span class="block font-medium text-ink-800 dark:text-ink-200">Basketball</span>
-                </div>
-                <div class="glass glass-hover rounded-xl p-6 text-center">
-                  <i class="ph ph-game-controller text-4xl text-violet-500 mb-2"></i>
-                  <span class="block font-medium text-ink-800 dark:text-ink-200">Video Games</span>
-                </div>
-                <div class="glass glass-hover rounded-xl p-6 text-center">
-                  <i class="ph ph-coffee text-4xl text-amber-700 mb-2"></i>
-                  <span class="block font-medium text-ink-800 dark:text-ink-200">Coffee</span>
-                </div>
-                <div class="glass glass-hover rounded-xl p-6 text-center">
-                  <i class="ph ph-television text-4xl text-primary-500 mb-2"></i>
-                  <span class="block font-medium text-ink-800 dark:text-ink-200">TV Series</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Contact Section -->
-      <section id="contact" class="py-24 relative border-t border-ink-200/60 dark:border-ink-800/60">
-        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 class="font-display text-3xl md:text-4xl font-bold mb-6 text-ink-900 dark:text-white">Let's Work Together</h2>
-          <p class="text-xl text-ink-600 dark:text-ink-400 mb-12">
-            Have a project in mind or just want to say hi? I'm always open to discussing new opportunities and ideas.
-          </p>
-
-          <div class="flex flex-col md:flex-row justify-center gap-6 mb-12">
-            <a href="mailto:lebronnsamson@gmail.com?subject=Hi%20Le%20Bronn%20Samson" class="flex items-center justify-center gap-3 px-8 py-4 bg-primary-600 text-white rounded-full hover:bg-primary-700 transition-all font-semibold text-lg shadow-glow-brand hover:-translate-y-0.5">
-              <i class="ph ph-envelope-simple text-2xl"></i>
-              Send an Email
-            </a>
-            <a href="https://www.linkedin.com/in/lebronnsamson/" target="_blank" class="flex items-center justify-center gap-3 px-8 py-4 glass glass-hover rounded-full font-semibold text-lg text-ink-900 dark:text-white">
-              <i class="ph ph-linkedin-logo text-2xl"></i>
-              LinkedIn
-            </a>
-          </div>
-
-          <div class="flex justify-center gap-3">
-            <a href="https://github.com/lbronn" target="_blank" aria-label="GitHub" class="w-11 h-11 flex items-center justify-center rounded-full glass glass-hover text-ink-700 dark:text-ink-200 text-xl"><i class="ph ph-github-logo"></i></a>
-            <a href="https://www.linkedin.com/in/lebronnsamson/" target="_blank" aria-label="LinkedIn" class="w-11 h-11 flex items-center justify-center rounded-full glass glass-hover text-ink-700 dark:text-ink-200 text-xl"><i class="ph ph-linkedin-logo"></i></a>
-            <a href="https://www.instagram.com/lbroooooonn/" target="_blank" aria-label="Instagram" class="w-11 h-11 flex items-center justify-center rounded-full glass glass-hover text-ink-700 dark:text-ink-200 text-xl"><i class="ph ph-instagram-logo"></i></a>
-          </div>
-
-          <p class="mt-16 text-sm text-ink-500 flex items-center justify-center gap-1.5">
-            &copy; 2026 Bronny. All rights reserved. <i class="ph ph-heart-fill text-red-500"></i>
-          </p>
-        </div>
-      </section>
+      </div>
     </main>
-
-    <!-- Scroll to Top Button -->
-    <button id="scroll-to-top" class="fixed bottom-8 right-8 w-12 h-12 flex items-center justify-center rounded-full bg-primary-600 text-white shadow-glow-brand translate-y-20 opacity-0 transition-all duration-300 hover:bg-primary-700 focus:outline-none z-40" aria-label="Scroll to top">
-      <i class="ph ph-arrow-up text-xl"></i>
-    </button>
-
-    <script src="./src/js/main.js"></script>
+    <dialog class="lightbox" aria-label="Photo viewer">
+      <button type="button" class="lb-btn lb-close" aria-label="Close"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg></button>
+      <button type="button" class="lb-btn lb-prev" aria-label="Previous photo"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7" /></svg></button>
+      <button type="button" class="lb-btn lb-next" aria-label="Next photo"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg></button>
+      <img alt="" />
+    </dialog>
   </body>
 </html>

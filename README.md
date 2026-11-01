@@ -15,6 +15,15 @@ Static portfolio: HTML, CSS and vanilla JS ES modules with a raw WebGL hero. No 
 - `src/js/lib.js`: pure helpers (tested)
 - `src/js/portrait-reveal.js`: WebGL burn/trail portrait (lazy-loaded)
 
+## Responsive layout
+
+- `width <= 1024px` (phones in both orientations, tablets in portrait) is the stacked layout: menu-button nav
+  (always compact), icon-only portrait switch / "View projects" beside the portrait, and every slider
+  (Projects, Achievements, Off-the-clock gallery, Profession roadmap) stacked vertically. Keep `STACKED` in
+  `src/js/main.js` equal to it.
+- On the stacked roadmap the figure teleports down a stop each time the next stop scrolls into view.
+- `(orientation: landscape) and (height <= 600px)` adds phone-landscape tweaks (two-column hero and menu).
+
 ## Calibrating the hero portrait
 
 The second layer (`hero-alt-*.webp`) is a still render of the 3D figure in the photo's pose (arms crossed),

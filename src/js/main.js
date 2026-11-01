@@ -46,6 +46,24 @@ function initNav() {
 }
 
 const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+/** Phones (both orientations) and tablets in portrait: sliders and the roadmap are stacked. Keep equal to home.css. */
+const STACKED = '(width <= 1024px)';
+
+/**
+ * Adds `cls` to `el` (restarting its animation if the class was already there) and resolves when that animation ends.
+ * The timeout is a safety net for an animation that never runs (e.g. the element is display: none).
+ */
+function playClass(el, cls, timeoutMs = 2500) {
+  return new Promise((resolve) => {
+    const done = () => { clearTimeout(timer); el.removeEventListener('animationend', onEnd); resolve(); };
+    const onEnd = (e) => { if (e.target === el && !e.pseudoElement) done(); };
+    const timer = setTimeout(done, timeoutMs);
+    el.addEventListener('animationend', onEnd);
+    el.classList.remove(cls);
+    void el.offsetWidth; // restart
+    el.classList.add(cls);
+  });
+}
 
 /** <polyline data-spark="1,2,3"> -> points. Bad data hides the sparkline instead of breaking the hero. */
 function initSpark() {
@@ -205,6 +223,8 @@ function initSliders() {
     go(start, 'instant');
     // web fonts resize the cards after first layout and the browser may re-snap to another card: put the start card back
     document.fonts.ready.then(() => { if (!moved) go(start, 'instant'); });
+    // stacked on small screens (no scrolling there): back on a wide screen, open on the start card again
+    window.matchMedia(STACKED).addEventListener('change', (e) => { if (!e.matches && !moved) go(start, 'instant'); });
   });
 }
 
@@ -265,24 +285,92 @@ function initSectionCentering() {
 }
 
 /**
- * Profession roadmap. The first time it's in view the figure hops stop 1 -> 2 -> 3 and the flags go up (CSS: .hop-ready, .is-hopping);
- * narrow screens scroll the road along with him. Reduced motion: no hops, the road just opens on the current stop.
+ * Profession roadmap: the figure travels stop 1 -> 2 -> 3 once, and each stop's flag goes up when he has left it.
+ * - Desktop (three columns): he hops sideways the first time the road is in view (CSS .hop-ready, .is-hopping).
+ * - Stacked (STACKED): he teleports down, one stop each time the next stop's sky has scrolled fully into view
+ *   (CSS .tp-ready + the .stop-pad teleport circles); --tp-y lifts him from the current stop's sky to the one he is on.
+ * Reduced motion, no IntersectionObserver, or the layout switching mid-way (a rotated tablet): he is simply on the current stop.
  */
 function initRoadmap() {
   const road = document.querySelector('.roadmap');
-  if (!road) return;
-  const stops = road.querySelectorAll('.stop');
-  const scrollToStop = (i, behavior) => road.scrollTo({ left: stops[i].offsetLeft - stops[0].offsetLeft, behavior }); // no-op when the road fits
-  if (reducedMotion() || !('IntersectionObserver' in window)) { scrollToStop(stops.length - 1, 'instant'); return; }
-  road.classList.add('hop-ready');
-  const io = new IntersectionObserver(([entry]) => {
-    if (!entry.isIntersecting) return;
-    io.disconnect();
-    road.classList.add('is-hopping');
-    setTimeout(() => scrollToStop(1, 'smooth'), 700); // take-offs in hop-x (home.css): 0.4s delay + 14% / 57% of 2.1s
-    setTimeout(() => scrollToStop(2, 'smooth'), 1600);
-  }, { threshold: 0.4 });
-  io.observe(road);
+  if (!road || reducedMotion() || !('IntersectionObserver' in window)) return;
+  const stops = [...road.querySelectorAll('.stop')];
+  const track = road.querySelector('.walker-track');
+  const btn = road.querySelector('.walker-btn');
+  if (!track || !btn || stops.length < 2) return;
+  const stacked = window.matchMedia(STACKED);
+  const observers = [];
+  let finished = false;
+  const finish = () => {
+    if (finished) return;
+    finished = true;
+    observers.forEach((o) => o.disconnect());
+    road.classList.remove('hop-ready', 'is-hopping', 'tp-ready');
+    stops.forEach((stop) => stop.classList.remove('is-left'));
+    road.querySelectorAll('.stop-pad').forEach((pad) => pad.classList.remove('is-on', 'is-departing', 'is-arriving'));
+    btn.classList.remove('is-tp-out', 'is-tp-in');
+    track.style.removeProperty('--tp-y');
+  };
+  stacked.addEventListener('change', finish, { once: true });
+
+  if (!stacked.matches) {
+    road.classList.add('hop-ready');
+    const io = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      io.disconnect();
+      road.classList.add('is-hopping');
+    }, { threshold: 0.4 });
+    io.observe(road);
+    observers.push(io);
+    return;
+  }
+
+  const skies = stops.map((stop) => stop.querySelector('.stop-sky'));
+  const pads = stops.map((stop) => stop.querySelector('.stop-pad'));
+  if (skies.includes(null) || pads.includes(null)) return; // markup changed: leave him on the current stop
+  const last = stops.length - 1;
+  let at = 0; // the stop he is on
+  let target = 0; // the furthest stop the visitor has reached
+  let running = false;
+  const place = () => {
+    if (!finished) track.style.setProperty('--tp-y', `${skies[at].getBoundingClientRect().top - skies[last].getBoundingClientRect().top}px`);
+  };
+  road.classList.add('tp-ready');
+  pads[0].classList.add('is-on');
+  place();
+  const ro = new ResizeObserver(place); // card heights change with width, fonts and rotation
+  ro.observe(road);
+  observers.push(ro);
+
+  const run = async () => {
+    if (running) return;
+    running = true;
+    while (at < target && !finished) {
+      pads[at].classList.remove('is-on');
+      playClass(pads[at], 'is-departing');
+      await playClass(btn, 'is-tp-out');
+      if (finished) return;
+      stops[at].classList.add('is-left'); // its flag goes up
+      at += 1;
+      place();
+      btn.classList.remove('is-tp-out');
+      await Promise.all([playClass(btn, 'is-tp-in'), playClass(pads[at], 'is-arriving')]);
+      if (finished) return;
+      btn.classList.remove('is-tp-in');
+      pads[at].classList.add('is-on');
+    }
+    running = false;
+    if (at === last) finish(); // the end state is the plain layout: him on the current stop, every flag up
+  };
+  // a stop counts as reached once its whole sky is on screen, or once it has been scrolled past (a fast fling)
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.intersectionRatio >= 0.99 || (!e.isIntersecting && e.boundingClientRect.top < 0)) target = Math.max(target, skies.indexOf(e.target));
+    });
+    run();
+  }, { threshold: [0, 1], rootMargin: '0px 0px -10% 0px' });
+  skies.slice(1).forEach((sky) => io.observe(sky));
+  observers.push(io);
 }
 
 /** Click the figure: his free hand waves (CSS .is-waving) and "I Freelance Too!" shows in a live region for 2 s. */

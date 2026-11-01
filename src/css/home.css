@@ -1,10 +1,11 @@
 /* Home page: nav, hero, sections, lightbox, footer. Breakpoints at the end of the file. */
 
 /* ---------- Footer ---------- */
-.footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; max-width: var(--max); margin: 0 auto; padding: 24px var(--gutter); color: var(--ink-soft); font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; }
+.footer { display: flex; justify-content: space-between; align-items: center; gap: 16px; max-width: var(--max); margin: 0 auto; padding: 24px var(--gutter); color: var(--ink-soft); font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; }
 .footer-name { color: var(--ink); font-size: 22px; }
 .footer-brand { display: inline-flex; align-items: center; gap: 12px; }
-.footer-logo { width: auto; height: 32px; } /* the favicon's "B." in white on a transparent background */
+.footer-logo { width: auto; height: 32px; }
+.footer-copy { white-space: nowrap; } /* the favicon's "B." in white on a transparent background */
 /* Contact and the footer share one ink band and one contour artwork, so nothing divides them */
 .contact-end { position: relative; isolation: isolate; max-width: var(--max); margin: 0 auto; }
 .contact-end.tone { padding-bottom: 0; }
@@ -42,13 +43,14 @@
 .nav-menu-btn { display: none; place-items: center; width: 42px; height: 42px; margin-left: 4px; border-radius: 999px; }
 .nav-menu-btn .icon { width: 20px; height: 20px; }
 
-@media (width <= 768px) {
-  .nav { left: 50%; width: 100vw; max-width: none; margin-left: -50vw; padding: 0 max(14px, env(safe-area-inset-left)); grid-template-columns: 1fr auto; gap: 8px; transform: none; background: none; border-color: #0000; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; transition: top 0.4s var(--ease); }
-  .nav.is-scrolled { width: 100vw; grid-template-columns: 1fr auto; }
+/* Phones (both orientations) and tablets in portrait: brand pill + menu button, always in the compact
+   "scrolled" form (the unscrolled state no longer stretches the brand pill or pads the menu button) */
+@media (width <= 1024px) {
+  .nav, .nav.is-scrolled { left: 50%; width: 100vw; max-width: none; margin-left: -50vw; padding: 0 max(14px, env(safe-area-inset-left)); grid-template-columns: 1fr auto; gap: 8px; transform: none; background: none; border-color: #0000; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; transition: top 0.4s var(--ease); }
   .nav.is-hidden { top: -70px; transform: none; }
-  .nav-brand, .nav.is-scrolled .nav-brand, .nav-menu-btn { padding: 10px 18px; border: 1px solid var(--glass-border); border-radius: 999px; background: var(--glass); box-shadow: var(--glass-shadow); -webkit-backdrop-filter: blur(18px) saturate(170%); backdrop-filter: blur(18px) saturate(170%); }
-  .nav-menu-btn { display: grid; padding: 0; }
-  .nav.is-scrolled .nav-end { padding: 0; background: none; border-color: #0000; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .nav-brand, .nav.is-scrolled .nav-brand, .nav-menu-btn { justify-self: start; padding: 10px 18px; border: 1px solid var(--glass-border); border-radius: 999px; background: var(--glass); box-shadow: var(--glass-shadow); -webkit-backdrop-filter: blur(18px) saturate(170%); backdrop-filter: blur(18px) saturate(170%); }
+  .nav-menu-btn { display: grid; width: 44px; height: 44px; margin-left: 0; padding: 0; }
+  .nav-end, .nav.is-scrolled .nav-end { justify-self: end; padding: 0; background: none; border-color: #0000; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
   .nav-end .nav-cta { display: none; }
   .nav-links-contact { display: block; }
   /* full-screen ink overlay: solid also when scrolled (.nav.is-scrolled > nav beats the desktop glass rule), unfocusable when closed */
@@ -60,6 +62,14 @@
   .nav-links-contact a { display: flex; justify-content: space-between; align-items: center; margin-top: 18px; padding: 16px 22px; border-radius: 999px; background: #29a3ff; color: #0b1026; font-size: clamp(20px, 6vw, 26px); }
   .nav-links-contact .icon { width: 20px; height: 20px; }
   .nav.is-open .nav-brand, .nav.is-open .nav-menu-btn { position: relative; z-index: 2; color: #eef3f4; background: none; border-color: #eef3f459; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+/* phones in landscape: the six menu entries in two columns so they fit a ~400px-tall screen */
+@media (width <= 1024px) and (orientation: landscape) and (height <= 600px) {
+  .nav > nav, .nav.is-scrolled > nav { padding-top: 80px; }
+  .nav-links { grid-template-columns: 1fr 1fr; column-gap: 32px; font-size: clamp(28px, 9svh, 40px); }
+  .nav-links a { padding: 6px 0; }
+  .nav-links-contact { grid-column: 1 / -1; }
+  .nav-links-contact a { margin-top: 10px; padding: 12px 22px; font-size: 20px; }
 }
 
 /* ---------- Hero ---------- */
@@ -111,33 +121,61 @@
 .hero-cta { display: inline-flex; align-items: center; gap: 10px; padding: 12px 22px; border: 1px solid var(--brand); color: var(--brand); background: color-mix(in srgb, var(--paper) 85%, transparent); clip-path: var(--cut); font-size: 13px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; transition: background-color 0.2s, color 0.2s; }
 .hero-cta:hover { background: var(--brand); color: var(--paper); }
 .hero-cta:focus-visible { outline-color: currentColor; outline-offset: -4px; } /* clip-path clips the outset ring */
+.hero-cta .icon-grid { display: none; } /* stands in for the label when the hero button is icon-only (mobile) */
 
+/* Mobile hero: a one-column grid. .hero-bar becomes display: contents so the portrait switch and "View projects"
+   can share the portrait's grid cell: icon-only buttons on its left and right, level with his face. */
 @media (width <= 1024px) {
-  .hero { display: flex; flex-direction: column; height: auto; min-height: 0; padding: 104px 0 28px; }
-  .hero-intro, .hero-panels, .hero-bar { position: relative; inset: auto; transform: none; }
-  .hero-intro { width: auto; padding: 0 var(--gutter); }
-  .hero-stage { position: relative; margin-top: 12px; }
-  .hero-portrait { position: relative; bottom: auto; left: auto; width: min(100%, 720px); height: auto; margin: 0 auto; transform: none; }
-  .hero-panels { width: auto; padding: 24px var(--gutter) 0; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
-  .hero-bar { padding: 28px var(--gutter) 0; grid-template-columns: 1fr; justify-items: start; gap: 20px; }
-  .hero-cta-wrap { grid-column: auto; justify-self: start; }
+  /* --pw: portrait width (946 / 883 = its aspect ratio; the svh cap keeps it inside short, landscape screens).
+     Its 100% means the same in the portrait (stage width) and in the buttons' margins (the shared grid cell). */
+  .hero { --hero-btn: 48px; --pw: min(100%, 720px, calc((100svh - 140px) * 946 / 883)); --stage-top: 12px; display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; height: auto; min-height: 0; padding: 96px 0 28px; }
+  .hero-intro, .hero-panels { position: relative; inset: auto; transform: none; }
+  .hero-intro { grid-row: 1; width: auto; padding: 0 var(--gutter); }
+  .hero-stage { position: relative; grid-row: 2; grid-column: 1; margin-top: var(--stage-top); }
+  .hero-portrait { position: relative; bottom: auto; left: auto; width: var(--pw); height: auto; margin: 0 auto; transform: none; }
+  .hero-panels { grid-row: 3; width: auto; padding: 24px var(--gutter) 0; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .hero-bar { display: contents; }
+  .hero-meta-bar { grid-row: 4; margin: 20px var(--gutter) 0; padding-bottom: 0; border-bottom: 0; animation: fade 1s 0.4s both; }
+  /* centred 32% down the frame (0.3 = 0.32 * 883 / 946 of its width): beside his face, where photo and 3D model leave the sides empty */
+  .hero-switch, .hero-cta-wrap { grid-row: 2; grid-column: 1; align-self: start; z-index: 4; margin-top: calc(var(--stage-top) + var(--pw) * 0.3 - var(--hero-btn) / 2); animation: fade 1s 0.4s both; }
+  .hero-switch { justify-self: start; margin-left: var(--gutter); padding: 0; gap: 0; border-radius: 50%; }
+  .hero-switch:hover { background: none; }
+  .switch-icon { width: var(--hero-btn); height: var(--hero-btn); background: color-mix(in srgb, var(--paper) 85%, transparent); }
+  .switch-icon .icon { width: 20px; height: 20px; }
+  .hero-switch-sub { display: none; }
+  /* labels removed visually; they stay the buttons' accessible names */
+  .hero-switch-title, .hero-cta-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .hero-cta-wrap { justify-self: end; margin-right: var(--gutter); }
+  .hero-cta-wrap .hero-cta { justify-content: center; width: var(--hero-btn); height: var(--hero-btn); padding: 0; gap: 0; }
+  .hero-cta-wrap .hero-cta .icon { width: 18px; height: 18px; }
+  .hero-cta-wrap .icon-arrow { display: none; }
+  .hero-cta-wrap .icon-grid { display: block; }
 }
 @media (width <= 768px) {
-  .hero { padding: 88px 0 20px; }
+  .hero { --hero-btn: 44px; --pw: min(100%, 420px, 44.9966svh); --stage-top: 4px; padding: 84px 0 20px; }
   .hero-intro { text-align: center; }
   .hero-meta-top { display: none; }
-  .hero-meta-bar { display: flex; gap: 6px 18px; padding-bottom: 12px; font-size: 11px; }
+  .hero-meta-bar { display: flex; gap: 6px 18px; font-size: 11px; }
   .hero-name { font-size: 8.5vw; white-space: nowrap; }
   .hero-name span { display: inline; }
-  .hero-portrait { width: min(100%, 420px, 44.9966svh); }
-  .hero-stage { margin-top: 4px; }
   .hero-panels { grid-template-columns: 1fr 1fr; gap: 10px; padding-top: 18px; }
   .hero-panels > :last-child { grid-column: 1 / -1; }
-  .hero-bar { gap: 14px; padding-top: 20px; }
 }
 @media (width <= 400px) {
-  .hero-portrait { width: min(100%, 40.7112svh); }
+  .hero { --pw: min(100%, 40.7112svh); }
   .hero-panels { gap: 8px; }
+}
+/* Phones in landscape: name and meta on the left, the portrait (with its two buttons) on the right */
+@media (width <= 1024px) and (orientation: landscape) and (height <= 600px) {
+  .hero { --pw: min(100%, calc((100svh - 96px) * 946 / 883)); --stage-top: 0px; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); column-gap: 8px; padding-top: 76px; }
+  .hero-intro { grid-row: 1; grid-column: 1; align-self: center; padding-right: 0; text-align: left; }
+  .hero-name { font-size: clamp(44px, 7.4vw, 72px); white-space: normal; }
+  .hero-name span { display: block; }
+  .hero-meta-top { display: grid; margin-top: 20px; font-size: 12px; }
+  .hero-meta-bar { display: none; }
+  .hero-stage, .hero-switch, .hero-cta-wrap { grid-row: 1; grid-column: 2; }
+  .hero-panels { grid-column: 1 / -1; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .hero-panels > :last-child { grid-column: auto; }
 }
 
 /* ---------- Sections ---------- */
@@ -189,6 +227,7 @@
 .carousel-btn { display: grid; place-items: center; width: 38px; height: 38px; color: #fff; font-size: 18px; background: #0b102673; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); clip-path: var(--cut); opacity: 0; transition: opacity 0.3s, background-color 0.2s, color 0.2s; }
 .carousel:hover .carousel-btn, .carousel-btn:focus-visible { opacity: 1; }
 .carousel-btn:hover { background: var(--sky); color: var(--ink); }
+@media (hover: none) { .carousel-btn { opacity: 1; } } /* touch screens never fire :hover to reveal them */
 .carousel-dots { display: flex; gap: 6px; margin: 0 auto; padding: 8px 10px; border-radius: 999px; background: #0b102666; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
 .carousel-dots button { width: 8px; height: 8px; border-radius: 999px; background: #ffffff80; transition: width 0.4s var(--ease), background-color 0.3s; }
 .carousel-dots button.is-current { width: 26px; background: var(--sky); }
@@ -315,15 +354,18 @@
   34%, 66% { rotate: -128deg; }
 }
 
-/* First time the road is in view (main.js initRoadmap adds .hop-ready, then .is-hopping) the figure hops
-   stop 1 -> 2 -> 3, and each flag goes up once he has hopped on from it. 100% + gap = one stop to the next. */
-.hop-ready .walker-track { translate: calc(-2 * (100% + var(--gap))) 0; }
-.hop-ready .stop-flag { scale: 1 0; }
-.is-hopping .walker-track { animation: hop-x 2.1s 0.4s both; }
-.is-hopping .walker-btn { animation: hop 2.1s 0.4s both; } /* drives --bend and --lift for the legs, arms, body and shadow */
-.is-hopping .stop-flag { animation: flag-up 0.5s var(--ease) both; }
-.is-hopping .stop:nth-child(1) .stop-flag { animation-delay: 1.3s; } /* 0.4s + landing on stop 2 at 42% */
-.is-hopping .stop:nth-child(2) .stop-flag { animation-delay: 2.2s; } /* 0.4s + landing on stop 3 at 85% */
+/* Desktop (main.js initRoadmap adds .hop-ready, then .is-hopping the first time the road is in view): the figure hops
+   stop 1 -> 2 -> 3, and each flag goes up once he has hopped on from it. 100% + gap = one stop to the next.
+   The stacked mobile roadmap teleports him instead (see "Profession, stacked" below). */
+@media (width > 1024px) {
+  .hop-ready .walker-track { translate: calc(-2 * (100% + var(--gap))) 0; }
+  .hop-ready .stop-flag { scale: 1 0; }
+  .is-hopping .walker-track { animation: hop-x 2.1s 0.4s both; }
+  .is-hopping .walker-btn { animation: hop 2.1s 0.4s both; } /* drives --bend and --lift for the legs, arms, body and shadow */
+  .is-hopping .stop-flag { animation: flag-up 0.5s var(--ease) both; }
+  .is-hopping .stop:nth-child(1) .stop-flag { animation-delay: 1.3s; } /* 0.4s + landing on stop 2 at 42% */
+  .is-hopping .stop:nth-child(2) .stop-flag { animation-delay: 2.2s; } /* 0.4s + landing on stop 3 at 85% */
+}
 /* sideways only while he's in the air (13-42%, 56-85%), at a steady speed like a real jump */
 @keyframes hop-x {
   0%, 13% { translate: calc(-2 * (100% + var(--gap))) 0; animation-timing-function: linear; }
@@ -348,6 +390,7 @@
   97%, 100% { --bend: 0; --lift: 0; }
 }
 @keyframes flag-up { from { scale: 1 0; } 70% { scale: 1 1.1; } to { scale: 1 1; } }
+.stop-pad { display: none; } /* teleport circles: mobile roadmap only */
 
 /* ---------- Off the clock + coverflow gallery ---------- */
 .paper .offclock { padding: clamp(22px, 3vw, 34px) 0; }
@@ -414,10 +457,82 @@ body:has(.lightbox[open]) { overflow: hidden; }
   .paper .achievement, .paper .achievement:nth-child(even) { grid-template-columns: 1fr; }
   .achievement-body, .paper .achievement:nth-child(even) .achievement-body { padding: 8px; }
   .paper .achievement:nth-child(even) .achievement-media { order: 0; }
-  /* three stops no longer fit "SMARTSOURCING": the roadmap stays horizontal, swipe along it, one stop per snap */
-  .roadmap { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: min(78vw, 320px); margin: -48px calc(-1 * var(--gutter)) 0; padding: 48px var(--gutter) 12px; /* headroom: the scroller clips the top of a hop */ overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter); scrollbar-width: none; }
-  .roadmap::-webkit-scrollbar { display: none; }
-  .stop { scroll-snap-align: start; }
+}
+
+/* ---------- Stacked (phones in both orientations, tablets in portrait): every sideways slider becomes a vertical stack ---------- */
+@media (width <= 1024px) {
+  .slide-nav { display: none; } /* nothing to page through */
+  /* Projects */
+  .projects-track { display: grid; gap: 20px; margin-inline: 0; padding: 0; overflow: visible; scroll-snap-type: none; perspective: none; -webkit-mask: none; mask: none; }
+  .paper .project { scroll-snap-align: none; }
+  /* Achievements */
+  .achievements { flex-direction: column; gap: 24px; padding: 0; overflow: visible; scroll-snap-type: none; }
+  .paper .achievement { flex: none; scroll-snap-align: none; }
+  /* Off the clock: the gallery becomes a grid */
+  .gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; overflow: visible; scroll-snap-type: none; perspective: none; }
+  .gallery-item { flex: none; }
+  .gallery-item, .paper .project { animation: none; } /* no coverflow without a sideways scroller */
+
+  /* Profession, stacked: oldest stop on top. A vertical road runs down the left rail; each stop has a "sky"
+     (flag + teleport circle + room for the figure), its date, then its card. */
+  .roadmap { --rail: 26px; --sky: 172px; --node-y: calc(var(--sky) + 9px); --stop-gap: 40px; display: block; }
+  .stop { display: grid; grid-template-columns: var(--rail) minmax(0, 1fr); grid-template-rows: auto auto 1fr; column-gap: 16px; }
+  .stop:not(:last-child) { padding-bottom: var(--stop-gap); }
+  .stop-sky { grid-area: 1 / 2; height: var(--sky); }
+  .stop-road { grid-area: 1 / 1 / 4 / 2; height: auto; }
+  .stop-date { grid-area: 2 / 2; margin-top: 0; text-align: left; }
+  .stop-card { grid-area: 3 / 2; margin-top: 12px; }
+  /* road: 12px ink with a dashed centre line, from each node down to the next one's */
+  .stop-road::before, .stop:first-child .stop-road::after { top: var(--node-y); bottom: calc(-1 * (var(--stop-gap) + var(--node-y))); left: 50%; width: 12px; height: auto; translate: -50% 0; background: repeating-linear-gradient(180deg, #eef3f4cc 0 10px, transparent 10px 22px) center / 2px 100% no-repeat, var(--ink); }
+  .stop:first-child .stop-road::after { top: calc(var(--node-y) - 120px); bottom: auto; width: 12px; height: 120px; -webkit-mask: linear-gradient(180deg, transparent, #000 70%); mask: linear-gradient(180deg, transparent, #000 70%); }
+  .stop:last-child .stop-road::before { bottom: auto; width: 12px; height: 160px; -webkit-mask: linear-gradient(180deg, #000 20%, transparent); mask: linear-gradient(180deg, #000 20%, transparent); } /* what's next */
+  .stop-node { top: var(--node-y); }
+  .stop-flag { left: 10px; translate: 0; }
+  /* the figure stands mid-sky at 70% size; --tp-y (set by main.js initRoadmap) lifts him to an earlier stop */
+  .walker-track { translate: 0 var(--tp-y, 0px); scale: 0.7; transform-origin: 50% 100%; }
+  .walker-btn { transform-origin: 50% 100%; }
+  .walker-bubble { left: calc(50% + 20px); font-size: 22px; } /* 22px at 70% = ~15px on screen */
+  /* teleport circle: a glowing ring on the ground with a column of light; dim under him at rest */
+  .stop-pad { display: block; position: absolute; bottom: -10px; left: 50%; width: 96px; height: 24px; translate: -50% 0; border: 2px solid var(--sky); border-radius: 50%; background: radial-gradient(closest-side, #29a3ff59, #29a3ff00); box-shadow: 0 0 16px #29a3ffaa, inset 0 0 10px #29a3ff80; opacity: 0; scale: 0.2; pointer-events: none; }
+  .stop-pad::before { content: ""; position: absolute; bottom: 50%; left: 10%; right: 10%; height: 168px; border-radius: 40% 40% 0 0 / 8% 8% 0 0; background: linear-gradient(0deg, #29a3ffb3, #29a3ff26 60%, #29a3ff00); opacity: 0; scale: 1 0; transform-origin: 50% 100%; }
+  .stop.is-current .stop-pad, .stop-pad.is-on { opacity: 0.45; scale: 1; }
+  .tp-ready .stop.is-current .stop-pad:not(.is-on) { opacity: 0; scale: 0.2; }
+  .stop-pad.is-departing { animation: pad-depart 1.2s var(--ease) both; }
+  .stop-pad.is-arriving { animation: pad-arrive 1.5s var(--ease) both; }
+  .stop-pad:is(.is-departing, .is-arriving)::before { animation: pad-light 1.2s ease-out both; }
+  /* he dissolves into light, squeezed thin, and re-forms the same way at the next stop */
+  .walker-btn.is-tp-out { animation: tp-out 0.6s cubic-bezier(0.5, 0, 0.75, 0) both; }
+  .walker-btn.is-tp-in { animation: tp-out 0.7s cubic-bezier(0.25, 1, 0.5, 1) reverse both; }
+  /* flags stay down until he has teleported on from their stop */
+  .tp-ready .stop-flag { scale: 1 0; }
+  .tp-ready .stop.is-left .stop-flag { animation: flag-up 0.5s var(--ease) both; }
+}
+@keyframes pad-depart {
+  0% { opacity: 0.45; scale: 1; }
+  15%, 55% { opacity: 1; scale: 1.08; }
+  100% { opacity: 0; scale: 0.2; }
+}
+@keyframes pad-arrive {
+  0% { opacity: 0; scale: 0.2; }
+  20%, 70% { opacity: 1; scale: 1.08; }
+  100% { opacity: 0.45; scale: 1; }
+}
+@keyframes pad-light {
+  0% { opacity: 0; scale: 1 0; }
+  25% { opacity: 1; scale: 1 1; }
+  60% { opacity: 0.9; scale: 1 1; }
+  100% { opacity: 0; scale: 0.4 1; }
+}
+@keyframes tp-out {
+  0% { opacity: 1; scale: 1 1; filter: none; }
+  40% { opacity: 1; scale: 1 1; filter: brightness(1.6) drop-shadow(0 0 6px #29a3ff); }
+  100% { opacity: 0; scale: 0.08 1.3; filter: brightness(3) drop-shadow(0 0 14px #29a3ff); }
+}
+/* tablets: projects as image-left cards, so the stack isn't a column of giant images */
+@media (640px <= width <= 1024px) {
+  .paper .project { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto auto 1fr; column-gap: 22px; }
+  .project-media { grid-row: 1 / 4; align-self: center; }
+  .project-row { margin-top: 4px; }
 }
 @media (width <= 768px) {
   .offclock-head { grid-template-columns: 1fr; }
@@ -434,8 +549,6 @@ body:has(.lightbox[open]) { overflow: hidden; }
 }
 @media (width <= 560px) {
   .facts { grid-template-columns: 1fr; }
-  .gallery { gap: 14px; }
-  .gallery-item { flex-basis: 74vw; }
   .section { padding-top: clamp(56px, 14vw, 80px); }
   .tone, .section:has(+ .tone) { padding-bottom: clamp(56px, 14vw, 80px); }
   .sec-head { margin-bottom: 24px; }
@@ -445,8 +558,22 @@ body:has(.lightbox[open]) { overflow: hidden; }
   .contact-sub { font-size: 16px; }
   .skill h3 { font-size: 30px; }
   .project h3 { font-size: 28px; }
-  .walker-bubble { left: calc(50% + 16px); font-size: 16px; } /* "I Freelance Too!" stays on narrow phones */
-  .footer { flex-direction: column; align-items: start; gap: 8px; }
+  .footer { gap: 12px; padding-bottom: calc(24px + env(safe-area-inset-bottom)); font-size: 12px; }
+  .footer-brand { gap: 10px; }
+  .footer-name { font-size: 20px; }
+  .footer-logo { height: 28px; }
   .achievement-facts { grid-template-columns: 1fr 1fr; }
-  .carousel-btn { opacity: 1; }
+  .achievement-body h3 { font-size: clamp(44px, 13vw, 56px); }
+  /* compact buttons: smaller padding and type, same 44px-ish tap height */
+  .cut-btn, .hero-cta { gap: 8px; padding: 10px 16px; font-size: 12px; }
+}
+/* phones: two photos per row */
+@media (width <= 600px) {
+  .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+}
+/* phones in landscape: photo beside text again, so one achievement isn't taller than the screen */
+@media (width <= 1024px) and (orientation: landscape) and (height <= 600px) {
+  .paper .achievement, .paper .achievement:nth-child(even) { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr); gap: 24px; }
+  .paper .achievement:nth-child(even) .achievement-media { order: 0; }
+  .achievement-body h3 { font-size: clamp(44px, 6vw, 64px); }
 }

@@ -186,8 +186,9 @@ export function mountPortraitReveal(canvas, photo, alt, { reducedMotion = false,
     else { running = false; lastPointer = null; }
   };
 
+  let lost = false; // context lost: the hero has gone static, so pointer/observer events must not restart the loop
   const wake = () => {
-    if (running || !onScreen || document.hidden) return;
+    if (lost || running || !onScreen || document.hidden) return;
     running = true;
     lastTime = performance.now();
     raf = requestAnimationFrame(frame);
@@ -195,6 +196,7 @@ export function mountPortraitReveal(canvas, photo, alt, { reducedMotion = false,
   const sleep = () => { cancelAnimationFrame(raf); running = false; };
 
   const resize = () => {
+    if (lost) return; // no GL calls against a dead context
     rect = canvas.getBoundingClientRect();
     const { clientWidth: w, clientHeight: h } = canvas;
     if (!w || !h) return;
@@ -222,6 +224,7 @@ export function mountPortraitReveal(canvas, photo, alt, { reducedMotion = false,
   new ResizeObserver(resize).observe(canvas);
   canvas.addEventListener('webglcontextlost', (e) => {
     e.preventDefault();
+    lost = true;
     sleep();
     onLost?.();
   });

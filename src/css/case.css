@@ -15,7 +15,8 @@
 .case-in > * { animation: case-in 0.9s var(--ease) both; animation-delay: calc(var(--i, 0) * 80ms); }
 .case-eyebrow { display: inline-flex; align-items: center; gap: 10px; color: var(--accent); }
 .case-eyebrow::before { content: ""; width: 28px; height: 1px; background: currentColor; }
-.case-title { margin: 18px 0 20px; font-size: clamp(64px, 9.5vw, 136px); }
+/* min(64px, 15vw): below ~430px the title shrinks so "Thrombolaize" fits a 320px screen whole; anywhere = safety net */
+.case-title { margin: 18px 0 20px; font-size: clamp(min(64px, 15vw), 9.5vw, 136px); overflow-wrap: anywhere; }
 .case-title em { color: var(--accent); font-style: normal; }
 .case-lede { max-width: 32em; font-size: clamp(18px, 1.6vw, 21px); line-height: 1.55; }
 .case-hero .tags { margin-top: 22px; }

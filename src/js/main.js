@@ -251,6 +251,7 @@ function initLightbox() {
 function initSectionCentering() {
   const sections = [...document.querySelectorAll('main section[id]:not(.hero)')];
   const last = sections.at(-1);
+  if (!last) return; // case-study pages load this module but have no anchor sections
   const fit = () => {
     last.style.minHeight = '';
     const below = document.documentElement.scrollHeight - (last.getBoundingClientRect().bottom + scrollY); // the footer

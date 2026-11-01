@@ -46,8 +46,9 @@ function initNav() {
 }
 
 const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-/** Phones (both orientations) and tablets in portrait: sliders and the roadmap are stacked. Keep equal to home.css. */
-const STACKED = '(width <= 1024px)';
+/** Phones (both orientations) and portrait screens under 1200px (tablets upright, up to the iPad Pro 13"): sliders and
+ * the roadmap are stacked. Keep equal to the stacked query in home.css. */
+const STACKED = '(width <= 1024px), (orientation: portrait) and (width < 1200px)';
 
 /**
  * Adds `cls` to `el` (restarting its animation if the class was already there) and resolves when that animation ends.
@@ -266,7 +267,9 @@ function initLightbox() {
 /**
  * Anchor jumps (nav, hero CTA, "Experience") stay native; this only sets each section's scroll-margin so the jump
  * puts the section's middle at the window's middle (taller sections included). The page ends just below the last
- * section, so it gets a min-height that leaves it room to centre. The hero (#top) is left alone: it means "the top".
+ * section, so it gets a min-height that leaves it room to centre, but never more than 10% of the window on top of its
+ * own height: on tall screens (a portrait iPad Pro) full centring meant a near-empty screen of padding, so there the
+ * jump simply stops at the bottom of the page. The hero (#top) is left alone: it means "the top".
  */
 function initSectionCentering() {
   const sections = [...document.querySelectorAll('main section[id]:not(.hero)')];
@@ -275,7 +278,9 @@ function initSectionCentering() {
   const fit = () => {
     last.style.minHeight = '';
     const below = document.documentElement.scrollHeight - (last.getBoundingClientRect().bottom + scrollY); // the footer
-    last.style.minHeight = `${innerHeight - 2 * below}px`; // centred at max scroll; min-height never shrinks it
+    const natural = last.offsetHeight;
+    // centred at max scroll (min-height never shrinks it), capped so it never adds more than 10% of the window
+    last.style.minHeight = `${Math.min(innerHeight - 2 * below, natural + 0.1 * innerHeight)}px`;
     const pad = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0; // html's scroll-padding (for the nav) still applies; cancel it
     sections.forEach((s) => { s.style.scrollMarginTop = `${(innerHeight - s.offsetHeight) / 2 - pad}px`; });
   };

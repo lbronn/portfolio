@@ -17,8 +17,8 @@ Static portfolio: HTML, CSS and vanilla JS ES modules with a raw WebGL hero. No 
 
 ## Responsive layout
 
-- `width <= 1024px` (phones in both orientations, tablets in portrait) is the stacked layout. Keep `STACKED` in
-  `src/js/main.js` equal to it. There:
+- `(width <= 1024px), (orientation: portrait) and (width < 1200px)` is the stacked layout: phones in both orientations
+  and every tablet held upright, up to the iPad Pro 13" (1032px). Keep `STACKED` in `src/js/main.js` equal to it. There:
   - the nav is always the compact menu-button form;
   - the portrait switch and "View projects" are square icon-only buttons on the portrait's left and right edges;
   - Projects and Achievements stack vertically and show only their `data-featured` cards until "Show all";

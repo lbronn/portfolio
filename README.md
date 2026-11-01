@@ -7,6 +7,11 @@ Static portfolio: HTML, CSS and vanilla JS ES modules with a raw WebGL hero. No 
     npm run dev      # python3 -m http.server 5173 → http://localhost:5173
     npm test         # node:test suite for src/js/lib.js
 
+## Deploy
+
+Vercel serves the repository root as-is. `vercel.json` sets the "Other" preset with an empty build command, so a
+leftover dashboard setting (such as the old Tailwind `npm run build`) can't break deploys.
+
 ## Structure
 
 - `index.html`: home page; `project/<slug>/index.html`: case studies

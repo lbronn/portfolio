@@ -123,25 +123,26 @@
 .hero-cta:focus-visible { outline-color: currentColor; outline-offset: -4px; } /* clip-path clips the outset ring */
 .hero-cta .icon-grid { display: none; } /* stands in for the label when the hero button is icon-only (mobile) */
 
-/* Mobile hero: a one-column grid. .hero-bar becomes display: contents so the portrait switch and "View projects"
-   become grid items too: a row of two buttons right above the Currently / Latest project cards, one per card column.
-   --cols / --pgap mirror the panels' grid; --cell is one card column (its 100% = the hero's width, in the buttons' grid cell). */
+/* Mobile hero: a one-column grid. .hero-bar becomes display: contents so the portrait switch and "View projects" can
+   share the portrait's grid cell: square icon-only buttons on the portrait's left and right edges, level with his face.
+   --pw = portrait width (946 / 883 = its aspect ratio; the svh cap keeps it inside short, landscape screens). Its 100%
+   means the same in the portrait (stage width) and in the buttons' margins (the shared grid cell). */
 @media (width <= 1024px) {
-  .hero { --pw: min(100%, 720px, calc((100svh - 140px) * 946 / 883)); --cols: 3; --pgap: 14px; --cell: calc((100% - 2 * var(--gutter) - (var(--cols) - 1) * var(--pgap)) / var(--cols)); display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; height: auto; min-height: 0; padding: 96px 0 28px; }
+  .hero { --pw: min(100%, 720px, calc((100svh - 140px) * 946 / 883)); --stage-top: 12px; --hero-btn: 48px; --pgap: 14px; display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; height: auto; min-height: 0; padding: 96px 0 28px; }
   .hero-intro, .hero-panels { position: relative; inset: auto; transform: none; }
   .hero-intro { grid-row: 1; width: auto; padding: 0 var(--gutter); }
-  .hero-stage { position: relative; grid-row: 2; grid-column: 1; margin-top: 12px; }
+  .hero-stage { position: relative; grid-row: 2; grid-column: 1; margin-top: var(--stage-top); }
   .hero-portrait { position: relative; bottom: auto; left: auto; width: var(--pw); height: auto; margin: 0 auto; transform: none; }
   .hero-bar { display: contents; }
-  .hero-switch, .hero-cta-wrap { grid-row: 3; grid-column: 1 / -1; align-self: start; width: var(--cell); margin-top: 24px; animation: fade 1s 0.4s both; }
-  .hero-switch { justify-self: start; margin-left: var(--gutter); }
-  .hero-cta-wrap { justify-self: start; margin-left: calc(var(--gutter) + var(--cell) + var(--pgap)); }
-  .hero-panels { grid-row: 4; grid-column: 1 / -1; width: auto; gap: var(--pgap); padding: var(--pgap) var(--gutter) 0; grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); }
-  .hero-meta-bar { grid-row: 5; grid-column: 1 / -1; margin: 20px var(--gutter) 0; padding-bottom: 0; border-bottom: 0; animation: fade 1s 0.4s both; }
-  /* both buttons: 44px tall, full card-column width, icon only (the labels stay as their accessible names);
-     the switch in ink, "View projects" in brand blue */
-  .hero-switch, .hero-cta-wrap .hero-cta { justify-content: center; gap: 0; height: 44px; padding: 0; }
-  .hero-cta-wrap .hero-cta { width: 100%; } /* the wrap carries the column width */
+  /* centred 32% down the frame (0.3 = 0.32 * 883 / 946 of its width): beside his face, where the photo and the 3D model
+     leave the frame empty; on the frame's own edges, but never closer to the screen edge than the gutter */
+  .hero-switch, .hero-cta-wrap { grid-row: 2; grid-column: 1; align-self: start; z-index: 4; margin-top: calc(var(--stage-top) + var(--pw) * 0.3 - var(--hero-btn) / 2); animation: fade 1s 0.4s both; }
+  .hero-switch { justify-self: start; margin-left: max(var(--gutter), (100% - var(--pw)) / 2); }
+  .hero-cta-wrap { justify-self: end; margin-right: max(var(--gutter), (100% - var(--pw)) / 2); }
+  .hero-panels { grid-row: 3; grid-column: 1 / -1; width: auto; gap: var(--pgap); padding: 24px var(--gutter) 0; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .hero-meta-bar { grid-row: 4; grid-column: 1 / -1; margin: 20px var(--gutter) 0; padding-bottom: 0; border-bottom: 0; animation: fade 1s 0.4s both; }
+  /* both buttons: chamfered squares, icon only (the labels stay as their accessible names); the switch in ink, "View projects" in brand blue */
+  .hero-switch, .hero-cta-wrap .hero-cta { justify-content: center; gap: 0; width: var(--hero-btn); height: var(--hero-btn); padding: 0; }
   .hero-switch { border: 1px solid var(--ink); border-radius: 0; background: color-mix(in srgb, var(--paper) 85%, transparent); clip-path: var(--cut); }
   .hero-switch:hover { background: color-mix(in srgb, var(--paper) 85%, transparent); } /* touch: no sticky grey */
   .hero-switch:focus-visible { outline-color: currentColor; outline-offset: -4px; } /* clip-path clips the outset ring */
@@ -154,9 +155,8 @@
   .hero-cta-wrap .icon-grid { display: block; }
 }
 @media (width <= 768px) {
-  .hero { --pw: min(100%, 420px, 44.9966svh); --cols: 2; --pgap: 10px; padding: 84px 0 20px; }
-  .hero-stage { margin-top: 4px; }
-  .hero-switch, .hero-cta-wrap { margin-top: 20px; }
+  .hero { --pw: min(100%, 420px, 44.9966svh); --stage-top: 4px; --hero-btn: 44px; --pgap: 10px; padding: 84px 0 20px; }
+  .hero-panels { grid-template-columns: 1fr 1fr; padding-top: 18px; }
   .hero-intro { text-align: center; }
   .hero-meta-top { display: none; }
   .hero-meta-bar { display: flex; gap: 6px 18px; font-size: 11px; }
@@ -169,13 +169,14 @@
 }
 /* Phones in landscape: name and meta on the left, the portrait (with its two buttons) on the right */
 @media (width <= 1024px) and (orientation: landscape) and (height <= 600px) {
-  .hero { --pw: min(100%, calc((100svh - 96px) * 946 / 883)); --cols: 3; --pgap: 14px; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); column-gap: 8px; padding-top: 76px; }
+  .hero { --pw: min(100%, calc((100svh - 96px) * 946 / 883)); --stage-top: 0px; --pgap: 14px; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); column-gap: 8px; padding-top: 76px; }
   .hero-intro { grid-row: 1; grid-column: 1; align-self: center; padding-right: 0; text-align: left; }
   .hero-name { font-size: clamp(44px, 7.4vw, 72px); white-space: normal; }
   .hero-name span { display: block; }
   .hero-meta-top { display: grid; margin-top: 20px; font-size: 12px; }
   .hero-meta-bar { display: none; }
-  .hero-stage { grid-row: 1; grid-column: 2; margin-top: 0; }
+  .hero-stage, .hero-switch, .hero-cta-wrap { grid-row: 1; grid-column: 2; }
+  .hero-panels { grid-column: 1 / -1; grid-row: 2; grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .hero-panels > :last-child { grid-column: auto; }
 }
 

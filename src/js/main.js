@@ -282,6 +282,75 @@ function initSectionCentering() {
   fit();
   document.fonts.ready.then(fit); // web fonts change section heights; images have fixed width/height
   window.addEventListener('resize', fit);
+  document.addEventListener('sections:resized', fit); // a section changed height without a resize (initShowAll)
+}
+
+/**
+ * "Show all" on stacked screens ([data-show-all] -> its [data-collapsible] list): only the [data-featured] cards show
+ * until it's pressed. The CSS for .is-collapsed lives in the stacked breakpoint, so wide screens always show every card.
+ * Without JS nothing is collapsed (the button's markup starts as aria-expanded="true").
+ */
+function initShowAll() {
+  document.querySelectorAll('[data-show-all]').forEach((btn) => {
+    const list = document.getElementById(btn.dataset.showAll);
+    const label = btn.querySelector('.show-all-label');
+    if (!list || !label) return;
+    const set = (open) => {
+      list.classList.toggle('is-collapsed', !open);
+      list.classList.toggle('is-expanded', open);
+      btn.setAttribute('aria-expanded', String(open));
+      label.textContent = open ? 'Show less' : 'Show all';
+      document.dispatchEvent(new Event('sections:resized'));
+    };
+    list.classList.add('is-collapsed');
+    btn.setAttribute('aria-expanded', 'false');
+    label.textContent = 'Show all';
+    btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') !== 'true';
+      set(open);
+      // collapsing from far down the list: bring the heading back instead of leaving the visitor in the next section
+      const head = btn.closest('.sec-head');
+      if (!open && head && head.getBoundingClientRect().top < 0) head.scrollIntoView({ block: 'start', behavior: reducedMotion() ? 'instant' : 'smooth' });
+    });
+  });
+}
+
+/** Off the clock on stacked screens: one photo at a time; dots under the gallery show which one and jump to any. */
+function initGalleryDots() {
+  const gallery = document.querySelector('.gallery');
+  if (!gallery) return;
+  const items = [...gallery.children];
+  if (items.length < 2) return;
+  const dots = document.createElement('div');
+  dots.className = 'gallery-dots';
+  const buttons = items.map((item, i) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('aria-label', `Show photo ${i + 1} of ${items.length}`);
+    b.addEventListener('click', () => {
+      const g = gallery.getBoundingClientRect();
+      const r = item.getBoundingClientRect();
+      gallery.scrollBy({ left: r.left + r.width / 2 - (g.left + g.width / 2), behavior: reducedMotion() ? 'instant' : 'smooth' });
+    });
+    dots.append(b);
+    return b;
+  });
+  const mark = (i) => buttons.forEach((b, n) => { b.classList.toggle('is-current', n === i); b.setAttribute('aria-current', String(n === i)); });
+  mark(0);
+  gallery.after(dots);
+  // the photo over the middle of the gallery is the current one, however it got there
+  const io = new IntersectionObserver((entries) => entries.forEach((e) => { if (e.isIntersecting) mark(items.indexOf(e.target)); }),
+    { root: gallery, rootMargin: '0px -49% 0px -49%' });
+  items.forEach((item) => io.observe(item));
+}
+
+/** Overscroll colour: paper while in the top half of the page, ink in the bottom half (see html.is-past-middle in base.css). */
+function initOverscrollTint() {
+  const root = document.documentElement;
+  const update = () => root.classList.toggle('is-past-middle', window.scrollY > (root.scrollHeight - window.innerHeight) / 2);
+  update();
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
 }
 
 /**
@@ -416,6 +485,9 @@ initHero();
 initCarousels();
 initSliders();
 initLightbox();
+initShowAll();
+initGalleryDots();
+initOverscrollTint();
 initSectionCentering();
 initRoadmap();
 initWalker();

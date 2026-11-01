@@ -110,7 +110,7 @@
             <span><span class="hero-switch-title">Show 3D model</span><span class="hero-switch-sub">Switch portrait</span></span>
           </button>
           <div class="hero-cta-wrap">
-            <a href="#projects" class="hero-cta" aria-label="View projects"><span class="hero-cta-label">View projects</span> <svg class="icon icon-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg><svg class="icon icon-grid" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z" /></svg></a>
+            <a href="#projects" class="hero-cta">View projects <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg></a>
           </div>
         </div>
       </section>
@@ -255,6 +255,7 @@
           <svg class="contours" data-contours viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
           <div class="sec-head" data-reveal="wipe">
             <h2 class="cond sec-title">Projects</h2>
+            <button type="button" class="hero-cta show-all" data-show-all="projects-track" aria-controls="projects-track" aria-expanded="true"><span class="show-all-label">Show all</span> <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg></button>
             <div class="sec-meta" data-reveal style="--i:1">
               <div class="slide-nav" data-slider-nav="projects-track">
                 <p class="hud-label slide-count" aria-live="polite">01 / 03</p>
@@ -263,8 +264,8 @@
               </div>
             </div>
           </div>
-          <ul class="projects-track" id="projects-track" data-slider="loop" data-reveal aria-label="Projects">
-            <li class="project hud">
+          <ul class="projects-track" id="projects-track" data-slider="loop" data-collapsible data-reveal aria-label="Projects">
+            <li class="project hud" data-featured>
               <div class="project-media burn"><img src="./src/assets/images/thrombolaize-1200.webp" srcset="./src/assets/images/thrombolaize-640.webp 640w, ./src/assets/images/thrombolaize-1200.webp 1200w" sizes="(max-width: 900px) 92vw, 46vw" width="1200" height="630" alt="Thrombolaize mobile app" loading="lazy" decoding="async" /></div>
               <div class="project-row"><p class="hud-label">Mobile app · 2025</p><h3 class="cond">Thrombolaize</h3></div>
               <p class="project-desc">A mobile app powered by an AI image classifier and segmentation model that identifies cerebral ischemic strokes, built to help save lives.</p>
@@ -272,7 +273,7 @@
                 <a class="cut-btn project-btn" href="./project/thrombolaize/">Details <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg></a>
               </div>
             </li>
-            <li class="project hud">
+            <li class="project hud" data-featured>
               <div class="project-media burn"><img src="./src/assets/images/boardprep-1200.webp" srcset="./src/assets/images/boardprep-640.webp 640w, ./src/assets/images/boardprep-1200.webp 1200w" sizes="(max-width: 900px) 92vw, 46vw" width="1200" height="630" alt="BoardPrep web app" loading="lazy" decoding="async" /></div>
               <div class="project-row"><p class="hud-label">Web app · 2024</p><h3 class="cond">BoardPrep</h3></div>
               <p class="project-desc">A full-stack web app that helps engineering students prepare with personalized learning content and assessments, powered by AI.</p>
@@ -366,6 +367,7 @@
           <svg class="contours" data-contours viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
           <div class="sec-head" data-reveal="wipe">
             <h2 class="cond sec-title">Achievements</h2>
+            <button type="button" class="hero-cta show-all" data-show-all="achievements-track" aria-controls="achievements-track" aria-expanded="true"><span class="show-all-label">Show all</span> <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg></button>
             <div class="sec-meta" data-reveal style="--i:1">
               <p class="hud-label">Milestones</p>
               <p class="sec-sub">Academics &amp; certifications</p>
@@ -376,8 +378,8 @@
               </div>
             </div>
           </div>
-          <ul class="achievements" id="achievements-track" data-slider="straight" data-reveal aria-label="Achievements">
-            <li class="hud achievement">
+          <ul class="achievements" id="achievements-track" data-slider="straight" data-collapsible data-reveal aria-label="Achievements">
+            <li class="hud achievement" data-featured>
               <div class="achievement-media">
                 <div class="carousel burn" data-carousel>
                   <img class="is-current" src="./src/assets/images/barong-1080.webp" srcset="./src/assets/images/barong-480.webp 480w, ./src/assets/images/barong-1080.webp 1080w" sizes="(max-width: 900px) 92vw, 46vw" alt="Bronn Samson in a barong Tagalog" width="1080" height="810" decoding="async" />
@@ -449,7 +451,7 @@
                 <ul class="tags"><li>AI for healthcare</li><li>AI Thesis</li><li>Public speaking</li></ul>
               </div>
             </li>
-            <li class="hud achievement">
+            <li class="hud achievement" data-featured>
               <div class="achievement-media">
                 <div class="carousel burn" data-carousel>
                   <img class="is-current" src="./src/assets/images/bluewater-1080.webp" srcset="./src/assets/images/bluewater-480.webp 480w, ./src/assets/images/bluewater-1080.webp 1080w" sizes="(max-width: 900px) 92vw, 46vw" alt="Certificate of appreciation for speaking at the AI Essentials at Work training, Bluewater Maribago" width="1080" height="810" loading="lazy" decoding="async" />

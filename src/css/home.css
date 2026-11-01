@@ -121,60 +121,58 @@
 .hero-cta { display: inline-flex; align-items: center; gap: 10px; padding: 12px 22px; border: 1px solid var(--brand); color: var(--brand); background: color-mix(in srgb, var(--paper) 85%, transparent); clip-path: var(--cut); font-size: 13px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; transition: background-color 0.2s, color 0.2s; }
 .hero-cta:hover { background: var(--brand); color: var(--paper); }
 .hero-cta:focus-visible { outline-color: currentColor; outline-offset: -4px; } /* clip-path clips the outset ring */
-.hero-cta .icon-grid { display: none; } /* stands in for the label when the hero button is icon-only (mobile) */
 
 /* Mobile hero: a one-column grid. .hero-bar becomes display: contents so the portrait switch and "View projects"
-   can share the portrait's grid cell: icon-only buttons on its left and right, level with his face. */
+   become grid items too: a row of two buttons right above the Currently / Latest project cards, one per card column.
+   --cols / --pgap mirror the panels' grid; --cell is one card column (its 100% = the hero's width, in the buttons' grid cell). */
 @media (width <= 1024px) {
-  /* --pw: portrait width (946 / 883 = its aspect ratio; the svh cap keeps it inside short, landscape screens).
-     Its 100% means the same in the portrait (stage width) and in the buttons' margins (the shared grid cell). */
-  .hero { --hero-btn: 48px; --pw: min(100%, 720px, calc((100svh - 140px) * 946 / 883)); --stage-top: 12px; display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; height: auto; min-height: 0; padding: 96px 0 28px; }
+  .hero { --pw: min(100%, 720px, calc((100svh - 140px) * 946 / 883)); --cols: 3; --pgap: 14px; --cell: calc((100% - 2 * var(--gutter) - (var(--cols) - 1) * var(--pgap)) / var(--cols)); display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; height: auto; min-height: 0; padding: 96px 0 28px; }
   .hero-intro, .hero-panels { position: relative; inset: auto; transform: none; }
   .hero-intro { grid-row: 1; width: auto; padding: 0 var(--gutter); }
-  .hero-stage { position: relative; grid-row: 2; grid-column: 1; margin-top: var(--stage-top); }
+  .hero-stage { position: relative; grid-row: 2; grid-column: 1; margin-top: 12px; }
   .hero-portrait { position: relative; bottom: auto; left: auto; width: var(--pw); height: auto; margin: 0 auto; transform: none; }
-  .hero-panels { grid-row: 3; width: auto; padding: 24px var(--gutter) 0; grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .hero-bar { display: contents; }
-  .hero-meta-bar { grid-row: 4; margin: 20px var(--gutter) 0; padding-bottom: 0; border-bottom: 0; animation: fade 1s 0.4s both; }
-  /* centred 32% down the frame (0.3 = 0.32 * 883 / 946 of its width): beside his face, where photo and 3D model leave the sides empty */
-  .hero-switch, .hero-cta-wrap { grid-row: 2; grid-column: 1; align-self: start; z-index: 4; margin-top: calc(var(--stage-top) + var(--pw) * 0.3 - var(--hero-btn) / 2); animation: fade 1s 0.4s both; }
-  .hero-switch { justify-self: start; margin-left: var(--gutter); padding: 0; gap: 0; border-radius: 50%; }
-  .hero-switch:hover { background: none; }
-  .switch-icon { width: var(--hero-btn); height: var(--hero-btn); background: color-mix(in srgb, var(--paper) 85%, transparent); }
-  .switch-icon .icon { width: 20px; height: 20px; }
+  .hero-switch, .hero-cta-wrap { grid-row: 3; grid-column: 1 / -1; align-self: start; width: var(--cell); margin-top: 24px; animation: fade 1s 0.4s both; }
+  .hero-switch { justify-self: start; margin-left: var(--gutter); }
+  .hero-cta-wrap { justify-self: start; margin-left: calc(var(--gutter) + var(--cell) + var(--pgap)); }
+  .hero-panels { grid-row: 4; grid-column: 1 / -1; width: auto; gap: var(--pgap); padding: var(--pgap) var(--gutter) 0; grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); }
+  .hero-meta-bar { grid-row: 5; grid-column: 1 / -1; margin: 20px var(--gutter) 0; padding-bottom: 0; border-bottom: 0; animation: fade 1s 0.4s both; }
+  /* both buttons: 44px tall, full card-column width, icon + label; the switch in ink, "View projects" in brand blue */
+  .hero-switch, .hero-cta-wrap .hero-cta { justify-content: center; gap: 8px; height: 44px; padding: 0 12px; font-size: 12px; white-space: nowrap; }
+  .hero-cta-wrap .hero-cta { width: 100%; } /* the wrap carries the column width */
+  .hero-switch { border: 1px solid var(--ink); border-radius: 0; background: color-mix(in srgb, var(--paper) 85%, transparent); clip-path: var(--cut); }
+  .hero-switch:hover { background: color-mix(in srgb, var(--paper) 85%, transparent); } /* touch: no sticky grey */
+  .hero-switch:focus-visible { outline-color: currentColor; outline-offset: -4px; } /* clip-path clips the outset ring */
+  .switch-icon, .hero-switch:hover .switch-icon { width: auto; height: auto; border: 0; background: none; color: inherit; }
+  .switch-icon .icon { width: 15px; height: 15px; }
+  .hero-switch-title { font-size: inherit; }
   .hero-switch-sub { display: none; }
-  /* labels removed visually; they stay the buttons' accessible names */
-  .hero-switch-title, .hero-cta-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-  .hero-cta-wrap { justify-self: end; margin-right: var(--gutter); }
-  .hero-cta-wrap .hero-cta { justify-content: center; width: var(--hero-btn); height: var(--hero-btn); padding: 0; gap: 0; }
-  .hero-cta-wrap .hero-cta .icon { width: 18px; height: 18px; }
-  .hero-cta-wrap .icon-arrow { display: none; }
-  .hero-cta-wrap .icon-grid { display: block; }
+  .hero-cta-wrap .hero-cta .icon { width: 14px; height: 14px; }
 }
 @media (width <= 768px) {
-  .hero { --hero-btn: 44px; --pw: min(100%, 420px, 44.9966svh); --stage-top: 4px; padding: 84px 0 20px; }
+  .hero { --pw: min(100%, 420px, 44.9966svh); --cols: 2; --pgap: 10px; padding: 84px 0 20px; }
+  .hero-stage { margin-top: 4px; }
+  .hero-switch, .hero-cta-wrap { margin-top: 20px; }
   .hero-intro { text-align: center; }
   .hero-meta-top { display: none; }
   .hero-meta-bar { display: flex; gap: 6px 18px; font-size: 11px; }
   .hero-name { font-size: 8.5vw; white-space: nowrap; }
   .hero-name span { display: inline; }
-  .hero-panels { grid-template-columns: 1fr 1fr; gap: 10px; padding-top: 18px; }
   .hero-panels > :last-child { grid-column: 1 / -1; }
 }
 @media (width <= 400px) {
-  .hero { --pw: min(100%, 40.7112svh); }
-  .hero-panels { gap: 8px; }
+  .hero { --pw: min(100%, 40.7112svh); --pgap: 8px; }
+  .hero-switch, .hero-cta-wrap .hero-cta { gap: 6px; padding: 0 8px; font-size: 11px; }
 }
 /* Phones in landscape: name and meta on the left, the portrait (with its two buttons) on the right */
 @media (width <= 1024px) and (orientation: landscape) and (height <= 600px) {
-  .hero { --pw: min(100%, calc((100svh - 96px) * 946 / 883)); --stage-top: 0px; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); column-gap: 8px; padding-top: 76px; }
+  .hero { --pw: min(100%, calc((100svh - 96px) * 946 / 883)); --cols: 3; --pgap: 14px; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); column-gap: 8px; padding-top: 76px; }
   .hero-intro { grid-row: 1; grid-column: 1; align-self: center; padding-right: 0; text-align: left; }
   .hero-name { font-size: clamp(44px, 7.4vw, 72px); white-space: normal; }
   .hero-name span { display: block; }
   .hero-meta-top { display: grid; margin-top: 20px; font-size: 12px; }
   .hero-meta-bar { display: none; }
-  .hero-stage, .hero-switch, .hero-cta-wrap { grid-row: 1; grid-column: 2; }
-  .hero-panels { grid-column: 1 / -1; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .hero-stage { grid-row: 1; grid-column: 2; margin-top: 0; }
   .hero-panels > :last-child { grid-column: auto; }
 }
 
@@ -415,6 +413,7 @@
 }
 .gallery { display: flex; gap: 20px; margin-top: 28px; padding: 16px clamp(20px, 3vw, 34px); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; perspective: 1200px; }
 .gallery::-webkit-scrollbar { display: none; }
+.show-all, .gallery-dots { display: none; } /* stacked (mobile) layout only */
 .gallery-item { flex: 0 0 clamp(220px, 26vw, 320px); scroll-snap-align: center; }
 .gallery-item button { display: block; width: 100%; aspect-ratio: 4 / 5; background: #0b10260f; clip-path: var(--cut-md); }
 .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s var(--ease); }
@@ -468,14 +467,39 @@ body:has(.lightbox[open]) { overflow: hidden; }
   /* Achievements */
   .achievements { flex-direction: column; gap: 24px; padding: 0; overflow: visible; scroll-snap-type: none; }
   .paper .achievement { flex: none; scroll-snap-align: none; }
-  /* Off the clock: the gallery becomes a grid */
-  .gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; overflow: visible; scroll-snap-type: none; perspective: none; }
-  .gallery-item { flex: none; }
-  .gallery-item, .paper .project { animation: none; } /* no coverflow without a sideways scroller */
+  .paper .project { animation: none; } /* no coverflow without a sideways scroller */
+  /* Off the clock: one photo at a time, swiped (the coverflow tilt stays). --w = one photo, capped by the screen's height;
+     the gap and side padding of (track - photo) / 2 centre each photo and keep its neighbours just off screen. */
+  .paper .offclock { container-type: inline-size; } /* 100cqw = the gallery's width */
+  .gallery { --w: min(100cqw - 40px, 460px, (100svh - 150px) * 0.8); gap: calc((100cqw - var(--w)) / 2); padding: 16px calc((100cqw - var(--w)) / 2) 8px; }
+  .gallery-item { flex: 0 0 var(--w); }
+  .gallery-dots { display: flex; justify-content: center; margin-top: 6px; }
+  .gallery-dots button { display: grid; place-items: center; width: 22px; height: 28px; }
+  .gallery-dots button::before { content: ""; width: 8px; height: 8px; border-radius: 999px; background: color-mix(in srgb, var(--ink) 22%, transparent); transition: width 0.4s var(--ease), background-color 0.3s; }
+  .gallery-dots button.is-current { width: 36px; }
+  .gallery-dots button.is-current::before { width: 26px; background: var(--brand); }
+  /* Projects / Achievements: two cards until "Show all" (main.js initShowAll sets .is-collapsed / .is-expanded) */
+  /* fixed width (fits "Show less" too), so the title beside it never reflows when it toggles */
+  .sec-head .show-all { display: inline-flex; justify-content: center; gap: 5px; width: 8.4em; padding: 10px 8px; font-size: 11px; white-space: nowrap; animation: fade 0.6s 0.3s both; }
+  .show-all .icon { width: 13px; height: 13px; transition: rotate 0.3s var(--ease); }
+  .show-all[aria-expanded="true"] .icon { rotate: 180deg; }
+  .sec-head:has(.show-all) { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px 12px; }
+  .sec-head:has(.show-all) .sec-title { grid-area: 1 / 1; }
+  .sec-head:has(.show-all) .show-all { grid-area: 1 / 2; }
+  .sec-head:has(.show-all) .sec-meta { grid-area: 2 / 1 / 3 / -1; padding-bottom: 0; text-align: left; }
+  .sec-meta:has(> .slide-nav:only-child) { display: none; } /* Projects: its meta only holds the hidden slider arrows */
+  [data-collapsible] > [data-featured] { order: -1; } /* the two shown cards lead the list */
+  [data-collapsible].is-collapsed > :not([data-featured]) { display: none; }
+  [data-collapsible].is-expanded > :not([data-featured]) { animation: rise 0.7s var(--ease) both; }
+  /* Skills: icons only; each name stays as the icon's accessible text */
+  .logos { gap: 8px; }
+  .logos li { gap: 0; padding: 9px; }
+  .logos img { width: 22px; height: 22px; }
+  .logos li span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
   /* Profession, stacked: oldest stop on top. A vertical road runs down the left rail; each stop has a "sky"
      (flag + teleport circle + room for the figure), its date, then its card. */
-  .roadmap { --rail: 26px; --sky: 172px; --node-y: calc(var(--sky) + 9px); --stop-gap: 40px; display: block; }
+  .roadmap { --rail: 26px; --sky: 100px; --node-y: calc(var(--sky) + 9px); --stop-gap: 32px; display: block; }
   .stop { display: grid; grid-template-columns: var(--rail) minmax(0, 1fr); grid-template-rows: auto auto 1fr; column-gap: 16px; }
   .stop:not(:last-child) { padding-bottom: var(--stop-gap); }
   .stop-sky { grid-area: 1 / 2; height: var(--sky); }
@@ -488,13 +512,13 @@ body:has(.lightbox[open]) { overflow: hidden; }
   .stop:last-child .stop-road::before { bottom: auto; width: 12px; height: 160px; -webkit-mask: linear-gradient(180deg, #000 20%, transparent); mask: linear-gradient(180deg, #000 20%, transparent); } /* what's next */
   .stop-node { top: var(--node-y); }
   .stop-flag { left: 10px; translate: 0; }
-  /* the figure stands mid-sky at 70% size; --tp-y (set by main.js initRoadmap) lifts him to an earlier stop */
-  .walker-track { translate: 0 var(--tp-y, 0px); scale: 0.7; transform-origin: 50% 100%; }
+  /* the figure stands mid-sky at 60% size (~125px: his head rises into the gap above, clear of the card); --tp-y (set by main.js initRoadmap) lifts him to an earlier stop */
+  .walker-track { translate: 0 var(--tp-y, 0px); scale: 0.6; transform-origin: 50% 100%; }
   .walker-btn { transform-origin: 50% 100%; }
-  .walker-bubble { left: calc(50% + 20px); font-size: 22px; } /* 22px at 70% = ~15px on screen */
+  .walker-bubble { left: calc(50% + 20px); font-size: 24px; } /* 24px at 60% = ~14px on screen */
   /* teleport circle: a glowing ring on the ground with a column of light; dim under him at rest */
-  .stop-pad { display: block; position: absolute; bottom: -10px; left: 50%; width: 96px; height: 24px; translate: -50% 0; border: 2px solid var(--sky); border-radius: 50%; background: radial-gradient(closest-side, #29a3ff59, #29a3ff00); box-shadow: 0 0 16px #29a3ffaa, inset 0 0 10px #29a3ff80; opacity: 0; scale: 0.2; pointer-events: none; }
-  .stop-pad::before { content: ""; position: absolute; bottom: 50%; left: 10%; right: 10%; height: 168px; border-radius: 40% 40% 0 0 / 8% 8% 0 0; background: linear-gradient(0deg, #29a3ffb3, #29a3ff26 60%, #29a3ff00); opacity: 0; scale: 1 0; transform-origin: 50% 100%; }
+  .stop-pad { display: block; position: absolute; bottom: -9px; left: 50%; width: 84px; height: 20px; translate: -50% 0; border: 2px solid var(--sky); border-radius: 50%; background: radial-gradient(closest-side, #29a3ff59, #29a3ff00); box-shadow: 0 0 16px #29a3ffaa, inset 0 0 10px #29a3ff80; opacity: 0; scale: 0.2; pointer-events: none; }
+  .stop-pad::before { content: ""; position: absolute; bottom: 50%; left: 10%; right: 10%; height: 142px; border-radius: 40% 40% 0 0 / 8% 8% 0 0; background: linear-gradient(0deg, #29a3ffb3, #29a3ff26 60%, #29a3ff00); opacity: 0; scale: 1 0; transform-origin: 50% 100%; }
   .stop.is-current .stop-pad, .stop-pad.is-on { opacity: 0.45; scale: 1; }
   .tp-ready .stop.is-current .stop-pad:not(.is-on) { opacity: 0; scale: 0.2; }
   .stop-pad.is-departing { animation: pad-depart 1.2s var(--ease) both; }
@@ -552,7 +576,7 @@ body:has(.lightbox[open]) { overflow: hidden; }
   .section { padding-top: clamp(56px, 14vw, 80px); }
   .tone, .section:has(+ .tone) { padding-bottom: clamp(56px, 14vw, 80px); }
   .sec-head { margin-bottom: 24px; }
-  .sec-title { font-size: clamp(44px, 14vw, 72px); }
+  .sec-title { font-size: clamp(32px, 11vw, 72px); } /* "Achievements" + "Show all" share a row down to 320px */
   .about-text p { font-size: 17px; }
   .contact-title { font-size: clamp(64px, 20vw, 110px); }
   .contact-sub { font-size: 16px; }
@@ -566,10 +590,6 @@ body:has(.lightbox[open]) { overflow: hidden; }
   .achievement-body h3 { font-size: clamp(44px, 13vw, 56px); }
   /* compact buttons: smaller padding and type, same 44px-ish tap height */
   .cut-btn, .hero-cta { gap: 8px; padding: 10px 16px; font-size: 12px; }
-}
-/* phones: two photos per row */
-@media (width <= 600px) {
-  .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 }
 /* phones in landscape: photo beside text again, so one achievement isn't taller than the screen */
 @media (width <= 1024px) and (orientation: landscape) and (height <= 600px) {

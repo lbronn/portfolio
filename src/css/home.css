@@ -402,15 +402,6 @@ body:has(.lightbox[open]) { overflow: hidden; }
 .lb-prev { top: 50%; left: 16px; translate: 0 -50%; }
 .lb-next { top: 50%; right: 16px; translate: 0 -50%; }
 
-/* ---------- Back to top: a nav glass pill (initToTop shows it once About fills the lower half of the viewport) ---------- */
-.to-top { position: fixed; right: clamp(16px, 2.5vw, 32px); bottom: clamp(16px, 2.5vw, 32px); z-index: 90; display: grid; place-items: center; width: 48px; height: 48px; border: 1px solid var(--glass-border); border-radius: 999px; background: var(--glass); color: var(--brand); box-shadow: var(--glass-shadow); -webkit-backdrop-filter: blur(18px) saturate(170%); backdrop-filter: blur(18px) saturate(170%); opacity: 0; visibility: hidden; translate: 0 12px; transition: opacity 0.3s var(--ease), translate 0.3s var(--ease), visibility 0s 0.3s, color 0.2s; }
-.to-top.is-visible { opacity: 1; visibility: visible; translate: none; transition-delay: 0s; }
-.to-top:hover { background: var(--brand); color: #fff; }
-/* over a dark band (About, Contact, footer; initToTop sets .on-ink): the glass turns sky blue */
-.to-top.on-ink { --glass: linear-gradient(135deg, #29a3ff73, #29a3ff1f); --glass-border: #29a3ff8c; --glass-shadow: inset 0 1px 0 #29a3ff99, 0 12px 32px -14px #000a; color: #29a3ff; }
-.to-top.on-ink:hover { background: #29a3ff; color: #0b1026; }
-.to-top .icon { width: 20px; height: 20px; }
-
 /* ---------- Home breakpoints (keep last) ---------- */
 @media (width <= 1024px) {
   .about, .contact { grid-template-columns: 1fr; }

@@ -318,35 +318,6 @@ function initAvatarTalk() {
   io.observe(head.parentElement);
 }
 
-/**
- * Back-to-top link: shown once the hero's bottom passes mid-viewport (About fills the lower half), and .on-ink while
- * a dark band sits under it. Scrolling is native: href="#top" + CSS scroll-behavior.
- */
-function initToTop() {
-  const btn = document.querySelector('.to-top');
-  const hero = document.querySelector('.hero');
-  if (!btn || !hero) return;
-  new IntersectionObserver(([entry]) => btn.classList.toggle('is-visible', !entry.isIntersecting), { rootMargin: '-50% 0px 0px 0px' }).observe(hero); // root = lower half of the viewport
-
-  const bands = document.querySelectorAll('.tone-ink');
-  const under = new Set();
-  let io;
-  const watch = () => { // root = a 1px line through the button's centre
-    io?.disconnect();
-    under.clear();
-    const r = btn.getBoundingClientRect();
-    const mid = Math.max(0, Math.round(r.top + r.height / 2));
-    const below = Math.max(0, innerHeight - mid - 1); // clamped: a negative value would make "--Npx", which throws
-    io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => (e.isIntersecting ? under.add(e.target) : under.delete(e.target)));
-      btn.classList.toggle('on-ink', under.size > 0);
-    }, { rootMargin: `-${mid}px 0px -${below}px 0px` });
-    bands.forEach((b) => io.observe(b));
-  };
-  watch();
-  window.addEventListener('resize', watch);
-}
-
 // --- boot (module scripts run after the DOM is parsed) ---
 initReveal();
 initContours();
@@ -360,4 +331,3 @@ initSectionCentering();
 initRoadmap();
 initWalker();
 initAvatarTalk();
-initToTop();

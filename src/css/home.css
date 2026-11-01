@@ -502,14 +502,15 @@ body:has(.lightbox[open]) { overflow: hidden; }
   .logos li { gap: 0; padding: 9px; }
   .logos img { width: 22px; height: 22px; }
   .logos li span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-  .logos li[data-repeat-icon] { display: none; } /* a second skill with the same icon (e.g. Claude Skills after Claude Code) */
+  /* a second skill with the same icon (e.g. Claude Skills after Claude Code): visually hidden, still read by screen readers */
+  .logos li[data-repeat-icon] { position: absolute; width: 1px; height: 1px; padding: 0; border: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
   /* Profession, stacked: oldest stop on top. A vertical road runs down the left rail; each stop has a "sky"
      (flag + teleport circle + room for the figure), its date, then its card. */
-  .roadmap { --rail: 26px; --sky: 100px; --node-y: calc(var(--sky) + 9px); --stop-gap: 32px; display: block; }
+  .roadmap { --rail: 26px; --sky-h: 100px; --node-y: calc(var(--sky-h) + 9px); --stop-gap: 32px; display: block; }
   .stop { display: grid; grid-template-columns: var(--rail) minmax(0, 1fr); grid-template-rows: auto auto 1fr; column-gap: 16px; }
   .stop:not(:last-child) { padding-bottom: var(--stop-gap); }
-  .stop-sky { grid-area: 1 / 2; height: var(--sky); }
+  .stop-sky { grid-area: 1 / 2; height: var(--sky-h); } /* --sky-h, not --sky: that's the colour token the teleport ring uses */
   .stop-road { grid-area: 1 / 1 / 4 / 2; height: auto; }
   .stop-date { grid-area: 2 / 2; margin-top: 0; text-align: left; }
   .stop-card { grid-area: 3 / 2; margin-top: 12px; }

@@ -10,3 +10,6 @@ build
 
 # Other Files
 .DS_Store
+
+# Impeccable design tool (local config)
+.impeccable/
